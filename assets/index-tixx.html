@@ -234,7 +234,7 @@ Contato
         </a>
 </nav>
 <!-- ========== 01. HERO SECTION ========== -->
-<section class="hero-layout" id="hero">
+<section class="hero-layout" id="hero" style="will-change: transform, opacity;">
 <!-- Background Composition -->
 <div data-reveal="" style="position: absolute; top: 0; bottom: 0; right: 0; left: 30%; background: url('imagens/xuxa2.png') center right/cover no-repeat; opacity: 0.25; filter: grayscale(80%) contrast(1.2); -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 30%); mask-image: linear-gradient(90deg, transparent 0%, black 30%);"></div>
 <div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(2,2,2,0.8) 0%, transparent 60%); pointer-events: none;"></div>
@@ -315,7 +315,7 @@ Contato
 </div>
 </div>
 <!-- Right Media -->
-<div class="hero-media-right" data-delay="3" data-reveal="" style="position: relative; z-index: 2;">
+<div class="hero-media-right" style="position: relative; z-index: 2;">
 <div class="hero-video-wrapper">
 <video autoplay="" loop="" muted="" playsinline="">
 <source src="videos/videotixxperfil.mp4" type="video/mp4"/>
@@ -617,6 +617,11 @@ Contato
 
         // 3D Card Hover Effect (Interactive Vanilla Tilt)
         document.querySelectorAll('.cyber-card').forEach(card => {
+            // Remove the slow reveal transition from cards after they appear
+            setTimeout(() => {
+                card.style.transition = '';
+            }, 2000);
+
             card.addEventListener('mousemove', e => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -630,11 +635,13 @@ Contato
                 
                 card.style.setProperty('--mouse-x', `${x}px`);
                 card.style.setProperty('--mouse-y', `${y}px`);
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                // Use !important to override the [data-reveal].visible class
+                card.style.setProperty('transform', `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`, 'important');
             });
             
             card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+                // Fallback to the .visible class transform
+                card.style.removeProperty('transform');
             });
         });
 
