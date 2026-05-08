@@ -207,6 +207,14 @@ h1, h2, h3, h4, h5, h6 {
     border-color: var(--neon-green);
 }
 
+.cyber-card .card-content {
+    transform: translateZ(40px);
+}
+
+.cyber-card .card-img-header {
+    transform: translateZ(20px);
+}
+
 /* Buttons */
 .cyber-btn {
     background: var(--neon-green);

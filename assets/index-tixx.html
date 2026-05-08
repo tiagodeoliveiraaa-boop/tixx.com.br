@@ -59,11 +59,11 @@
         }
         .top-menu a::before {
             top: 0; left: 0;
-            transition: border-color 0s ease-in 0.4s, width 0.2s ease-in 0.2s, height 0.2s ease-in;
+            transition: border-color 0s ease-in 0.8s, width 0.4s ease-in 0.4s, height 0.4s ease-in;
         }
         .top-menu a::after {
             bottom: 0; right: 0;
-            transition: border-color 0s ease-in 0.4s, width 0.2s ease-in 0.2s, height 0.2s ease-in;
+            transition: border-color 0s ease-in 0.8s, width 0.4s ease-in 0.4s, height 0.4s ease-in;
         }
         .top-menu a:hover { 
             color: var(--neon-green); 
@@ -74,13 +74,13 @@
             width: 100%; height: 100%;
             border-top-color: var(--neon-green);
             border-right-color: var(--neon-green);
-            transition: width 0.2s ease-out, height 0.2s ease-out 0.2s;
+            transition: width 0.4s ease-out, height 0.4s ease-out 0.4s;
         }
         .top-menu a:hover::after {
             width: 100%; height: 100%;
             border-bottom-color: var(--neon-green);
             border-left-color: var(--neon-green);
-            transition: border-color 0s ease-out 0.4s, width 0.2s ease-out 0.4s, height 0.2s ease-out 0.6s;
+            transition: border-color 0s ease-out 0.8s, width 0.4s ease-out 0.8s, height 0.4s ease-out 1.2s;
         }
 
         /* Side Navigation */
@@ -122,6 +122,9 @@
             display: flex;
             align-items: center;
             gap: 15px;
+        }
+        .ds-nav a svg {
+            flex-shrink: 0;
         }
         .ds-nav a:hover {
             color: var(--neon-green) !important;
@@ -336,7 +339,7 @@ Contato
 <div data-delay="2" data-reveal="" style="width: 80px; height: 3px; background: var(--neon-green); margin: 20px auto; box-shadow: var(--glow-green);"></div>
 </div>
 <!-- Grid of Cards -->
-<div class="ds-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px;">
+<div class="ds-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; perspective: 2000px;">
 <!-- 01. Vibe Design -->
 <div class="cyber-card" data-delay="1" data-reveal="">
 <div class="card-img-header">
@@ -431,7 +434,7 @@ Contato
 </div>
 </div>
 <div class="card-content">
-<h3 style="font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 12px; color: #fff;">Infra. de Rede</h3>
+<h3 style="font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 12px; color: #fff;">Infraestrutura de Rede</h3>
 <p class="text-sm opacity-60">Projeto e implementação de redes corporativas resilientes, garantindo conectividade e alta disponibilidade.</p>
 </div>
 </div>
@@ -459,7 +462,7 @@ Contato
 </div>
 </div>
 <div class="card-content">
-<h3 style="font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 12px; color: #fff;">Sec. da Informação</h3>
+<h3 style="font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 12px; color: #fff;">Segurança da Informação</h3>
 <p class="text-sm opacity-60">Blindagem de dados empresariais contra ameaças cibernéticas e mitigação inteligente de riscos.</p>
 </div>
 </div>
@@ -543,7 +546,7 @@ Contato
 </div>
 </div>
 <div class="card-content">
-<h3 style="font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 12px; color: #fff;">Est. Empresarial</h3>
+<h3 style="font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 12px; color: #fff;">Estratégia Empresarial</h3>
 <p class="text-sm opacity-60">Visão de negócios aliada à tecnologia para impulsionar escalabilidade e o diferencial competitivo.</p>
 </div>
 </div>
@@ -614,38 +617,24 @@ Contato
 
         // 3D Card Hover Effect (Interactive Vanilla Tilt)
         document.querySelectorAll('.cyber-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transition = 'none'; // Instant follow
-            });
-
             card.addEventListener('mousemove', e => {
                 const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left; // mouse x position within card
-                const y = e.clientY - rect.top;  // mouse y position within card
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
                 
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
                 
-                // Calculate rotation based on cursor position relative to center
                 const rotateX = ((y - centerY) / centerY) * -10; 
                 const rotateY = ((x - centerX) / centerX) * 10;
                 
-                // Apply the transform overriding CSS temporarily
                 card.style.setProperty('--mouse-x', `${x}px`);
                 card.style.setProperty('--mouse-y', `${y}px`);
-                
-                // Apply the transform overriding CSS temporarily
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale3d(1.02, 1.02, 1.02)`;
-                card.style.boxShadow = '20px 20px 30px rgba(0,0,0,0.8), var(--glow-green)';
-                card.style.borderColor = 'var(--neon-green)';
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
             });
             
             card.addEventListener('mouseleave', () => {
-                // Reset transform when mouse leaves smoothly
-                card.style.transition = 'transform 0.5s var(--ease-premium), box-shadow 0.5s var(--ease-premium), border-color 0.5s var(--ease-premium)';
-                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) scale3d(1, 1, 1)';
-                card.style.boxShadow = '';
-                card.style.borderColor = '';
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
             });
         });
 
