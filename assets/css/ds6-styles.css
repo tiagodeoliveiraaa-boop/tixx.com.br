@@ -1,4 +1,4 @@
-:root {
+﻿:root {
     /* Color System: 60% Neon Green / 40% Neon Purple */
     --neon-green: #b4ff00;
     --neon-green-muted: rgba(180, 255, 0, 0.2);
@@ -43,7 +43,7 @@ body {
     opacity: 0.04;
     pointer-events: none;
     z-index: 9999;
-    background: url('../Design%20System/assets/652a81c5d2f516632fee0fb0_noise_c57e95c375df.gif');
+    background: url('../imagens/652a81c5d2f516632fee0fb0_noise_c57e95c375df.gif');
 }
 
 .grid-bg {
@@ -480,7 +480,7 @@ h1, h2, h3, h4, h5, h6 {
     
 }
 
-/* === 04. CONTATO & FORMULÁRIO === */
+/* === 04. CONTATO & FORMULÃRIO === */
 .contact-grid {
     display: grid;
     grid-template-columns: 3fr 2fr;
@@ -693,3 +693,4 @@ textarea.cyber-input {
         padding: 2rem;
     }
 }
+
