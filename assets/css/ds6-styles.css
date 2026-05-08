@@ -1,4 +1,4 @@
-﻿:root {
+:root {
     /* Color System: 60% Neon Green / 40% Neon Purple */
     --neon-green: #b4ff00;
     --neon-green-muted: rgba(180, 255, 0, 0.2);
@@ -480,7 +480,7 @@ h1, h2, h3, h4, h5, h6 {
     
 }
 
-/* === 04. CONTATO & FORMULÃRIO === */
+/* === 04. CONTATO & FORMULÁRIO === */
 .contact-grid {
     display: grid;
     grid-template-columns: 3fr 2fr;
@@ -694,3 +694,123 @@ textarea.cyber-input {
     }
 }
 
+/* ========== 05. FOOTER ========== */
+.cyber-footer {
+    background: var(--void-base);
+}
+
+.footer-social-btn {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s var(--ease-premium);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.footer-social-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.footer-social-btn:hover {
+    color: var(--neon-green);
+    border-color: var(--neon-green);
+    background: rgba(116, 255, 10, 0.1);
+    box-shadow: var(--glow-green);
+    transform: translateY(-3px);
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* ========== FOOTER MARQUEE ========== */
+.skills-marquee-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    padding: 30px 0;
+    background: rgba(116, 255, 10, 0.02);
+    border-top: 1px solid rgba(116, 255, 10, 0.1);
+    border-bottom: 1px solid rgba(116, 255, 10, 0.1);
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+    margin-bottom: 40px;
+}
+
+.skills-marquee-container::before,
+.skills-marquee-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 150px;
+    z-index: 2;
+}
+
+.skills-marquee-container::before {
+    left: 0;
+    background: linear-gradient(to right, var(--void-base) 0%, transparent 100%);
+}
+
+.skills-marquee-container::after {
+    right: 0;
+    background: linear-gradient(to left, var(--void-base) 0%, transparent 100%);
+}
+
+.skills-marquee-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 50px;
+    animation: scroll-marquee 45s linear infinite;
+}
+
+.skills-marquee-content:hover {
+    animation-play-state: paused;
+}
+
+.marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s var(--ease-premium);
+    cursor: default;
+}
+
+.marquee-item svg {
+    width: 24px;
+    height: 24px;
+    color: var(--neon-green);
+    filter: drop-shadow(0 0 5px rgba(116, 255, 10, 0.5));
+    transition: all 0.3s var(--ease-premium);
+}
+
+.marquee-item:hover {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+}
+
+.marquee-item:hover svg {
+    color: var(--neon-purple);
+    filter: drop-shadow(0 0 8px rgba(157, 0, 255, 0.8));
+    transform: rotate(10deg);
+}
+
+@keyframes scroll-marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
