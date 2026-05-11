@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html class="antialiased" lang="pt-BR"><head><script data-offline-resolve="1">(function(){
+var ASSET_MAP = {"https://sd.asimov.academy/": "assets/7081a3009898a0e2_file.html", "https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js": "assets/758d94838db0cafd_iconify-icon.min.js", "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600&display=swap": "assets/4e2c41b629cf0d18_css2.css", "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbV2o-flEEny0FZhsfKu5WU4xD7OwGtT0rU.woff2": "assets/1e06740a02a443fb_tDbV2o-flEEny0FZhsfKu5WU4xD7Ow.woff2", "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2": "assets/c940764593d0fe5d_UcC73FwrK3iLTeHuS_nVMrMxCp50Sj.woff2", "https://api.iconify.design/solar.json?icons=check-circle-bold%2Cdownload-minimalistic-bold": "assets/994da82ccbdc812d_solar.json"};
+// Pre-populate path+query keys: when opened via file://, JS
+// resolves '/foo.js' against file://… so we lose the original
+// origin. Indexing by pathname+search lets the lookup succeed.
+var _add = {};
+for (var _k in ASSET_MAP) {
+  try { var _u = new URL(_k); _add[_u.pathname + _u.search] = ASSET_MAP[_k]; }
+  catch(e){}
+}
+for (var _k in _add) if (!ASSET_MAP[_k]) ASSET_MAP[_k] = _add[_k];
+function resolveLocal(u){
+  if (!u || typeof u !== 'string') return null;
+  if (u.indexOf('data:') === 0 || u.indexOf('blob:') === 0) return null;
+  if (ASSET_MAP[u]) return ASSET_MAP[u];
+  try {
+    var url = new URL(u, location.href);
+    var pq = url.pathname + url.search;
+    if (ASSET_MAP[pq]) return ASSET_MAP[pq];
+    // Next.js image optimization wrapper — peel the inner CDN URL
+    if (/_next\/image$/.test(url.pathname)) {
+      var t = url.searchParams.get('url');
+      if (t) {
+        var dec = decodeURIComponent(t);
+        if (ASSET_MAP[dec]) return ASSET_MAP[dec];
+        var bare = dec.split('?')[0];
+        for (var k in ASSET_MAP) {
+          if (k.split('?')[0] === bare) return ASSET_MAP[k];
+        }
+      }
+    }
+  } catch(e){}
+  return null;
+}
+function rewriteSrcset(s){
+  if (!s || typeof s !== 'string') return s;
+  return s.split(',').map(function(it){
+    var p = it.trim().split(/\s+/);
+    var loc = resolveLocal(p[0]);
+    if (loc) p[0] = loc;
+    return p.join(' ');
+  }).join(', ');
+}
+// Patch property setters: el.src = '...' / el.href = '...'
+// IMPORTANT: skip rewrite when the element has crossOrigin set.
+// WebGL textures (UnicornStudio, Three.js, etc.) are loaded via
+//   img.crossOrigin = 'anonymous'; img.src = 'https://cdn/...'
+// and consumed via gl.texImage2D. file:// resources have no CORS
+// headers, so rewriting to local makes WebGL reject the texture
+// (Access blocked by CORS policy → black/missing 3D scene).
+// Better to keep the original URL: works online, fails offline,
+// matches non-patched behaviour.
+function patchSetter(klass, prop, transform){
+  if (!klass || !klass.prototype) return;
+  var desc = Object.getOwnPropertyDescriptor(klass.prototype, prop);
+  if (!desc || !desc.set) return;
+  Object.defineProperty(klass.prototype, prop, {
+    configurable: true,
+    get: desc.get,
+    set: function(v){
+      try {
+        if (this.crossOrigin) {
+          /* preserve cross-origin URL — see comment above */
+        } else if (transform === 'srcset') {
+          v = rewriteSrcset(v);
+        } else {
+          var loc = resolveLocal(v); if (loc) v = loc;
+        }
+      } catch(e){}
+      desc.set.call(this, v);
+    }
+  });
+}
+patchSetter(window.HTMLScriptElement, 'src');
+patchSetter(window.HTMLLinkElement, 'href');
+patchSetter(window.HTMLImageElement, 'src');
+patchSetter(window.HTMLImageElement, 'srcset', 'srcset');
+patchSetter(window.HTMLSourceElement, 'src');
+patchSetter(window.HTMLSourceElement, 'srcset', 'srcset');
+patchSetter(window.HTMLMediaElement, 'src');
+patchSetter(window.HTMLIFrameElement, 'src');
+// Patch setAttribute too — some libs use it instead of property set
+var _setAttr = Element.prototype.setAttribute;
+Element.prototype.setAttribute = function(name, value){
+  try {
+    if (typeof value === 'string' && !this.crossOrigin) {
+      if (name === 'src' || name === 'href') {
+        var loc = resolveLocal(value);
+        if (loc) value = loc;
+      } else if (name === 'srcset') {
+        value = rewriteSrcset(value);
+      }
+    }
+  } catch(e){}
+  return _setAttr.call(this, name, value);
+};
+// Expose for the late-init script in body
+window.__resolveLocal = resolveLocal;
+window.__rewriteSrcset = rewriteSrcset;
+})();</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Asimov Site Downloader 2.0 — Captura offline de qualquer site</title>
+<meta content="Capture qualquer site em um ZIP offline completo. HTML, CSS, JS, fontes, imagens — preservando animações e SPAs." name="description"/>
+<link href="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'&gt;&lt;rect width='32' height='32' fill='%23030303'/&gt;&lt;rect x='8' y='8' width='16' height='16' fill='%2300ffa3'/&gt;&lt;text x='16' y='22' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%23030303'&gt;A&lt;/text&gt;&lt;/svg&gt;" rel="icon" type="image/svg+xml"/>
+<!-- Inter (display/body) + JetBrains Mono (HUD / status / mono labels) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="assets/4e2c41b629cf0d18_css2.css" rel="stylesheet"/>
+<!-- iconify web component runtime -->
+<script src="assets/758d94838db0cafd_iconify-icon.min.js"></script>
+<style>
+  /* ============================================================
+     DESIGN TOKENS — Aetheris/Asimov void+mint palette
+     ============================================================ */
+  :root {
+    --void: #030303;
+    --panel: #080808;
+    --panel-2: #0d0d0d;
+    --mint: #00ffa3;
+    --mint-soft: rgba(0, 255, 163, 0.12);
+    --mint-dark: #00b372;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.15);
+    --sub: #888888;
+    --white: #ffffff;
+    --error: #ff5577;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--void);
+    color: #e0e0e0;
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+    background-color: var(--void);
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  ::selection { background: var(--mint); color: var(--void); }
+
+  /* Scrollbar (only used inside log panel) */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #1f1f1f; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--mint); }
+
+  /* ============================================================
+     CANVAS BACKGROUND — particle network (mint)
+     ============================================================ */
+  .bg-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.7;
+  }
+  .bg-glow {
+    position: fixed; inset: 0;
+    background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(0, 255, 163, 0.18), transparent 70%);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .bg-vignette {
+    position: fixed; inset: 0;
+    background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(3,3,3,0.55) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* ============================================================
+     HUD CORNER OVERLAY (viewport-level brackets)
+     ============================================================ */
+  .hud-overlay {
+    position: fixed; inset: 0; pointer-events: none;
+    z-index: 30; padding: 18px;
+  }
+  .hud-overlay > div {
+    position: absolute;
+    width: 12px; height: 12px;
+    opacity: 0.55;
+  }
+  .hud-tl { top: 18px; left: 18px; border-top: 1px solid var(--white); border-left: 1px solid var(--white); }
+  .hud-tr { top: 18px; right: 18px; border-top: 1px solid var(--white); border-right: 1px solid var(--white); }
+  .hud-bl { bottom: 18px; left: 18px; border-bottom: 1px solid var(--white); border-left: 1px solid var(--white); }
+  .hud-br { bottom: 18px; right: 18px; border-bottom: 1px solid var(--white); border-right: 1px solid var(--white); }
+  .hud-status {
+    position: absolute;
+    bottom: 22px; left: 50%; transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--sub);
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    display: flex; align-items: center; gap: 8px;
+    opacity: 0.7;
+  }
+  .hud-status .dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--mint);
+    box-shadow: 0 0 8px var(--mint);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+  @media (max-width: 640px) { .hud-status { display: none; } }
+
+  /* ============================================================
+     STAGE — full-viewport flex centering
+     ============================================================ */
+  .stage {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+  }
+
+  /* ============================================================
+     CARD — the centered panel
+     ============================================================ */
+  .card {
+    position: relative;
+    width: 100%;
+    max-width: 540px;
+    background: linear-gradient(180deg, rgba(10,10,10,0.92), rgba(3,3,3,0.92));
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid var(--border);
+    box-shadow:
+      0 0 0 1px rgba(0, 255, 163, 0.04),
+      0 28px 90px rgba(0, 0, 0, 0.65),
+      0 0 60px rgba(0, 255, 163, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    transition: box-shadow 0.4s ease, transform 0.5s ease;
+    opacity: 0;
+    transform: translateY(18px);
+    animation: cardIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+  }
+  @keyframes cardIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .card:hover {
+    box-shadow:
+      0 0 0 1px rgba(0, 255, 163, 0.08),
+      0 28px 90px rgba(0, 0, 0, 0.7),
+      0 0 80px rgba(0, 255, 163, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  /* Mint corner brackets on the card */
+  .card .br {
+    position: absolute;
+    width: 12px; height: 12px;
+    pointer-events: none;
+    transition: width 0.3s ease, height 0.3s ease;
+  }
+  .card .br-tl { top: -1px; left: -1px; border-top: 1.5px solid var(--mint); border-left: 1.5px solid var(--mint); }
+  .card .br-tr { top: -1px; right: -1px; border-top: 1.5px solid var(--mint); border-right: 1.5px solid var(--mint); }
+  .card .br-bl { bottom: -1px; left: -1px; border-bottom: 1.5px solid var(--mint); border-left: 1.5px solid var(--mint); }
+  .card .br-br { bottom: -1px; right: -1px; border-bottom: 1.5px solid var(--mint); border-right: 1.5px solid var(--mint); }
+  .card:hover .br { width: 16px; height: 16px; }
+
+  /* Card header strip (terminal vibe) */
+  .card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--sub);
+  }
+  .card-head .left { display: flex; align-items: center; gap: 12px; }
+  .card-head .dots { display: flex; gap: 5px; }
+  .card-head .dots span {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .card-head .dots span.live {
+    background: var(--mint);
+    box-shadow: 0 0 6px var(--mint);
+  }
+  .card-head .right {
+    color: var(--mint);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .card-head .right .pulse {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--mint);
+    box-shadow: 0 0 6px var(--mint);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .card-body {
+    padding: 36px 32px 32px;
+  }
+  @media (max-width: 480px) {
+    .card-body { padding: 28px 22px 24px; }
+  }
+
+  /* Brand row (logo + name) */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .brand .mark {
+    width: 28px; height: 28px;
+    background: var(--mint);
+    color: var(--void);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 13px;
+    box-shadow: 0 0 14px rgba(0, 255, 163, 0.45);
+    flex-shrink: 0;
+  }
+  .brand .name {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: -0.02em;
+    color: var(--white);
+  }
+  .brand .name .accent { color: var(--mint); }
+
+  /* Description */
+  .desc {
+    color: #a8a8a8;
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin-bottom: 26px;
+    max-width: 440px;
+  }
+  .desc b { color: var(--white); font-weight: 500; }
+
+  /* Form label */
+  .form-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--sub);
+    margin-bottom: 10px;
+  }
+  .form-label .accent { color: var(--mint); }
+
+  /* Input row */
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .input-wrap {
+    position: relative;
+    border: 1px solid var(--border-strong);
+    background: var(--void);
+    transition: border-color 0.2s, box-shadow 0.25s;
+  }
+  .input-wrap:focus-within {
+    border-color: var(--mint);
+    box-shadow: 0 0 0 1px var(--mint), 0 0 22px rgba(0, 255, 163, 0.18);
+  }
+  .input-wrap::before {
+    content: '>';
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: var(--mint);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px; font-weight: 600;
+    pointer-events: none;
+  }
+  .input-wrap input {
+    width: 100%;
+    padding: 15px 16px 15px 36px;
+    background: transparent;
+    border: 0;
+    color: var(--white);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.01em;
+    outline: none;
+  }
+  .input-wrap input::placeholder { color: #444; }
+  .input-wrap input:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* Grab button */
+  .grab-btn {
+    position: relative;
+    width: 100%;
+    background: var(--mint);
+    color: var(--void);
+    padding: 14px 24px;
+    border: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px;
+    transition: background 0.2s, transform 0.1s, box-shadow 0.3s;
+    box-shadow: 0 0 22px rgba(0, 255, 163, 0.35);
+    overflow: hidden;
+  }
+  .grab-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    transition: left 0.6s ease;
+  }
+  .grab-btn:hover:not(:disabled)::before { left: 100%; }
+  .grab-btn:hover:not(:disabled) {
+    background: var(--white);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.45);
+  }
+  .grab-btn:active:not(:disabled) { transform: translateY(1px); }
+  .grab-btn:disabled {
+    background: rgba(0, 255, 163, 0.18);
+    color: rgba(0, 255, 163, 0.7);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  .grab-btn .arrow {
+    transition: transform 0.2s;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+  }
+  .grab-btn:hover:not(:disabled) .arrow { transform: translateX(4px); }
+  .spinner {
+    width: 14px; height: 14px;
+    border: 1.5px solid rgba(0, 255, 163, 0.3);
+    border-top-color: var(--mint);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+  }
+  .grab-btn.loading .spinner { display: block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Form footer micro-meta */
+  .form-meta {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+  }
+  .form-meta .left { display: flex; gap: 14px; flex-wrap: wrap; }
+  .form-meta .left span { display: inline-flex; align-items: center; gap: 5px; }
+  .form-meta .left span::before {
+    content: ''; width: 4px; height: 4px;
+    background: var(--mint); border-radius: 50%;
+    box-shadow: 0 0 4px var(--mint);
+  }
+  .form-meta .right { color: var(--mint); }
+
+  /* ============================================================
+     LOG PANEL — appears below the form, expands the card down
+     ============================================================ */
+  .log-shell {
+    margin-top: 0;
+    border: 1px solid var(--border);
+    background: var(--void);
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition:
+      max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.35s ease,
+      margin-top 0.35s ease;
+  }
+  .log-shell.open {
+    max-height: 280px;
+    opacity: 1;
+    margin-top: 18px;
+  }
+  .log-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(90deg, rgba(0, 255, 163, 0.04), transparent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--sub);
+  }
+  .log-head .left { display: flex; align-items: center; gap: 10px; }
+  .log-head .scan {
+    width: 26px; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--mint), transparent);
+    box-shadow: 0 0 6px var(--mint);
+    animation: scanPulse 1.6s ease-in-out infinite;
+  }
+  @keyframes scanPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+  .log-head .right {
+    color: var(--mint);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .log-head .right .dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--mint); box-shadow: 0 0 6px var(--mint);
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+
+  .log-body {
+    padding: 12px 14px;
+    max-height: 220px;
+    overflow-y: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    line-height: 1.7;
+    background: var(--void);
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 2px,
+        rgba(255, 255, 255, 0.012) 2px,
+        rgba(255, 255, 255, 0.012) 4px
+      );
+  }
+
+  .log-line {
+    display: flex; gap: 10px;
+    color: #b8b8b8;
+    animation: logIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .log-line .ts {
+    color: #555;
+    flex-shrink: 0;
+    font-size: 10px;
+    user-select: none;
+  }
+  .log-line .ic {
+    color: var(--mint);
+    flex-shrink: 0;
+    width: 14px;
+  }
+  .log-line .msg { flex: 1; word-break: break-word; }
+  .log-line.ok .msg { color: var(--mint); font-weight: 500; }
+  .log-line.err .msg { color: var(--error); }
+  .log-line.warn .msg { color: #ffd166; }
+  .log-line.dim .msg { color: #777; }
+
+  @keyframes logIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .cursor-line {
+    display: flex; gap: 10px;
+    color: var(--mint);
+  }
+  .cursor-line .ts { color: #555; flex-shrink: 0; font-size: 10px; }
+  .cursor-line .blink {
+    display: inline-block;
+    width: 7px; height: 12px;
+    background: var(--mint);
+    box-shadow: 0 0 6px var(--mint);
+    margin-left: 2px;
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  /* ============================================================
+     SUCCESS BAR
+     ============================================================ */
+  .success-shell {
+    margin-top: 14px;
+    border: 1px solid rgba(0, 255, 163, 0.4);
+    background: linear-gradient(135deg, rgba(0, 255, 163, 0.08), rgba(0, 255, 163, 0.02));
+    padding: 14px 16px;
+    display: none;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .success-shell.open {
+    display: flex;
+    animation: successIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .success-shell::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--mint);
+    box-shadow: 0 0 14px var(--mint);
+  }
+  .success-icon {
+    width: 36px; height: 36px;
+    border: 1px solid var(--mint);
+    background: rgba(0, 255, 163, 0.08);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--mint);
+    flex-shrink: 0;
+    box-shadow: 0 0 14px rgba(0, 255, 163, 0.3);
+  }
+  .success-text { flex: 1; min-width: 0; }
+  .success-text .title {
+    color: var(--mint);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin-bottom: 3px;
+  }
+  .success-text .meta {
+    color: #c0c0c0;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .success-text .meta b { color: var(--white); font-weight: 500; }
+  .success-link {
+    background: var(--mint);
+    color: var(--void);
+    padding: 9px 16px;
+    text-decoration: none;
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: inline-flex; align-items: center; gap: 7px;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 16px rgba(0, 255, 163, 0.35);
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .success-link:hover {
+    background: var(--white);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  }
+  @keyframes successIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (max-width: 480px) {
+    .success-shell { flex-direction: column; align-items: flex-start; }
+    .success-link { width: 100%; justify-content: center; }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+<style data-offline="1">/* offline: ensure content is visible regardless of JS init state */
+html,body{opacity:1!important;visibility:visible!important}
+.page-loader,.site-loader,[class*='loading-screen'],[id*='loading-screen']{display:none!important}
+</style></head>
+<body>
+<!-- BACKGROUND CANVAS (particle network) -->
+<canvas aria-hidden="true" class="bg-canvas" height="1080" id="particles" style="width: 100%; height: 100%;" width="1920"></canvas>
+<div aria-hidden="true" class="bg-glow"></div>
+<div aria-hidden="true" class="bg-vignette"></div>
+<!-- HUD CORNERS -->
+<div aria-hidden="true" class="hud-overlay">
+<div class="hud-tl"></div>
+<div class="hud-tr"></div>
+<div class="hud-bl"></div>
+<div class="hud-br"></div>
+<div class="hud-status">
+<span class="dot"></span>
+<span>asimov · pipeline ativo</span>
+</div>
+</div>
+<!-- STAGE -->
+<main class="stage">
+<section aria-label="Asimov Site Downloader" class="card">
+<span class="br br-tl"></span>
+<span class="br br-tr"></span>
+<span class="br br-bl"></span>
+<span class="br br-br"></span>
+<div class="card-head">
+<div class="left">
+<div class="dots">
+<span class="live"></span>
+<span></span>
+<span></span>
+</div>
+<span>asimov://capture</span>
+</div>
+<div class="right">
+<span class="pulse"></span>
+<span id="head-status">pronto</span>
+</div>
+</div>
+<div class="card-body">
+<div class="brand">
+<span class="mark">A</span>
+<span class="name">Asimov Site Downloader <span class="accent">2.0</span></span>
+</div>
+<p class="desc">
+        Capture qualquer site em um <b>ZIP offline</b> completo. HTML, CSS, JS, fontes, imagens — preservando <b>animações</b> e <b>SPAs</b>.
+      </p>
+<div class="form-label">
+<span class="accent">›</span>
+<span>URL alvo</span>
+</div>
+<form class="form-row" onsubmit="event.preventDefault(); startGrab();">
+<div class="input-wrap">
+<input aria-label="URL do site a capturar" autocomplete="off" id="url" placeholder="https://exemplo.com" spellcheck="false" type="url"/>
+</div>
+<button class="grab-btn" id="grab" type="submit">
+<span id="btn-label">Baixar Site</span>
+<div aria-hidden="true" class="spinner" id="spin"></div>
+<span class="arrow" id="btn-arrow">→</span>
+</button>
+</form>
+<!-- LOG PANEL -->
+<div aria-live="polite" class="log-shell" id="log-shell">
+<div class="log-head">
+<div class="left">
+<div class="scan"></div>
+<span>stream // grabber.py</span>
+</div>
+<div class="right">
+<div class="dot"></div>
+<span>ao vivo</span>
+</div>
+</div>
+<div class="log-body" id="logs" role="log"></div>
+</div>
+<!-- SUCCESS BAR -->
+<div class="success-shell" id="ok">
+<div class="success-icon">
+<iconify-icon height="20" icon="solar:check-circle-bold" width="20"></iconify-icon>
+</div>
+<div class="success-text">
+<div class="title">Captura concluída</div>
+<div class="meta">Seu ZIP está pronto para download.</div>
+</div>
+<a class="success-link" download="" href="#" id="dl-link">
+<iconify-icon height="13" icon="solar:download-minimalistic-bold" width="13"></iconify-icon>
+          Baixar ZIP
+        </a>
+</div>
+</div>
+</section>
+</main>
+<script>
+  /* ============================================================
+     PARTICLE BACKGROUND (canvas, mint-tinted) — fullscreen
+     ============================================================ */
+  (function particles() {
+    const canvas = document.getElementById('particles');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let w, h, dots, raf;
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+    function resize() {
+      w = canvas.width = window.innerWidth * DPR;
+      h = canvas.height = window.innerHeight * DPR;
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      seed();
+    }
+    function seed() {
+      const N = Math.floor((window.innerWidth * window.innerHeight) / 16000);
+      dots = Array.from({ length: N }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.25 * DPR,
+        vy: (Math.random() - 0.5) * 0.25 * DPR,
+        r: (Math.random() * 1.4 + 0.4) * DPR,
+        a: Math.random() * 0.5 + 0.2
+      }));
+    }
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (const d of dots) {
+        d.x += d.vx; d.y += d.vy;
+        if (d.x < 0 || d.x > w) d.vx *= -1;
+        if (d.y < 0 || d.y > h) d.vy *= -1;
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(0, 255, 163, ${d.a})`;
+        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      const MAX = 130 * DPR;
+      for (let i = 0; i < dots.length; i++) {
+        for (let j = i + 1; j < dots.length; j++) {
+          const dx = dots[i].x - dots[j].x;
+          const dy = dots[i].y - dots[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < MAX) {
+            const op = (1 - dist / MAX) * 0.18;
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(0, 255, 163, ${op})`;
+            ctx.lineWidth = 0.5 * DPR;
+            ctx.moveTo(dots[i].x, dots[i].y);
+            ctx.lineTo(dots[j].x, dots[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      raf = requestAnimationFrame(draw);
+    }
+    let resizeT;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeT);
+      resizeT = setTimeout(resize, 120);
+    });
+    resize();
+    draw();
+  })();
+
+  /* ============================================================
+     REAL CAPTURE — POST /start-download → SSE /stream/<sid> → /download-file/<sid>
+     ============================================================ */
+  let es = null;
+  let cursorEl = null;
+
+  function startGrab() {
+    const input = document.getElementById('url');
+    let url = input.value.trim();
+    if (!url) {
+      flashError(input);
+      return;
+    }
+    if (!/^https?:\/\//i.test(url)) {
+      url = 'https://' + url;
+      input.value = url;
+    }
+
+    setLoading(true);
+    setHeadStatus('capturando');
+    closeSuccess();
+    clearLogs();
+    openLogs();
+    addCursor();
+
+    fetch('/start-download', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url })
+    })
+      .then(r => r.json())
+      .then(data => {
+        if (data.error) {
+          removeCursor();
+          addLog('Erro: ' + data.error, 'err');
+          setHeadStatus('falhou');
+          setLoading(false);
+          return;
+        }
+        listenSSE(data.session_id);
+      })
+      .catch(err => {
+        removeCursor();
+        addLog('Erro de rede: ' + err.message, 'err');
+        setHeadStatus('falhou');
+        setLoading(false);
+      });
+  }
+
+  function listenSSE(sid) {
+    es = new EventSource('/stream/' + sid);
+
+    es.onmessage = e => addLog(e.data);
+
+    es.addEventListener('done', e => {
+      es.close();
+      es = null;
+      removeCursor();
+      if (e.data === 'complete') {
+        setHeadStatus('concluído');
+        triggerDownload(sid);
+        showSuccess(sid);
+      } else {
+        setHeadStatus('falhou');
+      }
+      setTimeout(() => setLoading(false), 400);
+    });
+
+    es.onerror = () => {
+      if (es) { es.close(); es = null; }
+      removeCursor();
+      setHeadStatus('desconectado');
+      setLoading(false);
+    };
+  }
+
+  function triggerDownload(sid) {
+    const href = '/download-file/' + sid;
+    const a = document.createElement('a');
+    a.href = href;
+    a.click();
+    document.getElementById('dl-link').href = href;
+  }
+
+  /* ============================================================
+     UI helpers
+     ============================================================ */
+  function setLoading(on) {
+    const btn = document.getElementById('grab');
+    const lbl = document.getElementById('btn-label');
+    const arr = document.getElementById('btn-arrow');
+    const inp = document.getElementById('url');
+    btn.disabled = on;
+    inp.disabled = on;
+    if (on) {
+      btn.classList.add('loading');
+      lbl.textContent = 'Capturando';
+      arr.style.display = 'none';
+    } else {
+      btn.classList.remove('loading');
+      lbl.textContent = 'Baixar Site';
+      arr.style.display = '';
+    }
+  }
+
+  function setHeadStatus(text) {
+    const el = document.getElementById('head-status');
+    if (el) el.textContent = text;
+  }
+
+  function flashError(input) {
+    input.focus();
+    const wrap = input.closest('.input-wrap');
+    wrap.style.borderColor = '#ff5577';
+    wrap.style.boxShadow = '0 0 0 1px #ff5577, 0 0 18px rgba(255,85,119,0.18)';
+    setTimeout(() => {
+      wrap.style.borderColor = '';
+      wrap.style.boxShadow = '';
+    }, 1400);
+  }
+
+  function openLogs() {
+    document.getElementById('log-shell').classList.add('open');
+  }
+
+  function clearLogs() {
+    document.getElementById('logs').innerHTML = '';
+  }
+
+  /* Detect line type from leading emoji / keywords. */
+  function classifyLine(text) {
+    const t = text.trim();
+    if (/^(❌|⛔|🚫|✗)/.test(t) || /^erro/i.test(t) || /falhou/i.test(t)) return 'err';
+    if (/^(⚠️|⚠)/.test(t) || /aviso/i.test(t)) return 'warn';
+    if (/^(✅|✔|✓|🎉|🟢)/.test(t) || /pronto/i.test(t) || /conclu(í|i)d/i.test(t)) return 'ok';
+    return '';
+  }
+
+  function addLog(text, forcedClass) {
+    const box = document.getElementById('logs');
+    const ts = nowTS();
+    const cls = forcedClass || classifyLine(text);
+    const el = document.createElement('div');
+    el.className = 'log-line ' + cls;
+    el.innerHTML = `
+      <span class="ts">${ts}</span>
+      <span class="ic">${cls === 'err' ? '✗' : cls === 'warn' ? '!' : cls === 'ok' ? '✓' : '›'}</span>
+      <span class="msg"></span>
+    `;
+    el.querySelector('.msg').textContent = text;
+    if (cursorEl && cursorEl.parentNode === box) {
+      box.insertBefore(el, cursorEl);
+    } else {
+      box.appendChild(el);
+    }
+    box.scrollTop = box.scrollHeight;
+  }
+
+  function addCursor() {
+    const box = document.getElementById('logs');
+    cursorEl = document.createElement('div');
+    cursorEl.className = 'cursor-line';
+    cursorEl.innerHTML = `
+      <span class="ts">${nowTS()}</span>
+      <span class="ic">›</span>
+      <span class="blink"></span>
+    `;
+    box.appendChild(cursorEl);
+  }
+
+  function removeCursor() {
+    if (cursorEl && cursorEl.parentNode) {
+      cursorEl.parentNode.removeChild(cursorEl);
+      cursorEl = null;
+    }
+  }
+
+  function nowTS() {
+    const d = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+  }
+
+  function showSuccess(sid) {
+    document.getElementById('ok').classList.add('open');
+  }
+
+  function closeSuccess() {
+    document.getElementById('ok').classList.remove('open');
+  }
+
+  /* enter key triggers grab */
+  document.getElementById('url').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !document.getElementById('grab').disabled) {
+      e.preventDefault();
+      startGrab();
+    }
+  });
+</script>
+<script data-offline-fix="1">(function(){
+var IS_CSR = false;
+var resolveLocal = window.__resolveLocal || function(){return null;};
+var rewriteSrcset = window.__rewriteSrcset || function(s){return s;};
+function fixImg(el){
+  if (!el || el.tagName !== 'IMG') return;
+  var src = el.getAttribute('src');
+  var loc = resolveLocal(src);
+  if (loc && src !== loc) el.setAttribute('src', loc);
+  var ss = el.getAttribute('srcset');
+  if (ss) {
+    var nss = rewriteSrcset(ss);
+    if (nss !== ss) el.setAttribute('srcset', nss);
+  }
+}
+function fixAll(){ document.querySelectorAll('img').forEach(fixImg); }
+function hasSlideOffset(t){
+  // True if a transform indicates a 'parked off-screen' starting
+  // state: translation in px (>= 30) or % (>= 5), or a matrix
+  // with non-zero translation. Returns false for crossfade-only
+  // companions like scale(0.9) or pure centering translateX(-50%).
+  if (!t || t === 'none') return false;
+  // matrix(a,b,c,d,tx,ty) — parse tx/ty; matrix3d & friends → assume slide.
+  var matMatch = t.match(/matrix\(([^)]+)\)/);
+  if (matMatch) {
+    var parts = matMatch[1].split(',').map(function(x){return parseFloat(x.trim());});
+    if (parts.length === 6) {
+      if (Math.abs(parts[4]) >= 30 || Math.abs(parts[5]) >= 30) return true;
+    } else { return true; }
+  }
+  if (/matrix3d/i.test(t)) return true;
+  var px = t.match(/(-?\d+\.?\d*)px/g) || [];
+  for (var i = 0; i < px.length; i++) {
+    if (Math.abs(parseFloat(px[i])) >= 30) return true;
+  }
+  var pct = t.match(/(-?\d+\.?\d*)%/g) || [];
+  for (var j = 0; j < pct.length; j++) {
+    if (Math.abs(parseFloat(pct[j])) >= 5) return true;
+  }
+  return false;
+}
+function isHiddenStart(s){
+  // True if the element's inline style is parked at a 'before'
+  // animation state. opacity:0 alone is ambiguous (could be a
+  // crossfade companion); pair it with a slide transform OR an
+  // explicit visibility:hidden (GSAP/SplitType signature) to be
+  // confident it's a scroll-reveal waiting to fire.
+  if (s.opacity !== '0' && s.visibility !== 'hidden') return false;
+  if (s.visibility === 'hidden') return true;
+  return hasSlideOffset(s.transform) || hasSlideOffset(s.translate);
+}
+function revealEl(el){
+  var s = el.style;
+  s.opacity = '1';
+  if (s.visibility === 'hidden') s.visibility = 'visible';
+  if (s.transform) s.transform = 'none';
+  if (s.translate) s.translate = 'none';
+  if (s.rotate)    s.rotate = 'none';
+  if (s.scale)     s.scale = 'none';
+  if (s.pointerEvents === 'none') s.pointerEvents = '';
+}
+function snapReveal(){
+  // Safety net: any 'before-state' element still hidden gets
+  // forced visible. Used as a deadline pass for non-CSR mode
+  // (after GSAP/etc had a chance to play) and as a final guard.
+  // Skip pinned-chain elements — same reason as findScrollAnchor.
+  var n = 0;
+  document.querySelectorAll('[style]').forEach(function(el){
+    if (!isHiddenStart(el.style)) return;
+    if (isInsideFixed(el)) return;
+    revealEl(el); n++;
+  });
+  if (window.console && n) console.log('[offline-fix] snap-revealed', n);
+}
+function isInsideFixed(el){
+  var p = el;
+  while (p && p !== document.documentElement) {
+    if (getComputedStyle(p).position === 'fixed') return true;
+    p = p.parentElement;
+  }
+  return false;
+}
+function findScrollAnchor(el){
+  // Pinned-narrative sections (one position:fixed ancestor wrapping
+  // many sequenced headings the live JS reveals one-by-one across
+  // scroll progress) can't be orchestrated offline — revealing all
+  // of them at once produces an overlapping mess. Skip them: leave
+  // the parked state intact, matching the live site at scroll=0.
+  // For sticky chains, observe the sticky container itself (fires
+  // when the user has scrolled past its stuck threshold).
+  if (isInsideFixed(el)) return null;
+  var p = el;
+  while (p && p !== document.documentElement) {
+    if (getComputedStyle(p).position === 'sticky') return p;
+    p = p.parentElement;
+  }
+  return el;
+}
+function progressiveReveal(){
+  // CSR mode: scripts stripped → no GSAP/IO is going to fire.
+  // Mimic a scroll-driven reveal: each parked element gets a
+  // CSS transition + IntersectionObserver. As it enters viewport
+  // we transition to the 'after' state, with a small stagger by
+  // document order so SplitType chars still feel letter-by-letter.
+  var targets = [];
+  document.querySelectorAll('[style]').forEach(function(el){
+    if (isHiddenStart(el.style)) targets.push(el);
+  });
+  if (!targets.length) return;
+  var EASE = 'cubic-bezier(.16,1,.3,1)';
+  targets.forEach(function(el){
+    el.style.transition =
+      'opacity .6s ' + EASE + ', transform .6s ' + EASE + ', ' +
+      'translate .6s ' + EASE + ', scale .6s ' + EASE + ', ' +
+      'visibility 0s linear';
+  });
+  if (typeof IntersectionObserver === 'undefined') {
+    targets.forEach(revealEl);
+    return;
+  }
+  // Group targets by their scroll anchor. Anchors in sticky
+  // sections share one observation point — when that anchor
+  // intersects, we reveal all its parked descendants.
+  // Targets with null anchor (inside position:fixed) are skipped.
+  var groups = new Map();
+  targets.forEach(function(el){
+    var anchor = findScrollAnchor(el);
+    if (!anchor) return;
+    if (!groups.has(anchor)) groups.set(anchor, []);
+    groups.get(anchor).push(el);
+  });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (!entry.isIntersecting) return;
+      var children = groups.get(entry.target) || [entry.target];
+      children.sort(function(a, b){
+        var pos = a.compareDocumentPosition(b);
+        return (pos & Node.DOCUMENT_POSITION_FOLLOWING) ? -1 : 1;
+      });
+      children.forEach(function(child, i){
+        var delay = Math.min(i * 18, 700);
+        setTimeout(function(){ revealEl(child); }, delay);
+      });
+      io.unobserve(entry.target);
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -8% 0px' });
+  groups.forEach(function(_, anchor){ io.observe(anchor); });
+  // Deadline guard: anything that never intersects still gets revealed.
+  setTimeout(snapReveal, 8000);
+}
+function initUnicornStudio(){
+  // Captured page already has the loaded UMD script + the inline
+  // loader that says `if(!window.UnicornStudio)…`. The loader bails
+  // because UnicornStudio is already defined, so init() never runs.
+  if (window.UnicornStudio && typeof window.UnicornStudio.init === 'function'
+      && !window.UnicornStudio.isInitialized) {
+    try { window.UnicornStudio.init(); window.UnicornStudio.isInitialized = true; }
+    catch(e){ if(window.console) console.warn('[offline-fix] UnicornStudio init failed:', e); }
+  }
+}
+// Initial img sweep + observer for hydration-time updates
+fixAll();
+var obs = new MutationObserver(function(muts){
+  for (var i = 0; i < muts.length; i++) {
+    var m = muts[i];
+    if (m.type === 'attributes' && m.target.tagName === 'IMG') fixImg(m.target);
+    for (var j = 0; j < m.addedNodes.length; j++) {
+      var n = m.addedNodes[j];
+      if (n && n.nodeType === 1) {
+        if (n.tagName === 'IMG') fixImg(n);
+        if (n.querySelectorAll) n.querySelectorAll('img').forEach(fixImg);
+      }
+    }
+  }
+});
+obs.observe(document, {childList:true, subtree:true,
+  attributes:true, attributeFilter:['src','srcset']});
+setTimeout(fixAll, 1000);
+setTimeout(fixAll, 3000);
+var go = function(){
+  // CSR: scripts stripped, so 'before-state' elements stay parked
+  // forever unless we do something. Use IntersectionObserver to
+  // reveal them progressively as the user scrolls — preserves the
+  // scroll-triggered animation feel for SplitType chars, etc.
+  // Non-CSR: GSAP/Framer may still play; let them, then catch any
+  // leftovers with a snap pass at 5 s.
+  if (IS_CSR) progressiveReveal();
+  else setTimeout(snapReveal, 5000);
+  initUnicornStudio();
+  setTimeout(initUnicornStudio, 500);
+  setTimeout(initUnicornStudio, 2000);
+};
+if (document.readyState === 'complete') go();
+else window.addEventListener('load', go);
+})();</script></body></html>
