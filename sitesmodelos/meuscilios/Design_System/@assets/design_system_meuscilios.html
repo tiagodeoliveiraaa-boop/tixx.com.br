@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System | Meus Cílios</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#F9F3F2',
+                        dark: '#1A1818',
+                        accent: '#D4B5B0',
+                        dark2: '#5A5A58',
+                        dark3: '#4A4A48',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                        accent: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Iconify -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F9F3F2;
+            color: #1A1818;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #F9F3F2; }
+        ::-webkit-scrollbar-thumb { background: #D4B5B0; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #1A1818; }
+
+        /* Animations */
+        @keyframes animationIn { 
+            0% { opacity: 0; transform: translateY(30px); filter: blur(8px); } 
+            100% { opacity: 1; transform: translateY(0); filter: blur(0px); } 
+        }
+        
+        .animate-in {
+            animation: animationIn 1.2s ease-out both;
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+
+        /* Transparent Lettering Outline Effect */
+        .text-outline {
+            color: transparent;
+            -webkit-text-stroke: 2px #1A1818;
+            transition: all 0.5s ease;
+        }
+        
+        .text-outline:hover {
+            color: #1A1818;
+            -webkit-text-stroke: 2px transparent;
+        }
+
+        .text-outline-white {
+            color: transparent;
+            -webkit-text-stroke: 1px #F9F3F2;
+            transition: all 0.5s ease;
+        }
+        
+        .text-outline-white:hover {
+            color: #F9F3F2;
+        }
+
+        /* Grid Background Pattern */
+        .bg-grid-pattern {
+            background-image:
+                linear-gradient(to right, rgba(45,50,47,0.06) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(45,50,47,0.06) 1px, transparent 1px);
+            background-size: 64px 64px;
+        }
+        
+        .bg-grid-pattern-light {
+            background-image:
+                linear-gradient(to right, rgba(235,237,234,0.08) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(235,237,234,0.08) 1px, transparent 1px);
+            background-size: 64px 64px;
+        }
+
+        /* Button Glow/Hover Effects */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, rgba(212,181,176,0.5) 0%, transparent 60%);
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.6s ease-out;
+            opacity: 0;
+            z-index: 0;
+        }
+        .btn-glow:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        .btn-content {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="selection:bg-accent selection:text-white">
+
+    <!-- Navbar -->
+    <header class="border-b border-dark/10 bg-primary/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-[1400px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+            <div class="flex-1">
+                <a href="#" class="font-display text-2xl font-bold tracking-widest uppercase text-dark flex items-center gap-2 animate-in">
+                    M. Cílios
+                </a>
+            </div>
+            <nav class="hidden md:flex justify-center gap-10 flex-1">
+                <a href="#hero" class="relative group text-xs font-semibold text-dark/70 hover:text-accent transition-colors duration-300 uppercase tracking-[0.15em] py-2 animate-in delay-100">Hero<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-accent opacity-0 group-hover:opacity-100 transition-opacity"></span></a>
+                <a href="#typography" class="relative group text-xs font-semibold text-dark/70 hover:text-accent transition-colors duration-300 uppercase tracking-[0.15em] py-2 animate-in delay-200">Typography<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-accent opacity-0 group-hover:opacity-100 transition-opacity"></span></a>
+                <a href="#colors" class="relative group text-xs font-semibold text-dark/70 hover:text-accent transition-colors duration-300 uppercase tracking-[0.15em] py-2 animate-in delay-300">Colors<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-accent opacity-0 group-hover:opacity-100 transition-opacity"></span></a>
+                <a href="#components" class="relative group text-xs font-semibold text-dark/70 hover:text-accent transition-colors duration-300 uppercase tracking-[0.15em] py-2 animate-in delay-400">Components<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-accent opacity-0 group-hover:opacity-100 transition-opacity"></span></a>
+            </nav>
+            <div class="flex-1 flex justify-end items-center gap-4 animate-in delay-500">
+                <button class="bg-dark text-white px-6 py-3 text-xs font-semibold uppercase tracking-widest hover:bg-accent transition-colors duration-300 btn-glow">
+                    <span class="btn-content">Download Kit</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO FOLD -->
+    <section id="hero" class="relative w-full min-h-[90vh] flex items-center justify-center overflow-hidden bg-primary pt-10">
+        <!-- Background Grid -->
+        <div class="absolute inset-0 bg-grid-pattern z-0"></div>
+        
+        <!-- Abstract BG Image (Grayscale + Overlay) -->
+        <div class="absolute inset-0 z-0 pointer-events-none opacity-40">
+            <img src="https://images.unsplash.com/photo-1518002171953-a080ee817e1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" alt="Texture" class="w-full h-full object-cover grayscale mix-blend-multiply"/>
+            <div class="absolute inset-0 bg-gradient-to-b from-primary/60 via-transparent to-primary"></div>
+        </div>
+
+        <div class="relative z-10 max-w-[1400px] mx-auto px-6 w-full flex flex-col items-center text-center">
+            
+            <div class="flex items-center justify-center gap-3 mb-6 animate-in">
+                <span class="h-px w-12 bg-accent/70"></span>
+                <span class="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+                    Aesthetics Protocol
+                </span>
+                <span class="h-px w-12 bg-accent/70"></span>
+            </div>
+
+            <h1 class="relative flex flex-col items-center w-full mt-4">
+                <span class="font-display uppercase font-bold tracking-tighter leading-[0.85] text-outline text-[4.5rem] md:text-[8rem] lg:text-[11rem] animate-in delay-100 drop-shadow-sm">
+                    MEUS CÍLIOS
+                </span>
+                <span class="font-display uppercase font-bold tracking-tighter leading-[0.85] text-dark text-[4rem] md:text-[7rem] lg:text-[10rem] animate-in delay-200 mt-2">
+                    DESIGN SYSTEM
+                </span>
+                
+                <span class="pointer-events-none absolute left-1/2 -translate-x-1/2 top-[45%] border border-dark/40 bg-primary px-3 py-1.5 text-[10px] md:text-xs font-semibold uppercase text-accent tracking-[0.4em] animate-in delay-300 shadow-xl backdrop-blur-md">
+                    Version 1.0
+                </span>
+            </h1>
+
+            <p class="font-accent italic text-xl md:text-2xl text-accent mt-12 mb-8 max-w-2xl animate-in delay-400">
+                Onde a precisão técnica encontra o requinte estético.
+            </p>
+
+            <button class="bg-dark text-white px-10 py-4 text-sm font-semibold uppercase tracking-widest hover:bg-accent transition-colors duration-300 animate-in delay-500 btn-glow shadow-lg flex items-center gap-3">
+                <span class="btn-content">Explorar Componentes</span>
+                <iconify-icon icon="solar:arrow-down-linear" class="btn-content text-lg"></iconify-icon>
+            </button>
+            
+            <!-- Mouse Scroll Indicator -->
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce animate-in delay-500 opacity-50">
+                <iconify-icon icon="solar:mouse-minimalistic-linear" class="text-3xl text-dark"></iconify-icon>
+            </div>
+        </div>
+    </section>
+
+    <main class="relative z-20 bg-primary">
+
+        <!-- TYPOGRAPHY -->
+        <section id="typography" class="py-24 lg:py-32 border-t border-dark/5">
+            <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+                <div class="flex items-center gap-4 mb-16 animate-in">
+                    <span class="font-display text-sm text-dark/40 uppercase tracking-[0.2em]">01 //</span>
+                    <h2 class="font-display text-4xl lg:text-5xl font-semibold tracking-tighter uppercase text-dark">Tipografia</h2>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 mb-20">
+                    <!-- Family 1 -->
+                    <div class="border border-dark/10 p-8 bg-white/40 backdrop-blur-sm animate-in delay-100 hover:border-accent/50 transition-colors">
+                        <div class="text-xs uppercase tracking-widest text-accent mb-6 font-semibold">Primary / Headings</div>
+                        <div class="font-display text-6xl mb-4 text-dark">Oswald</div>
+                        <p class="font-sans text-sm text-dark/70 mb-6">Usada para títulos de grande impacto, hero sections e elementos de destaque. Transmite modernidade e precisão.</p>
+                        <div class="space-y-2 text-sm font-sans text-dark/80">
+                            <div class="flex justify-between"><span>Weights:</span> <span class="font-semibold">400, 500, 600, 700</span></div>
+                            <div class="flex justify-between"><span>Tracking:</span> <span class="font-semibold">Tighter to Widest</span></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Family 2 -->
+                    <div class="border border-dark/10 p-8 bg-white/40 backdrop-blur-sm animate-in delay-200 hover:border-accent/50 transition-colors">
+                        <div class="text-xs uppercase tracking-widest text-accent mb-6 font-semibold">Body / UI Text</div>
+                        <div class="font-sans text-5xl mb-4 text-dark font-semibold">Inter</div>
+                        <p class="font-sans text-sm text-dark/70 mb-6">A fonte principal para leitura e interface. Alta legibilidade em tamanhos pequenos e peso neutro.</p>
+                        <div class="space-y-2 text-sm font-sans text-dark/80">
+                            <div class="flex justify-between"><span>Weights:</span> <span class="font-semibold">300, 400, 500, 600</span></div>
+                            <div class="flex justify-between"><span>Tracking:</span> <span class="font-semibold">Normal</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Family 3 -->
+                    <div class="border border-dark/10 p-8 bg-white/40 backdrop-blur-sm animate-in delay-300 hover:border-accent/50 transition-colors">
+                        <div class="text-xs uppercase tracking-widest text-accent mb-6 font-semibold">Accent / Italic</div>
+                        <div class="font-accent italic text-5xl mb-4 text-dark">Playfair</div>
+                        <p class="font-sans text-sm text-dark/70 mb-6">Utilizada pontualmente para subtítulos, citações ou detalhes elegantes que requerem um toque de sofisticação clássica.</p>
+                        <div class="space-y-2 text-sm font-sans text-dark/80">
+                            <div class="flex justify-between"><span>Weights:</span> <span class="font-semibold">400 Italic</span></div>
+                            <div class="flex justify-between"><span>Tracking:</span> <span class="font-semibold">Normal</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Type Scale -->
+                <div class="bg-dark/5 p-8 lg:p-12 border border-dark/10 animate-in delay-400">
+                    <h3 class="font-display text-xl uppercase tracking-widest text-dark mb-10 border-b border-dark/10 pb-4">Type Scale</h3>
+                    
+                    <div class="space-y-10">
+                        <div class="grid grid-cols-1 md:grid-cols-[150px_1fr] items-center gap-4">
+                            <span class="text-xs font-mono text-dark/50">H1 / 6rem</span>
+                            <h1 class="font-display text-6xl md:text-[6rem] font-bold leading-none tracking-tighter text-dark uppercase">Heading 1</h1>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-[150px_1fr] items-center gap-4">
+                            <span class="text-xs font-mono text-dark/50">H2 / 4rem</span>
+                            <h2 class="font-display text-4xl md:text-[4rem] font-semibold leading-[1.1] tracking-tight text-dark uppercase">Heading 2</h2>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-[150px_1fr] items-center gap-4">
+                            <span class="text-xs font-mono text-dark/50">H3 / 2.5rem</span>
+                            <h3 class="font-display text-3xl md:text-[2.5rem] font-semibold leading-[1.2] text-dark uppercase">Heading 3</h3>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-[150px_1fr] items-center gap-4">
+                            <span class="text-xs font-mono text-dark/50">H4 / 1.5rem</span>
+                            <h4 class="font-sans text-xl md:text-[1.5rem] font-semibold leading-[1.3] text-dark">Heading 4 (Inter)</h4>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-[150px_1fr] items-start gap-4 pt-6 border-t border-dark/10">
+                            <span class="text-xs font-mono text-dark/50 mt-1">Body Lg / 1.125rem</span>
+                            <p class="font-sans text-lg text-dark/80 leading-relaxed max-w-3xl">Design systems provide a convenient, centralized, and evolving map of a brand’s known product territories with directional pointers to help you explore new regions.</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-[150px_1fr] items-start gap-4">
+                            <span class="text-xs font-mono text-dark/50 mt-1">Body / 1rem</span>
+                            <p class="font-sans text-base text-dark/80 leading-relaxed max-w-3xl">A well-crafted design system creates visual consistency and logical structure. It bridges the gap between design and engineering, allowing teams to build interfaces efficiently and elegantly.</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-[150px_1fr] items-start gap-4">
+                            <span class="text-xs font-mono text-dark/50 mt-1">Body Sm / 0.875rem</span>
+                            <p class="font-sans text-sm text-dark/60 leading-relaxed max-w-3xl">Labels, helper text, and secondary information use this size to maintain hierarchy without sacrificing legibility.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COLOR SYSTEM -->
+        <section id="colors" class="py-24 lg:py-32 bg-dark2 text-white relative overflow-hidden">
+            <div class="absolute inset-0 bg-grid-pattern-light opacity-30 z-0"></div>
+            
+            <div class="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
+                <div class="flex items-center gap-4 mb-16 animate-in">
+                    <span class="font-display text-sm text-primary/40 uppercase tracking-[0.2em]">02 //</span>
+                    <h2 class="font-display text-4xl lg:text-5xl font-semibold tracking-tighter uppercase text-primary">Sistema de Cores</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                    
+                    <!-- Color 1 -->
+                    <div class="group animate-in delay-100">
+                        <div class="h-48 w-full bg-[#F9F3F2] border border-white/10 rounded-sm mb-4 relative overflow-hidden shadow-lg">
+                            <div class="absolute inset-0 bg-white/0 group-hover:bg-white/20 transition-colors duration-300"></div>
+                        </div>
+                        <h4 class="font-display text-lg tracking-wide uppercase text-primary mb-1">Primary Light</h4>
+                        <div class="font-mono text-xs text-primary/50 space-y-1 mb-4">
+                            <p>HEX: #F9F3F2</p>
+                            <p>RGB: 249, 243, 242</p>
+                        </div>
+                        <p class="font-sans text-xs text-primary/70 border-t border-white/10 pt-3">Background principal, base para interfaces limpas e minimalistas. (Text intent: Dark)</p>
+                    </div>
+
+                    <!-- Color 2 -->
+                    <div class="group animate-in delay-200">
+                        <div class="h-48 w-full bg-[#1A1818] border border-white/10 rounded-sm mb-4 relative overflow-hidden shadow-lg">
+                            <div class="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-300"></div>
+                        </div>
+                        <h4 class="font-display text-lg tracking-wide uppercase text-primary mb-1">Base Dark</h4>
+                        <div class="font-mono text-xs text-primary/50 space-y-1 mb-4">
+                            <p>HEX: #1A1818</p>
+                            <p>RGB: 26, 24, 24</p>
+                        </div>
+                        <p class="font-sans text-xs text-primary/70 border-t border-white/10 pt-3">Texto primário, elementos de alto contraste e componentes bold. (Text intent: Light)</p>
+                    </div>
+
+                    <!-- Color 3 -->
+                    <div class="group animate-in delay-300">
+                        <div class="h-48 w-full bg-[#D4B5B0] border border-white/10 rounded-sm mb-4 relative overflow-hidden shadow-[0_0_20px_rgba(212,181,176,0.3)]">
+                            <div class="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-300"></div>
+                        </div>
+                        <h4 class="font-display text-lg tracking-wide uppercase text-accent mb-1">Accent Nude</h4>
+                        <div class="font-mono text-xs text-primary/50 space-y-1 mb-4">
+                            <p>HEX: #D4B5B0</p>
+                            <p>RGB: 212, 181, 176</p>
+                        </div>
+                        <p class="font-sans text-xs text-primary/70 border-t border-white/10 pt-3">Ações primárias, links, botões em hover, ícones de destaque e foco. (Text intent: White)</p>
+                    </div>
+
+                    <!-- Color 4 -->
+                    <div class="group animate-in delay-400">
+                        <div class="h-48 w-full bg-[#5A5A58] border border-white/10 rounded-sm mb-4 relative overflow-hidden shadow-lg">
+                            <div class="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-300"></div>
+                        </div>
+                        <h4 class="font-display text-lg tracking-wide uppercase text-primary mb-1">Deep Section</h4>
+                        <div class="font-mono text-xs text-primary/50 space-y-1 mb-4">
+                            <p>HEX: #5A5A58</p>
+                            <p>RGB: 90, 90, 88</p>
+                        </div>
+                        <p class="font-sans text-xs text-primary/70 border-t border-white/10 pt-3">Background para seções inversas ou footer, criando pausas dramáticas na rolagem.</p>
+                    </div>
+
+                    <!-- Color 5 -->
+                    <div class="group animate-in delay-500">
+                        <div class="h-48 w-full bg-[#ffffff] border border-white/10 rounded-sm mb-4 relative overflow-hidden shadow-lg flex items-center justify-center">
+                            <span class="text-dark/20 text-xs font-mono uppercase">Pure White</span>
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/5 transition-colors duration-300"></div>
+                        </div>
+                        <h4 class="font-display text-lg tracking-wide uppercase text-primary mb-1">Surface White</h4>
+                        <div class="font-mono text-xs text-primary/50 space-y-1 mb-4">
+                            <p>HEX: #FFFFFF</p>
+                            <p>RGB: 255, 255, 255</p>
+                        </div>
+                        <p class="font-sans text-xs text-primary/70 border-t border-white/10 pt-3">Cards de destaque, modais e elementos que precisam saltar do fundo principal.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- UI COMPONENTS -->
+        <section id="components" class="py-24 lg:py-32">
+            <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+                <div class="flex items-center gap-4 mb-16 animate-in">
+                    <span class="font-display text-sm text-dark/40 uppercase tracking-[0.2em]">03 //</span>
+                    <h2 class="font-display text-4xl lg:text-5xl font-semibold tracking-tighter uppercase text-dark">Componentes UI</h2>
+                </div>
+
+                <!-- Buttons & Badges -->
+                <div class="mb-20 animate-in delay-100">
+                    <h3 class="font-display text-xl uppercase tracking-widest text-dark mb-8 border-b border-dark/10 pb-2">Botões & Badges</h3>
+                    <div class="flex flex-wrap items-center gap-8 p-8 bg-white/40 border border-dark/5 rounded-sm shadow-sm">
+                        
+                        <button class="bg-dark text-white px-8 py-3.5 text-xs font-semibold uppercase tracking-widest hover:bg-accent transition-colors duration-300 btn-glow">
+                            <span class="btn-content">Primary Action</span>
+                        </button>
+
+                        <button class="bg-transparent border border-dark text-dark px-8 py-3.5 text-xs font-semibold uppercase tracking-widest hover:bg-accent hover:border-accent hover:text-white transition-all duration-300">
+                            Secondary Ghost
+                        </button>
+
+                        <button class="bg-white text-dark border border-dark/10 px-6 py-3 text-sm font-medium hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2">
+                            <iconify-icon icon="solar:cart-large-minimalistic-linear"></iconify-icon>
+                            Icon Button
+                        </button>
+
+                        <div class="h-8 w-px bg-dark/10 mx-4"></div> <!-- Divider -->
+
+                        <span class="bg-accent text-white text-[10px] font-semibold uppercase tracking-[0.2em] px-3 py-1 shadow-sm">
+                            New Arrival
+                        </span>
+
+                        <span class="border border-dark/20 text-dark/60 text-[10px] font-semibold uppercase tracking-[0.2em] px-3 py-1">
+                            Out of Stock
+                        </span>
+                        
+                        <div class="relative group cursor-pointer">
+                            <span class="text-sm border-b border-dark border-dashed pb-0.5">Hover Tooltip</span>
+                            <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max bg-dark text-white text-xs px-3 py-2 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg">
+                                Information helper text.
+                                <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-dark"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Inputs & Forms -->
+                <div class="mb-20 animate-in delay-200">
+                    <h3 class="font-display text-xl uppercase tracking-widest text-dark mb-8 border-b border-dark/10 pb-2">Inputs & Controles</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 p-8 bg-white/40 border border-dark/5 rounded-sm shadow-sm">
+                        
+                        <!-- Text Input -->
+                        <div class="flex flex-col gap-2">
+                            <label class="font-sans text-xs font-semibold uppercase tracking-widest text-dark/70">Email Address</label>
+                            <input type="email" placeholder="nome@exemplo.com" class="w-full bg-transparent border-b border-dark/30 py-3 text-dark placeholder-dark/30 focus:outline-none focus:border-accent focus:bg-white/50 transition-all font-sans text-sm">
+                        </div>
+
+                        <!-- Select -->
+                        <div class="flex flex-col gap-2">
+                            <label class="font-sans text-xs font-semibold uppercase tracking-widest text-dark/70">Categoria</label>
+                            <div class="relative">
+                                <select class="w-full bg-transparent border-b border-dark/30 py-3 pr-8 text-dark appearance-none focus:outline-none focus:border-accent transition-all font-sans text-sm rounded-none">
+                                    <option>Extensão de Cílios</option>
+                                    <option>Lash Lifting</option>
+                                    <option>Sobrancelhas</option>
+                                </select>
+                                <iconify-icon icon="solar:alt-arrow-down-linear" class="absolute right-0 top-1/2 -translate-y-1/2 text-dark/50 pointer-events-none"></iconify-icon>
+                            </div>
+                        </div>
+
+                        <!-- Checkbox -->
+                        <div class="flex items-center gap-3">
+                            <div class="relative flex items-center">
+                                <input type="checkbox" id="terms" class="peer appearance-none w-5 h-5 border border-dark/30 rounded-sm checked:bg-accent checked:border-accent transition-colors cursor-pointer">
+                                <iconify-icon icon="solar:check-read-linear" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 peer-checked:opacity-100 pointer-events-none text-sm transition-opacity"></iconify-icon>
+                            </div>
+                            <label for="terms" class="text-sm text-dark/80 cursor-pointer select-none">Aceito os termos e protocolos.</label>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <!-- Cards (Hardware Grid Style) -->
+                <div class="mb-20 animate-in delay-300">
+                    <h3 class="font-display text-xl uppercase tracking-widest text-dark mb-8 border-b border-dark/10 pb-2">Product Cards / Displays</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        
+                        <!-- Card 1 -->
+                        <div class="flex flex-col bg-primary border border-dark/10 transition-all duration-500 hover:shadow-[0_15px_40px_rgba(63,85,107,0.12)] hover:-translate-y-1 group">
+                            <div class="relative aspect-[4/5] bg-white overflow-hidden flex items-center justify-center p-8">
+                                <span class="absolute top-4 left-4 bg-accent text-white text-[10px] font-semibold uppercase tracking-[0.2em] px-3 py-1 z-10 shadow-sm">
+                                    Premium
+                                </span>
+                                <button class="absolute top-4 right-4 text-dark/30 hover:text-accent z-10 transition-colors">
+                                    <iconify-icon icon="solar:heart-linear" height="24" width="24"></iconify-icon>
+                                </button>
+                                <!-- Image Placeholder using Unsplash -->
+                                <img src="https://images.unsplash.com/photo-1512496015851-a1dc8a479b18?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Product" class="w-full h-full object-cover grayscale mix-blend-multiply opacity-80 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-700 ease-out"/>
+                            </div>
+                            <div class="p-6 flex flex-col flex-grow bg-white/40">
+                                <div class="flex justify-between items-start mb-6">
+                                    <h3 class="font-display text-xl font-semibold tracking-tighter uppercase text-dark pr-4">
+                                        <span class="border-b-2 border-accent pb-1 inline-block">Volume Russo Kit</span>
+                                    </h3>
+                                    <span class="font-display text-lg font-semibold text-dark shrink-0">R$ 180</span>
+                                </div>
+                                <div class="grid grid-cols-3 gap-2 border-y border-dark/10 py-3 mt-auto mb-6">
+                                    <div class="flex flex-col items-center justify-center">
+                                        <iconify-icon icon="solar:star-fall-linear" class="text-accent mb-1"></iconify-icon>
+                                        <span class="font-display text-[10px] uppercase tracking-widest text-dark/60">Top Rated</span>
+                                    </div>
+                                    <div class="flex flex-col items-center justify-center border-x border-dark/10">
+                                        <iconify-icon icon="solar:box-minimalistic-linear" class="text-accent mb-1"></iconify-icon>
+                                        <span class="font-display text-[10px] uppercase tracking-widest text-dark/60">Em Estoque</span>
+                                    </div>
+                                    <div class="flex flex-col items-center justify-center">
+                                        <iconify-icon icon="solar:verified-check-linear" class="text-accent mb-1"></iconify-icon>
+                                        <span class="font-display text-[10px] uppercase tracking-widest text-dark/60">Certificado</span>
+                                    </div>
+                                </div>
+                                <button class="w-full bg-transparent border border-dark py-3 text-xs font-semibold uppercase tracking-widest text-dark hover:bg-accent hover:border-accent hover:text-white transition-all flex items-center justify-center gap-2">
+                                    Adicionar
+                                    <iconify-icon icon="solar:cart-large-minimalistic-linear"></iconify-icon>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Sector Card Style -->
+                        <div class="relative group overflow-hidden h-[450px] lg:h-auto cursor-pointer bg-dark col-span-1 md:col-span-2 lg:col-span-2">
+                            <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Sector" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-80 transition-all duration-700"/>
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark2/90 to-transparent pointer-events-none"></div>
+                            
+                            <div class="absolute bottom-0 left-0 p-8 z-20 pointer-events-none">
+                                <span class="font-display text-xs text-white/70 uppercase tracking-[0.2em] mb-2 block drop-shadow-md">
+                                    Categoria 01
+                                </span>
+                                <h3 class="font-display text-4xl lg:text-5xl font-semibold text-white uppercase tracking-tighter drop-shadow-lg">
+                                    Extensão Fio a Fio
+                                </h3>
+                            </div>
+                            
+                            <!-- Sliding Glass Panel -->
+                            <div class="absolute inset-y-0 right-0 w-[60%] lg:w-[45%] bg-dark3/70 backdrop-blur-md translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out z-10 flex flex-col justify-end p-8 border-l border-white/10">
+                                <div class="w-0 group-hover:w-full h-px bg-white/40 mb-6 transition-all duration-700 delay-300 ease-out"></div>
+                                <p class="text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-400 leading-relaxed font-medium">
+                                    A técnica clássica e atemporal. Materiais de precisão anatômica, retenção máxima e acabamento hiper-realista para um olhar marcante e natural.
+                                </p>
+                                <button class="mt-8 self-start text-xs font-semibold uppercase tracking-widest text-white border-b border-white hover:text-accent hover:border-accent transition-colors pb-1">Ver Produtos</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ICONS & DECORATIONS -->
+        <section class="py-24 bg-dark2 text-white border-t border-white/5 relative">
+            <div class="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
+                <div class="flex items-center justify-between mb-16">
+                    <h2 class="font-display text-3xl font-semibold tracking-tighter uppercase">Iconografia (Solar Set)</h2>
+                    <span class="text-xs uppercase tracking-widest text-primary/50 border border-primary/20 px-3 py-1 rounded-sm">Iconify</span>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                    <!-- Icon Item -->
+                    <div class="flex flex-col items-center justify-center p-8 border border-white/10 bg-white/5 hover:bg-white/10 transition-colors rounded-sm group animate-in delay-100">
+                        <iconify-icon icon="solar:eye-linear" class="text-3xl text-primary group-hover:text-accent transition-colors mb-3"></iconify-icon>
+                        <span class="text-[10px] font-mono text-primary/50">eye-linear</span>
+                    </div>
+                    <div class="flex flex-col items-center justify-center p-8 border border-white/10 bg-white/5 hover:bg-white/10 transition-colors rounded-sm group animate-in delay-200">
+                        <iconify-icon icon="solar:magic-stick-3-linear" class="text-3xl text-primary group-hover:text-accent transition-colors mb-3"></iconify-icon>
+                        <span class="text-[10px] font-mono text-primary/50">magic-stick</span>
+                    </div>
+                    <div class="flex flex-col items-center justify-center p-8 border border-white/10 bg-white/5 hover:bg-white/10 transition-colors rounded-sm group animate-in delay-300">
+                        <iconify-icon icon="solar:leaf-linear" class="text-3xl text-primary group-hover:text-accent transition-colors mb-3"></iconify-icon>
+                        <span class="text-[10px] font-mono text-primary/50">leaf-linear</span>
+                    </div>
+                    <div class="flex flex-col items-center justify-center p-8 border border-white/10 bg-white/5 hover:bg-white/10 transition-colors rounded-sm group animate-in delay-400">
+                        <iconify-icon icon="solar:shield-check-linear" class="text-3xl text-primary group-hover:text-accent transition-colors mb-3"></iconify-icon>
+                        <span class="text-[10px] font-mono text-primary/50">shield-check</span>
+                    </div>
+                    <div class="flex flex-col items-center justify-center p-8 border border-white/10 bg-white/5 hover:bg-white/10 transition-colors rounded-sm group animate-in delay-500">
+                        <iconify-icon icon="solar:verified-check-linear" class="text-3xl text-primary group-hover:text-accent transition-colors mb-3"></iconify-icon>
+                        <span class="text-[10px] font-mono text-primary/50">verified-check</span>
+                    </div>
+                    <div class="flex flex-col items-center justify-center p-8 border border-white/10 bg-white/5 hover:bg-white/10 transition-colors rounded-sm group animate-in delay-[600ms]">
+                        <iconify-icon icon="solar:bag-3-linear" class="text-3xl text-primary group-hover:text-accent transition-colors mb-3"></iconify-icon>
+                        <span class="text-[10px] font-mono text-primary/50">bag-3-linear</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER / METRICS STYLE -->
+        <footer class="bg-dark text-white border-t border-white/5 py-12 relative overflow-hidden">
+            <div class="max-w-[1400px] mx-auto px-6 text-center relative z-10">
+                <div class="flex items-center justify-center gap-2 mb-6">
+                    <span class="font-display text-2xl font-bold tracking-widest uppercase">M. Cílios</span>
+                    <span class="h-1 w-1 bg-accent rounded-full"></span>
+                </div>
+                <p class="text-xs uppercase tracking-[0.2em] text-white/40 font-semibold">
+                    Engineered Design System &copy; 2026
+                </p>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Animation Trigger Script (Simples Intersection Observer para as classes animate-in se necessário, 
+         mas como já estão com a classe base, elas rodarão no load. Adicionando lógica on-scroll para melhorar) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                        // Re-trigger animation by removing and adding class if needed
+                        // But for simplicity, we just ensure it runs when in view
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // Pause animations initially so they only run when scrolled into view
+            document.querySelectorAll('.animate-in').forEach(el => {
+                el.style.animationPlayState = 'paused';
+                observer.observe(el);
+            });
+            
+            // Immediately play hero animations
+            document.querySelectorAll('#hero .animate-in, header .animate-in').forEach(el => {
+                el.style.animationPlayState = 'running';
+            });
+        });
+    </script>
+</body>
+</html>

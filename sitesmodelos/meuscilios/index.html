@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Meus Cílios® Rede Franquias</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#F9F3F2',
+                        dark: '#1A1818',
+                        accent: '#D4B5B0',
+                        dark2: '#5A5A58',
+                        dark3: '#4A4A48',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                        accent: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Iconify -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F9F3F2;
+            color: #1A1818;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #F9F3F2; }
+        ::-webkit-scrollbar-thumb { background: #D4B5B0; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #1A1818; }
+
+        /* Animations */
+        @keyframes animationIn { 
+            0% { opacity: 0; transform: translateY(30px); filter: blur(8px); } 
+            100% { opacity: 1; transform: translateY(0); filter: blur(0px); } 
+        }
+        
+        .animate-in {
+            animation: animationIn 1.2s ease-out both;
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+
+        /* Transparent Lettering Outline Effect */
+        .text-outline {
+            color: transparent;
+            -webkit-text-stroke: 2px #1A1818;
+            transition: all 0.5s ease;
+        }
+        
+        .text-outline:hover {
+            color: #1A1818;
+            -webkit-text-stroke: 2px transparent;
+        }
+
+        .text-outline-white {
+            color: transparent;
+            -webkit-text-stroke: 1px #F9F3F2;
+            transition: all 0.5s ease;
+        }
+        
+        .text-outline-white:hover {
+            color: #F9F3F2;
+        }
+
+        /* Grid Background Pattern */
+        .bg-grid-pattern {
+            background-image:
+                linear-gradient(to right, rgba(45,50,47,0.06) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(45,50,47,0.06) 1px, transparent 1px);
+            background-size: 64px 64px;
+        }
+        
+        .bg-grid-pattern-light {
+            background-image:
+                linear-gradient(to right, rgba(235,237,234,0.08) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(235,237,234,0.08) 1px, transparent 1px);
+            background-size: 64px 64px;
+        }
+
+        /* Button Glow/Hover Effects */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, rgba(212,181,176,0.5) 0%, transparent 60%);
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.6s ease-out;
+            opacity: 0;
+            z-index: 0;
+        }
+        .btn-glow:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        .btn-content {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="selection:bg-accent selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 py-4 backdrop-blur-md bg-primary/40 border-b border-dark/5">
+        <div class="max-w-[1400px] mx-auto px-6 lg:px-12 flex items-center justify-between">
+            <div class="flex-1">
+                <a href="#hero" class="inline-block hover:scale-105 transition-transform duration-300">
+                    <img src="assets/logo-e1740668883685_8182fd50b9ca.png" alt="Meus Cílios" class="h-10 object-contain">
+                </a>
+            </div>
+            <nav class="hidden md:flex justify-center gap-10 flex-1">
+                <a href="#hero" class="relative group text-[10px] font-bold text-dark/60 hover:text-dark transition-all duration-300 uppercase tracking-[0.2em] py-2 animate-in delay-100">
+                    Home
+                    <span class="absolute bottom-0 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-500 ease-out"></span>
+                </a>
+                <a href="#servicos" class="relative group text-[10px] font-bold text-dark/60 hover:text-dark transition-all duration-300 uppercase tracking-[0.2em] py-2 animate-in delay-200">
+                    Serviços
+                    <span class="absolute bottom-0 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-500 ease-out"></span>
+                </a>
+                <a href="#beneficios" class="relative group text-[10px] font-bold text-dark/60 hover:text-dark transition-all duration-300 uppercase tracking-[0.2em] py-2 animate-in delay-300">
+                    Benefícios
+                    <span class="absolute bottom-0 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-500 ease-out"></span>
+                </a>
+                <a href="#unidades" class="relative group text-[10px] font-bold text-dark/60 hover:text-dark transition-all duration-300 uppercase tracking-[0.2em] py-2 animate-in delay-400">
+                    Unidades
+                    <span class="absolute bottom-0 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-500 ease-out"></span>
+                </a>
+            </nav>
+            <div class="flex-1 flex justify-end items-center gap-4 animate-in delay-500">
+                <a href="#franquias" class="bg-dark text-white px-8 py-3.5 text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-accent hover:text-white transition-all duration-500 btn-glow hidden md:block shadow-xl hover:shadow-accent/20">
+                    Seja um franqueado
+                </a>
+                <button id="mobile-menu-btn" class="md:hidden text-dark text-2xl hover:text-accent transition-colors">
+                    <iconify-icon icon="solar:hamburger-menu-linear"></iconify-icon>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO FOLD -->
+    <section id="hero" class="relative w-full min-h-[90vh] flex items-center justify-start overflow-hidden bg-primary pt-10">
+        <!-- Background Grid -->
+        <div class="absolute inset-0 bg-grid-pattern z-0"></div>
+        
+        <!-- Hero Background Video -->
+        <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden" id="hero-video-container">
+            <video id="hero-video" autoplay muted loop playsinline class="w-full h-full object-cover transition-opacity duration-1000 opacity-0 contrast-[1.1] brightness-[1.1]">
+                <source src="assets/cilios.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/20 to-transparent z-10"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-primary/40 via-transparent to-primary z-10"></div>
+        </div>
+
+        <div class="relative z-10 max-w-[1400px] !ml-0 !mr-auto px-6 lg:px-12 w-full flex flex-col items-start text-left">
+            
+            <div class="flex items-center gap-3 mb-8 animate-in">
+                <span class="h-px w-12 bg-accent/70"></span>
+                <span class="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+                    MUITO MAIS QUE CÍLIOS
+                </span>
+            </div>
+
+            <h1 class="relative flex flex-col items-start w-full">
+                <span class="font-display uppercase font-bold tracking-tighter leading-[0.85] text-outline text-[2.8rem] md:text-[4.5rem] lg:text-[6rem] animate-in delay-100 drop-shadow-sm max-w-4xl">
+                    SOMOS ESPECIALISTAS
+                </span>
+                <span class="font-display uppercase font-bold tracking-tighter leading-[0.85] text-dark text-[2.4rem] md:text-[3.8rem] lg:text-[5rem] animate-in delay-200 mt-2 max-w-4xl">
+                    EM CUIDADOS COM A BELEZA
+                </span>
+                <span class="font-display uppercase font-bold tracking-tighter leading-[0.85] text-dark/80 text-[1.6rem] md:text-[2.8rem] lg:text-[3.8rem] animate-in delay-300 mt-2">
+                    E BEM-ESTAR DA MULHER
+                </span>
+            </h1>
+
+            <p class="font-accent italic text-base md:text-lg text-dark/70 mt-10 mb-8 max-w-2xl animate-in delay-400">
+                Em nossos Studios, você encontra extensões de cílios saudáveis, alongamento de unhas resistentes, escovaria e muitos outros serviços com alto padrão de qualidade a preços justos!
+            </p>
+
+            <div class="flex flex-wrap items-center gap-6 animate-in delay-500">
+                <a href="#servicos" class="bg-dark text-white px-10 py-4 text-xs font-semibold uppercase tracking-widest hover:bg-accent transition-colors duration-300 btn-glow shadow-lg flex items-center gap-3">
+                    <span class="btn-content">Nossos Serviços</span>
+                    <iconify-icon icon="solar:arrow-right-linear" class="btn-content text-lg"></iconify-icon>
+                </a>
+                <a href="#unidades" class="group flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-dark/60 hover:text-dark transition-colors">
+                    Ver Unidades
+                    <span class="w-8 h-px bg-dark/20 group-hover:w-12 group-hover:bg-accent transition-all"></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- NOSSOS SERVIÇOS FOLD -->
+    <section id="servicos" class="pt-24 lg:pt-32 pb-12 relative bg-primary overflow-hidden">
+        <!-- Background Text Watermark -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-display text-[15rem] lg:text-[25rem] font-bold text-accent/10 pointer-events-none select-none uppercase tracking-widest whitespace-nowrap z-0">
+            Services
+        </div>
+        <div class="max-w-[1400px] !ml-0 !mr-auto px-6 lg:px-12 relative z-10">
+            <div class="flex flex-col md:flex-row items-start justify-between gap-8 mb-12 animate-in">
+                <div class="flex flex-col gap-4 max-w-2xl text-left">
+                    <span class="font-display text-sm text-dark/40 uppercase tracking-[0.2em]">01 // Nossos Serviços</span>
+                    <h2 class="font-display text-4xl lg:text-5xl font-semibold tracking-tighter uppercase text-dark">
+                        Serviços que valorizam sua beleza e elevam sua autoestima
+                    </h2>
+                    <p class="font-sans text-dark/70 mt-2">
+                        Nossos procedimentos são feitos para te dar mais praticidade e tempo. Todos com durabilidade média de um mês para você acordar sempre pronta.
+                    </p>
+                </div>
+                
+                <!-- Navigation Arrows & Dots -->
+                <div class="flex flex-col items-end gap-6 shrink-0">
+                    <div class="flex gap-4">
+                        <button id="serv-prev" class="w-12 h-12 rounded-full border border-dark/20 flex items-center justify-center hover:bg-dark hover:text-white transition-colors">
+                            <iconify-icon icon="solar:arrow-left-linear" class="text-xl"></iconify-icon>
+                        </button>
+                        <button id="serv-next" class="w-12 h-12 rounded-full border border-dark/20 flex items-center justify-center hover:bg-dark hover:text-white transition-colors">
+                            <iconify-icon icon="solar:arrow-right-linear" class="text-xl"></iconify-icon>
+                        </button>
+                    </div>
+                    <div id="serv-dots" class="flex gap-2 justify-end">
+                        <!-- Dots populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Horizontal Slider -->
+        <main id="servicos-slider" class="flex flex-row overflow-x-auto snap-x snap-mandatory hide-scrollbar w-full px-6 md:px-12 gap-x-6 scroll-smooth pb-12">
+
+            <!-- SLIDE 1 -->
+            <section class="slide-container flex-shrink-0 w-[85vw] md:w-[380px] snap-center bg-[#F2E1DF] border border-accent/20 shadow-sm group relative flex flex-col overflow-hidden transition-all duration-700 hover:shadow-2xl hover:shadow-accent/20 hover:-translate-y-3 hover:border-accent/40 hover:bg-white">
+                <div class="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                
+                <header class="flex justify-between items-center p-6 md:p-8 [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
+                    <span class="font-mono text-xs text-dark/40 font-semibold tracking-widest">[01/12]</span>
+                    <iconify-icon icon="solar:stars-linear" class="text-accent text-xl"></iconify-icon>
+                </header>
+                
+                <div class="flex-grow flex flex-col items-center justify-center p-6 relative">
+                    <div class="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl mb-8 [animation:animationIn_0.8s_ease-out_0.3s_both] animate-on-scroll z-10 bg-primary group-hover:scale-110 transition-transform duration-700 ease-out">
+                        <img src="assets/i1_633d80b7bfb7.png" alt="Extensão de cílios" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" onerror="this.src='https://images.unsplash.com/photo-1512496015851-a1c8caac1349?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'"/>
+                    </div>
+                    
+                    <div class="text-center w-full mt-auto [animation:animationIn_0.8s_ease-out_0.5s_both] animate-on-scroll">
+                        <h3 class="font-display text-2xl font-bold tracking-tighter uppercase text-dark mb-4">Extensão de cílios</h3>
+                        <p class="font-sans text-sm text-dark/60 leading-relaxed border-t border-dark/10 pt-4">
+                            Saudáveis, alto padrão de qualidade e com diversas opções de tamanho e volume que variam dos mais naturais aos olhares mais intensos.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 2 -->
+            <section class="slide-container flex-shrink-0 w-[85vw] md:w-[380px] snap-center bg-[#F2E1DF] border border-accent/20 shadow-sm group relative flex flex-col overflow-hidden transition-all duration-700 hover:shadow-2xl hover:shadow-accent/20 hover:-translate-y-3 hover:border-accent/40 hover:bg-white">
+                <div class="absolute inset-0 bg-dark/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                
+                <header class="flex justify-between items-center p-6 md:p-8 [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
+                    <span class="font-mono text-xs text-dark/40 font-semibold tracking-widest">[02/12]</span>
+                    <iconify-icon icon="solar:stars-linear" class="text-accent text-xl"></iconify-icon>
+                </header>
+                
+                <div class="flex-grow flex flex-col items-center justify-center p-6 relative">
+                    <div class="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl mb-8 [animation:animationIn_0.8s_ease-out_0.3s_both] animate-on-scroll z-10 bg-primary group-hover:scale-110 transition-transform duration-700 ease-out">
+                        <img src="assets/i2_30487d07b553.png" alt="Alongamento de unhas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" onerror="this.src='https://images.unsplash.com/photo-1512496015851-a1c8caac1349?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'"/>
+                    </div>
+                    
+                    <div class="text-center w-full mt-auto [animation:animationIn_0.8s_ease-out_0.5s_both] animate-on-scroll">
+                        <h3 class="font-display text-2xl font-bold tracking-tighter uppercase text-dark mb-4">Alongamento de unhas</h3>
+                        <p class="font-sans text-sm text-dark/60 leading-relaxed border-t border-dark/10 pt-4">
+                            Unhas mais longas, resistentes e naturais feitas em fibra de vidro ou molde que podem ter acabamento natural ou decorado.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 3 -->
+            <section class="slide-container flex-shrink-0 w-[85vw] md:w-[380px] snap-center bg-[#F2E1DF] border border-accent/20 shadow-sm group relative flex flex-col overflow-hidden transition-all duration-700 hover:shadow-2xl hover:shadow-accent/20 hover:-translate-y-3 hover:border-accent/40 hover:bg-white">
+                <div class="absolute inset-0 bg-dark/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                
+                <header class="flex justify-between items-center p-6 md:p-8 [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
+                    <span class="font-mono text-xs text-dark/40 font-semibold tracking-widest">[03/12]</span>
+                    <iconify-icon icon="solar:stars-linear" class="text-accent text-xl"></iconify-icon>
+                </header>
+                
+                <div class="flex-grow flex flex-col items-center justify-center p-6 relative">
+                    <div class="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl mb-8 [animation:animationIn_0.8s_ease-out_0.3s_both] animate-on-scroll z-10 bg-primary group-hover:scale-110 transition-transform duration-700 ease-out">
+                        <img src="assets/i3_ea0597823e77.png" alt="Lash Lifting" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" onerror="this.src='https://images.unsplash.com/photo-1512496015851-a1c8caac1349?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'"/>
+                    </div>
+                    
+                    <div class="text-center w-full mt-auto [animation:animationIn_0.8s_ease-out_0.5s_both] animate-on-scroll">
+                        <h3 class="font-display text-2xl font-bold tracking-tighter uppercase text-dark mb-4">Lash Lifting</h3>
+                        <p class="font-sans text-sm text-dark/60 leading-relaxed border-t border-dark/10 pt-4">
+                            Eleva e curva os fios naturais desde a raiz, proporcionando um efeito de maior comprimento e volume sem a necessidade de extensões.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 4 -->
+            <section class="slide-container flex-shrink-0 w-[85vw] md:w-[380px] snap-center bg-[#F2E1DF] border border-accent/20 shadow-sm group relative flex flex-col overflow-hidden transition-all duration-700 hover:shadow-2xl hover:shadow-accent/20 hover:-translate-y-3 hover:border-accent/40 hover:bg-white">
+                <div class="absolute inset-0 bg-dark/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                
+                <header class="flex justify-between items-center p-6 md:p-8 [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
+                    <span class="font-mono text-xs text-dark/40 font-semibold tracking-widest">[04/12]</span>
+                    <iconify-icon icon="solar:stars-linear" class="text-accent text-xl"></iconify-icon>
+                </header>
+                
+                <div class="flex-grow flex flex-col items-center justify-center p-6 relative">
+                    <div class="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl mb-8 [animation:animationIn_0.8s_ease-out_0.3s_both] animate-on-scroll z-10 bg-primary group-hover:scale-110 transition-transform duration-700 ease-out">
+                        <img src="assets/i4_6f29c649d514.png" alt="Brown Lamination" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" onerror="this.src='https://images.unsplash.com/photo-1512496015851-a1c8caac1349?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'"/>
+                    </div>
+                    
+                    <div class="text-center w-full mt-auto [animation:animationIn_0.8s_ease-out_0.5s_both] animate-on-scroll">
+                        <h3 class="font-display text-2xl font-bold tracking-tighter uppercase text-dark mb-4">Brown Lamination</h3>
+                        <p class="font-sans text-sm text-dark/60 leading-relaxed border-t border-dark/10 pt-4">
+                            A sobrancelha das famosas. O procedimento alinha e fixa os pelos, criando um efeito de sobrancelhas mais cheias e definidas.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 5 -->
+            <section class="slide-container flex-shrink-0 w-[85vw] md:w-[380px] snap-center bg-[#F2E1DF] border border-accent/20 shadow-sm group relative flex flex-col overflow-hidden transition-all duration-700 hover:shadow-2xl hover:shadow-accent/20 hover:-translate-y-3 hover:border-accent/40 hover:bg-white">
+                <div class="absolute inset-0 bg-dark/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                
+                <header class="flex justify-between items-center p-6 md:p-8 [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
+                    <span class="font-mono text-xs text-dark/40 font-semibold tracking-widest">[05/12]</span>
+                    <iconify-icon icon="solar:stars-linear" class="text-accent text-xl"></iconify-icon>
+                </header>
+                
+                <div class="flex-grow flex flex-col items-center justify-center p-6 relative">
+                    <div class="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl mb-8 [animation:animationIn_0.8s_ease-out_0.3s_both] animate-on-scroll z-10 bg-primary group-hover:scale-110 transition-transform duration-700 ease-out">
+                        <img src="assets/i5_e3d6c5d5f7d5.png" alt="Tintura de Sobrancelhas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" onerror="this.src='https://images.unsplash.com/photo-1512496015851-a1c8caac1349?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'"/>
+                    </div>
+                    
+                    <div class="text-center w-full mt-auto [animation:animationIn_0.8s_ease-out_0.5s_both] animate-on-scroll">
+                        <h3 class="font-display text-2xl font-bold tracking-tighter uppercase text-dark mb-4">Tintura de Sobrancelhas</h3>
+                        <p class="font-sans text-sm text-dark/60 leading-relaxed border-t border-dark/10 pt-4">
+                            Define as sobrancelhas com henna ou refectocil, proporcionando um aspecto mais cheio e bem delineado.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 6 -->
+            <section class="slide-container flex-shrink-0 w-[85vw] md:w-[380px] snap-center bg-[#F2E1DF] border border-accent/20 shadow-sm group relative flex flex-col overflow-hidden transition-all duration-700 hover:shadow-2xl hover:shadow-accent/20 hover:-translate-y-3 hover:border-accent/40 hover:bg-white">
+                <div class="absolute inset-0 bg-dark/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                
+                <header class="flex justify-between items-center p-6 md:p-8 [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
+                    <span class="font-mono text-xs text-dark/40 font-semibold tracking-widest">[06/12]</span>
+                    <iconify-icon icon="solar:stars-linear" class="text-accent text-xl"></iconify-icon>
+                </header>
+                
+                <div class="flex-grow flex flex-col items-center justify-center p-6 relative">
+                    <div class="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl mb-8 [animation:animationIn_0.8s_ease-out_0.3s_both] animate-on-scroll z-10 bg-primary group-hover:scale-110 transition-transform duration-700 ease-out">
+                        <img src="assets/i6_dfef96ff9a82.png" alt="Design de Sobrancelhas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" onerror="this.src='https://images.unsplash.com/photo-1512496015851-a1c8caac1349?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'"/>
+                    </div>
+                    
+                    <div class="text-center w-full mt-auto [animation:animationIn_0.8s_ease-out_0.5s_both] animate-on-scroll">
+                        <h3 class="font-display text-2xl font-bold tracking-tighter uppercase text-dark mb-4">Design de Sobrancelhas</h3>
+                        <p class="font-sans text-sm text-dark/60 leading-relaxed border-t border-dark/10 pt-4">
+                            Formato harmonioso e estético, adequado ao rosto de cada pessoa.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 7 -->
+            <section class="slide-container flex-shrink-0 w-[85vw] md:w-[380px] snap-center bg-[#F2E1DF] border border-accent/20 shadow-sm group relative flex flex-col overflow-hidden transition-all duration-700 hover:shadow-2xl hover:shadow-accent/20 hover:-translate-y-3 hover:border-accent/40 hover:bg-white">
+                <div class="absolute inset-0 bg-dark/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                
+                <header class="flex justify-between items-center p-6 md:p-8 [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
+                    <span class="font-mono text-xs text-dark/40 font-semibold tracking-widest">[07/12]</span>
+                    <iconify-icon icon="solar:stars-linear" class="text-accent text-xl"></iconify-icon>
+                </header>
+                
+                <div class="flex-grow flex flex-col items-center justify-center p-6 relative">
+                    <div class="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl mb-8 [animation:animationIn_0.8s_ease-out_0.3s_both] animate-on-scroll z-10 bg-primary group-hover:scale-110 transition-transform duration-700 ease-out">
+                        <img src="assets/i7_bf562949c93f.png" alt="Hydra Gloss" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" onerror="this.src='https://images.unsplash.com/photo-1512496015851-a1c8caac1349?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'"/>
+                    </div>
+                    
+                    <div class="text-center w-full mt-auto [animation:animationIn_0.8s_ease-out_0.5s_both] animate-on-scroll">
+                        <h3 class="font-display text-2xl font-bold tracking-tighter uppercase text-dark mb-4">Hydra Gloss</h3>
+                        <p class="font-sans text-sm text-dark/60 leading-relaxed border-t border-dark/10 pt-4">
+                            Tratamento labial que hidrata e dá brilho aos lábios, proporcionando um efeito volumoso e saudável.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 8 -->
+            <section class="slide-container flex-shrink-0 w-[85vw] md:w-[380px] snap-center bg-[#F2E1DF] border border-accent/20 shadow-sm group relative flex flex-col overflow-hidden transition-all duration-700 hover:shadow-2xl hover:shadow-accent/20 hover:-translate-y-3 hover:border-accent/40 hover:bg-white">
+                <div class="absolute inset-0 bg-dark/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                
+                <header class="flex justify-between items-center p-6 md:p-8 [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
+                    <span class="font-mono text-xs text-dark/40 font-semibold tracking-widest">[08/12]</span>
+                    <iconify-icon icon="solar:stars-linear" class="text-accent text-xl"></iconify-icon>
+                </header>
+                
+                <div class="flex-grow flex flex-col items-center justify-center p-6 relative">
+                    <div class="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl mb-8 [animation:animationIn_0.8s_ease-out_0.3s_both] animate-on-scroll z-10 bg-primary group-hover:scale-110 transition-transform duration-700 ease-out">
+                        <img src="assets/i8_7fc20103ed2e.png" alt="Micropigmentação Labial" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" onerror="this.src='https://images.unsplash.com/photo-1512496015851-a1c8caac1349?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'"/>
+                    </div>
+                    
+                    <div class="text-center w-full mt-auto [animation:animationIn_0.8s_ease-out_0.5s_both] animate-on-scroll">
+                        <h3 class="font-display text-2xl font-bold tracking-tighter uppercase text-dark mb-4">Micropigmentação Labial</h3>
+                        <p class="font-sans text-sm text-dark/60 leading-relaxed border-t border-dark/10 pt-4">
+                            Melhora a cor, o contorno e a simetria, criando uma aparência de lábios mais definidos e uniformes.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 9 -->
+            <section class="slide-container flex-shrink-0 w-[85vw] md:w-[380px] snap-center bg-[#F2E1DF] border border-accent/20 shadow-sm group relative flex flex-col overflow-hidden transition-all duration-700 hover:shadow-2xl hover:shadow-accent/20 hover:-translate-y-3 hover:border-accent/40 hover:bg-white">
+                <div class="absolute inset-0 bg-dark/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                
+                <header class="flex justify-between items-center p-6 md:p-8 [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
+                    <span class="font-mono text-xs text-dark/40 font-semibold tracking-widest">[09/12]</span>
+                    <iconify-icon icon="solar:stars-linear" class="text-accent text-xl"></iconify-icon>
+                </header>
+                
+                <div class="flex-grow flex flex-col items-center justify-center p-6 relative">
+                    <div class="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl mb-8 [animation:animationIn_0.8s_ease-out_0.3s_both] animate-on-scroll z-10 bg-primary group-hover:scale-110 transition-transform duration-700 ease-out">
+                        <img src="assets/i9_920958ee8087.png" alt="Limpeza de Pele" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" onerror="this.src='https://images.unsplash.com/photo-1512496015851-a1c8caac1349?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'"/>
+                    </div>
+                    
+                    <div class="text-center w-full mt-auto [animation:animationIn_0.8s_ease-out_0.5s_both] animate-on-scroll">
+                        <h3 class="font-display text-2xl font-bold tracking-tighter uppercase text-dark mb-4">Limpeza de Pele</h3>
+                        <p class="font-sans text-sm text-dark/60 leading-relaxed border-t border-dark/10 pt-4">
+                            Remove impurezas, células mortas e desobstrui os poros promovendo uma pele mais limpa e saudável.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 10 -->
+            <section class="slide-container flex-shrink-0 w-[85vw] md:w-[380px] snap-center bg-[#F2E1DF] border border-accent/20 shadow-sm group relative flex flex-col overflow-hidden transition-all duration-700 hover:shadow-2xl hover:shadow-accent/20 hover:-translate-y-3 hover:border-accent/40 hover:bg-white">
+                <div class="absolute inset-0 bg-dark/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                
+                <header class="flex justify-between items-center p-6 md:p-8 [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
+                    <span class="font-mono text-xs text-dark/40 font-semibold tracking-widest">[10/12]</span>
+                    <iconify-icon icon="solar:stars-linear" class="text-accent text-xl"></iconify-icon>
+                </header>
+                
+                <div class="flex-grow flex flex-col items-center justify-center p-6 relative">
+                    <div class="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl mb-8 [animation:animationIn_0.8s_ease-out_0.3s_both] animate-on-scroll z-10 bg-primary group-hover:scale-110 transition-transform duration-700 ease-out">
+                        <img src="assets/escova-express_107a1f7cd5d4.png" alt="Escovaria" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" onerror="this.src='https://images.unsplash.com/photo-1512496015851-a1c8caac1349?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'"/>
+                    </div>
+                    
+                    <div class="text-center w-full mt-auto [animation:animationIn_0.8s_ease-out_0.5s_both] animate-on-scroll">
+                        <h3 class="font-display text-2xl font-bold tracking-tighter uppercase text-dark mb-4">Escovaria</h3>
+                        <p class="font-sans text-sm text-dark/60 leading-relaxed border-t border-dark/10 pt-4">
+                            Você linda em até 45 minutos. Escolha entre escova rápida lisa ou modelada!
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 11 -->
+            <section class="slide-container flex-shrink-0 w-[85vw] md:w-[380px] snap-center bg-[#F2E1DF] border border-accent/20 shadow-sm group relative flex flex-col overflow-hidden transition-all duration-700 hover:shadow-2xl hover:shadow-accent/20 hover:-translate-y-3 hover:border-accent/40 hover:bg-white">
+                <div class="absolute inset-0 bg-dark/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                
+                <header class="flex justify-between items-center p-6 md:p-8 [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
+                    <span class="font-mono text-xs text-dark/40 font-semibold tracking-widest">[11/12]</span>
+                    <iconify-icon icon="solar:stars-linear" class="text-accent text-xl"></iconify-icon>
+                </header>
+                
+                <div class="flex-grow flex flex-col items-center justify-center p-6 relative">
+                    <div class="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl mb-8 [animation:animationIn_0.8s_ease-out_0.3s_both] animate-on-scroll z-10 bg-primary group-hover:scale-110 transition-transform duration-700 ease-out">
+                        <img src="assets/mechas_92521932867c.png" alt="Mechas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" onerror="this.src='https://images.unsplash.com/photo-1512496015851-a1c8caac1349?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'"/>
+                    </div>
+                    
+                    <div class="text-center w-full mt-auto [animation:animationIn_0.8s_ease-out_0.5s_both] animate-on-scroll">
+                        <h3 class="font-display text-2xl font-bold tracking-tighter uppercase text-dark mb-4">Mechas</h3>
+                        <p class="font-sans text-sm text-dark/60 leading-relaxed border-t border-dark/10 pt-4">
+                            Mais iluminado, marcado ou delicado. Deixamos do jeito que você gosta.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 12 -->
+            <section class="slide-container flex-shrink-0 w-[85vw] md:w-[380px] snap-center bg-[#F2E1DF] border border-accent/20 shadow-sm group relative flex flex-col overflow-hidden transition-all duration-700 hover:shadow-2xl hover:shadow-accent/20 hover:-translate-y-3 hover:border-accent/40 hover:bg-white">
+                <div class="absolute inset-0 bg-dark/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                
+                <header class="flex justify-between items-center p-6 md:p-8 [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
+                    <span class="font-mono text-xs text-dark/40 font-semibold tracking-widest">[12/12]</span>
+                    <iconify-icon icon="solar:stars-linear" class="text-accent text-xl"></iconify-icon>
+                </header>
+                
+                <div class="flex-grow flex flex-col items-center justify-center p-6 relative">
+                    <div class="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl mb-8 [animation:animationIn_0.8s_ease-out_0.3s_both] animate-on-scroll z-10 bg-primary group-hover:scale-110 transition-transform duration-700 ease-out">
+                        <img src="assets/hidratacao-cabelo_13336366aa7e.png" alt="Hidratação" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" onerror="this.src='https://images.unsplash.com/photo-1512496015851-a1c8caac1349?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'"/>
+                    </div>
+                    
+                    <div class="text-center w-full mt-auto [animation:animationIn_0.8s_ease-out_0.5s_both] animate-on-scroll">
+                        <h3 class="font-display text-2xl font-bold tracking-tighter uppercase text-dark mb-4">Hidratação</h3>
+                        <p class="font-sans text-sm text-dark/60 leading-relaxed border-t border-dark/10 pt-4">
+                            Resultado eficaz que repõe a água e os nutrientes essenciais, devolvendo brilho e maciez aos fios.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </section>
+
+    <!-- SEÇÃO BENEFÍCIOS -->
+    <section id="beneficios" class="py-24 lg:py-32 bg-gradient-to-br from-[#F2E1DF] via-white to-[#F2E1DF] relative overflow-hidden">
+        <div class="absolute inset-0 bg-grid-pattern opacity-5 z-0"></div>
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px] -mr-64 -mt-64"></div>
+        
+        <div class="relative z-10 max-w-[1400px] !ml-0 !mr-auto px-6 lg:px-12 w-full">
+            <div class="text-left mb-16 animate-in">
+                <span class="font-display text-sm text-accent uppercase tracking-[0.4em] mb-4 block font-bold">02 // Experiência Signature</span>
+                <h2 class="font-display text-5xl lg:text-8xl font-bold tracking-tighter uppercase text-dark mb-6 leading-[0.85]">
+                    A excelência que<br><span class="text-accent italic font-accent lowercase normal-case tracking-normal">define você</span>
+                </h2>
+            </div>
+
+            <div class="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+                <div class="w-full lg:w-1/2 flex flex-col gap-8 animate-in">
+                    <!-- Card 1 -->
+                    <div class="group bg-white/40 backdrop-blur-xl border border-white/60 p-10 rounded-[2rem] shadow-[0_10px_40px_-15px_rgba(212,181,176,0.3)] hover:shadow-[0_20px_60px_-10px_rgba(212,181,176,0.5)] hover:-translate-y-3 transition-all duration-700 ease-out">
+                        <div class="flex items-start gap-8">
+                            <div class="w-16 h-16 rounded-2xl bg-accent flex items-center justify-center shrink-0 shadow-2xl shadow-accent/40 group-hover:scale-110 transition-transform duration-500">
+                                <iconify-icon icon="solar:magic-stick-3-bold" class="text-4xl text-white"></iconify-icon>
+                            </div>
+                            <div>
+                                <h4 class="font-display text-2xl font-bold tracking-tighter uppercase text-dark mb-3">Técnicas de Vanguarda</h4>
+                                <p class="text-sm text-dark/70 leading-relaxed font-medium">Metodologias exclusivas que unem ciência e estética para resultados inigualáveis.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="group bg-white/40 backdrop-blur-xl border border-white/60 p-10 rounded-[2rem] shadow-[0_10px_40px_-15px_rgba(212,181,176,0.3)] hover:shadow-[0_20px_60px_-10px_rgba(212,181,176,0.5)] hover:-translate-y-3 transition-all duration-700 ease-out">
+                        <div class="flex items-start gap-8">
+                            <div class="w-16 h-16 rounded-2xl bg-dark flex items-center justify-center shrink-0 shadow-2xl group-hover:scale-110 transition-transform duration-500">
+                                <iconify-icon icon="solar:crown-minimalistic-bold" class="text-4xl text-accent"></iconify-icon>
+                            </div>
+                            <div>
+                                <h4 class="font-display text-2xl font-bold tracking-tighter uppercase text-dark mb-3">Curadoria Premium</h4>
+                                <p class="text-sm text-dark/70 leading-relaxed font-medium">Fios de seda e adesivos hipoalergênicos selecionados sob o mais rígido controle de qualidade.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="group bg-white/40 backdrop-blur-xl border border-white/60 p-10 rounded-[2rem] shadow-[0_10px_40px_-15px_rgba(212,181,176,0.3)] hover:shadow-[0_20px_60px_-10px_rgba(212,181,176,0.5)] hover:-translate-y-3 transition-all duration-700 ease-out">
+                        <div class="flex items-start gap-8">
+                            <div class="w-16 h-16 rounded-2xl bg-white border border-accent/20 flex items-center justify-center shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-500">
+                                <iconify-icon icon="solar:shield-check-bold" class="text-4xl text-accent"></iconify-icon>
+                            </div>
+                            <div>
+                                <h4 class="font-display text-2xl font-bold tracking-tighter uppercase text-dark mb-3">Sanidade & Conforto</h4>
+                                <p class="text-sm text-dark/70 leading-relaxed font-medium">Protocolos de biossegurança hospitalar para garantir sua total paz de espírito durante o ritual.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/2 relative animate-in delay-200">
+                    <div class="relative aspect-square lg:aspect-[4/5] overflow-hidden rounded-[3rem] border-[16px] border-white shadow-[-20px_20px_60px_rgba(0,0,0,0.15)]">
+                        <img src="assets/studio-luxo.png" alt="Beleza Meus Cílios" class="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-1000" onerror="this.src='https://images.unsplash.com/photo-1512496015851-a1c8caac1349?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark/50 via-transparent to-transparent"></div>
+                    </div>
+                    <!-- Badge Flutuante -->
+                    <div class="absolute -bottom-12 -left-12 bg-dark text-white p-10 rounded-[2rem] shadow-2xl animate-bounce-slow border border-white/10 backdrop-blur-2xl">
+                        <div class="flex items-center gap-6">
+                            <span class="text-6xl font-display font-bold text-accent leading-none">10+</span>
+                            <div class="text-[10px] uppercase tracking-[0.3em] font-bold leading-tight opacity-70">Anos de Legado em<br>Beleza de Luxo</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- APLICATIVO FOLD -->
+    <section class="py-24 lg:py-40 bg-dark2 relative overflow-hidden border-y border-white/5">
+        <div class="absolute inset-0 bg-grid-pattern-light opacity-5 z-0"></div>
+        <div class="absolute -bottom-1/4 -left-1/4 w-[700px] h-[700px] bg-accent/20 rounded-full blur-[180px] animate-pulse"></div>
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[100px] -mr-32 -mt-32"></div>
+        
+        <div class="relative z-10 max-w-[1400px] !ml-0 !mr-auto px-6 lg:px-12 w-full">
+            <div class="flex flex-col lg:flex-row items-center gap-24 lg:gap-32">
+                <div class="flex-1 text-left animate-in">
+                    <div class="inline-flex items-center gap-3 px-6 py-2.5 bg-white/5 border border-white/10 rounded-full mb-10 backdrop-blur-md">
+                        <span class="w-2 h-2 bg-accent rounded-full animate-pulse shadow-[0_0_10px_#D4B5B0]"></span>
+                        <span class="text-[11px] uppercase tracking-[0.3em] font-bold text-white/80">Experiência Digital Exclusive</span>
+                    </div>
+                    <h2 class="font-display text-5xl lg:text-8xl font-bold tracking-tighter uppercase text-white mb-8 leading-[0.85]">
+                        Seu Studio<br><span class="text-accent italic font-accent lowercase normal-case tracking-normal">always with you</span>
+                    </h2>
+                    <p class="font-sans text-white/50 text-xl mb-12 max-w-lg leading-relaxed font-medium">
+                        O agendamento do seu próximo ritual de beleza agora é tão sofisticado quanto o nosso atendimento. Gerencie seu tempo com exclusividade.
+                    </p>
+                    <div class="flex flex-wrap items-center gap-6">
+                        <a href="#" class="group relative px-10 py-5 bg-white text-dark rounded-2xl font-bold text-xs uppercase tracking-[0.2em] overflow-hidden transition-all duration-500 hover:bg-accent hover:text-white hover:scale-105 shadow-xl">
+                            <div class="flex items-center gap-4">
+                                <iconify-icon icon="logos:google-play-icon" class="text-2xl"></iconify-icon>
+                                <span>Google Play</span>
+                            </div>
+                        </a>
+                        <a href="#" class="group relative px-10 py-5 bg-transparent border-2 border-white/20 text-white rounded-2xl font-bold text-xs uppercase tracking-[0.2em] overflow-hidden transition-all duration-500 hover:border-accent hover:text-accent hover:scale-105 shadow-xl">
+                            <div class="flex items-center gap-4">
+                                <iconify-icon icon="mdi:apple" class="text-2xl"></iconify-icon>
+                                <span>App Store</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="flex-1 relative flex justify-center animate-in delay-200">
+                    <!-- Glow de Fundo -->
+                    <div class="absolute inset-0 bg-accent/30 rounded-full blur-[120px] scale-90 animate-pulse"></div>
+                    <!-- Mockup Celular -->
+                    <div class="relative w-full max-w-[550px] drop-shadow-[0_50px_80px_rgba(0,0,0,0.8)] hover:scale-105 transition-transform duration-700">
+                        <img src="assets/iphone-premium.png" alt="App Meus Cílios Premium" class="w-full h-auto drop-shadow-2xl" onerror="this.src='https://images.unsplash.com/photo-1522337660859-02fbefca4702?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NOSSAS UNIDADES FOLD -->
+    <section id="unidades" class="py-24 bg-primary relative overflow-hidden flex flex-col items-start justify-start">
+        <div class="max-w-[1400px] !ml-0 !mr-auto px-6 lg:px-12 w-full relative z-10">
+            <div class="text-left mb-16 animate-in">
+                <span class="font-display text-sm text-dark/40 uppercase tracking-[0.2em]">03 // Nossas Unidades</span>
+                <h2 class="font-display text-4xl lg:text-6xl font-bold tracking-tighter uppercase text-dark mt-2">
+                    Escolha a unidade mais próxima
+                </h2>
+                <p class="font-sans text-dark/70 max-w-2xl mt-4">
+                    Temos mais de 45 unidades de nossa rede no Brasil. Selecione um estado e descubra a mais próxima de você.
+                </p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row items-start gap-12">
+                <!-- Map Container -->
+                <div class="w-full lg:w-1/2 flex justify-center animate-in delay-100">
+                    <div class="relative w-full max-w-[500px] aspect-square bg-dark/5 rounded-full flex items-center justify-center p-8 border border-dark/10 shadow-inner">
+                        <!-- Total Units Counter -->
+                        <div class="absolute top-4 right-4 bg-dark text-white px-4 py-2 rounded-full border-2 border-primary shadow-lg flex items-center gap-2 z-20 animate-in delay-300">
+                            <iconify-icon icon="solar:map-point-bold" class="text-accent text-lg"></iconify-icon>
+                            <span class="text-xs font-semibold uppercase tracking-widest"><span id="total-unidades-counter">0</span> Unidades</span>
+                        </div>
+
+                        <img src="assets/brasil2_f8b21bf3b404.png" alt="Mapa do Brasil" class="w-full h-full object-contain opacity-80" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3004/3004543.png'"/>
+                        
+                        <!-- Interactive Pins (Approximate Positions for South/Southeast) -->
+                        <button class="state-pin absolute w-4 h-4 bg-dark rounded-full border-2 border-primary shadow-lg hover:scale-150 hover:bg-accent transition-all cursor-pointer z-10" style="top: 72%; left: 60%;" data-state="PR" title="Paraná">
+                            <span class="absolute -top-6 left-1/2 -translate-x-1/2 bg-white text-dark text-[10px] font-bold px-2 py-1 rounded shadow-sm opacity-0 pointer-events-none transition-opacity whitespace-nowrap">PR</span>
+                        </button>
+                        <button class="state-pin absolute w-4 h-4 bg-dark rounded-full border-2 border-primary shadow-lg hover:scale-150 hover:bg-accent transition-all cursor-pointer z-10" style="top: 78%; left: 62%;" data-state="SC" title="Santa Catarina">
+                            <span class="absolute -top-6 left-1/2 -translate-x-1/2 bg-white text-dark text-[10px] font-bold px-2 py-1 rounded shadow-sm opacity-0 pointer-events-none transition-opacity whitespace-nowrap">SC</span>
+                        </button>
+                        <button class="state-pin absolute w-4 h-4 bg-dark rounded-full border-2 border-primary shadow-lg hover:scale-150 hover:bg-accent transition-all cursor-pointer z-10" style="top: 86%; left: 58%;" data-state="RS" title="Rio Grande do Sul">
+                            <span class="absolute -top-6 left-1/2 -translate-x-1/2 bg-white text-dark text-[10px] font-bold px-2 py-1 rounded shadow-sm opacity-0 pointer-events-none transition-opacity whitespace-nowrap">RS</span>
+                        </button>
+                        <button class="state-pin absolute w-4 h-4 bg-dark rounded-full border-2 border-primary shadow-lg hover:scale-150 hover:bg-accent transition-all cursor-pointer z-10" style="top: 65%; left: 65%;" data-state="SP" title="São Paulo">
+                            <span class="absolute -top-6 left-1/2 -translate-x-1/2 bg-white text-dark text-[10px] font-bold px-2 py-1 rounded shadow-sm opacity-0 pointer-events-none transition-opacity whitespace-nowrap">SP</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Units Content -->
+                <div class="w-full lg:w-1/2 flex flex-col">
+                    <!-- State Selector Buttons -->
+                    <div class="flex flex-wrap gap-4 mb-8 animate-in delay-200">
+                        <button class="state-btn bg-accent text-white border border-accent px-8 py-3 text-xs font-semibold uppercase tracking-widest shadow-md transition-colors" data-state="PR">PR</button>
+                        <button class="state-btn bg-transparent border border-dark/20 text-dark px-8 py-3 text-xs font-semibold uppercase tracking-widest hover:border-accent hover:text-accent transition-colors" data-state="RS">RS</button>
+                        <button class="state-btn bg-transparent border border-dark/20 text-dark px-8 py-3 text-xs font-semibold uppercase tracking-widest hover:border-accent hover:text-accent transition-colors" data-state="SC">SC</button>
+                        <button class="state-btn bg-transparent border border-dark/20 text-dark px-8 py-3 text-xs font-semibold uppercase tracking-widest hover:border-accent hover:text-accent transition-colors" data-state="SP">SP</button>
+                    </div>
+
+                    <!-- Units List -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in delay-300 h-[450px] overflow-y-auto pr-2 custom-scrollbar">
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group" data-state="PR">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Ponta Grossa</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (42) 9992-38240
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Rua Benjamin Constant – 1 – Sala 06 – Centro, Ponta Grossa, PR
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group" data-state="PR">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Santa Felicidade</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (41) 9971-64015
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Rua Via Veneto – 1421 – Santa Felicidade, Curitiba, PR
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group" data-state="PR">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Batel Curitiba</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (41) 9910-79770
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Rua Teixeira Soares – 138 – Loja 1 – Batel, Curitiba, PR
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group" data-state="PR">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Shopping Anita</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (41) 9993-42840
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Avenida Anita Garibaldi – 2480  Loja 07 – São Lourenço, Curitiba, PR
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group" data-state="PR">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Curitiba Centro</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (41) 9971-64076
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Avenida Vicente Machado – 520 – Loja 7 – Centro, Curitiba, PR
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group" data-state="PR">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Juvevê Curitiba</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (41) 9993-42840
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Rua Rocha Pombo – 650 – Loja 1 – Juvevê, Curitiba, PR
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group" data-state="PR">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cilios Jardim das Américas</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (41) 98888-3838
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                R. Cap. Leônidas Marques – 154 – Loja 01 – Jardim das Américas, Curitiba, PR
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group" data-state="PR">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Araucária</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (41) 99842-9496
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                R. Prof. Alfredo Parodi, 753 – Centro, Araucária
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="RS">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Santa Maria</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (55) 9964-05644
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Rua Duque de Caxias – 2319 – Loja 01 – Nonoai, Santa Maria, RS
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="RS">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Linda Santa Maria</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (55) 9993-67837
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Rua Duque de Caxias – 2319 – 03 – Centro, Santa Maria, RS
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="RS">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Linda Moinhos de Vento</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (51) 9 9446-8805
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Rua Florêncio Ygartua, 270 Loja 9, Porto Alegre, RS
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="RS">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Jardim Lindóia</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (51) 9970-50328
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Avenida Assis Brasil – 4574 – São Sebastião, Porto Alegre, RS
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="RS">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Linda Lindóia</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (51) 9949-10707
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Avenida Assis Brasil – 4574 – São Sebastião, Porto Alegre, RS
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="RS">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Cachoeirinha</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (51) 9845-67419
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Avenida General Flores da Cunha – 1901 – Vila Cachoeirinha, Cachoeirinha, RS
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="RS">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Moradas</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (51) 9845-67419
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Av. Alexandrino de Alencar – 593 – Morada do Vale III, Gravataí
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="RS">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Gravataí Centro</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (51) 9968-79615
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Rua Prefeito Ary Tubbs – 732 – Centro, Gravataí, RS
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="RS">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (54) 9990-05841
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Avenida Primero de Maio – 1981 – Sala 14 – Várzea Grande 1° de Maio, Gramado, RS
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="RS">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Gramado</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (54) 9911-01156
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Rua Borges de Medeiros – 3878 – Loja 2 – Centro, Gramado, RS
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="RS">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Linda Escova Express Gramado</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (54) 9964-14301
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Avenida Borges de Medeiros – 3892 – térreo – Centro, Gramado, RS
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="RS">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Canela</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (54) 9916-50944
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Rua Borges de Medeiros- 560 – loja 02 – Centro, Canela, RS
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="SC">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (48) 9881-29216
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Rua Presidente Coutinho – 311 – Sala 504A – Centro, Florianópolis, SC
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="SC">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios São José</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (48) 9916-41711
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Rua Altamiro Di Bernardi – 51 – Loja 04 – Campina, São José, SC
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="SC">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Balneário Camboriú</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (47) 9885-95958
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Rua 2500 – 423 – Edifício Golden Bay – Centro, Balneário Camboriú, SC
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="SC">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Itajaí</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (47) 9892-22550
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Rua Gumercindo Rocha – 64 – sala 01 – Fazenda, Itajaí, SC
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="SP">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Vinhedo</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (19) 9993-01118
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Rua Manoel Matheus – 1360 – sala 02 – Santa Rosa, Vinhedo, SP
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="SP">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Santo André</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (11) 9751-00706
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Rua das Caneleiras – 267 – Jardim, Santo André, SP
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="SP">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios São Caetano</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (11) 9945-30272
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Avenida Goiás – 1750 – Santo Antônio, São Caetano do Sul, SP
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="SP">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Bauru</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (14) 9918-2236
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Rua Azarias Leites – 1985 – Ao lado do colégio Batista – Jardim Estoril, Bauru, SP
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="SP">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Alphaville</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (11) 9165-43542
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Alameda Madeira – 258 – Térreo – Alphaville, Barueri, SP
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="SP">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios Sorocaba</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (15) 9966-65094
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                Avenida Pereira da Silva – 878 – Jardim Santa Rosália, Sorocaba, SP
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="SP">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Meus Cílios e Linda – Chácara Santo Antônio</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (11) 97673-1878
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                R. Henri Dunant – 920 – Santo Amaro, São Paulo, SP
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                        <div class="unit-card border border-dark/10 p-6 bg-white/60 hover:shadow-lg hover:border-accent/50 transition-all group hidden" data-state="SP">
+                            <h4 class="font-display text-lg font-semibold tracking-tighter uppercase text-dark mb-3 group-hover:text-accent transition-colors">Linda São Carlos</h4>
+                            <p class="text-xs text-dark/60 mb-2 flex items-start gap-2">
+                                <iconify-icon icon="solar:phone-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                (16) 99643-2024
+                            </p>
+                            <p class="text-xs text-dark/60 mb-6 flex items-start gap-2">
+                                <iconify-icon icon="solar:map-point-linear" class="text-accent mt-0.5 shrink-0"></iconify-icon>
+                                R. Episcopal, 2621 – Sala 02 – Centro, São Carlos, SP
+                            </p>
+                            <button class="w-full bg-dark text-white py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-accent transition-colors btn-glow mt-auto">
+                                <span class="btn-content">Agendar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FRANQUIAS E NEWSLETTER FOLD -->
+    <section id="franquias" class="border-t border-dark/10">
+        <div class="flex flex-col lg:flex-row">
+            
+            <!-- Franquias -->
+            <div class="w-full lg:w-1/2 bg-white p-12 lg:p-24 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-dark/10">
+                <h2 class="font-display text-3xl font-semibold tracking-tighter uppercase text-dark mb-6">
+                    Você também pode fazer parte do nosso grupo de franquias
+                </h2>
+                <p class="font-sans text-dark/70 mb-10 leading-relaxed">
+                    O Studio Meus Cílios é uma franquia da rede Performance, que gerencia 5 marcas voltadas ao segmento de beleza.<br><br>
+                    Conheça nossos modelos de franquias e seja um franqueado você também!
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <button class="bg-accent text-white px-8 py-3 text-xs font-semibold uppercase tracking-widest hover:bg-dark transition-colors btn-glow">
+                        <span class="btn-content">Franquia Meus Cílios</span>
+                    </button>
+                    <button class="bg-transparent border border-dark text-dark px-8 py-3 text-xs font-semibold uppercase tracking-widest hover:bg-dark hover:text-white transition-all">
+                        Franquia Linda
+                    </button>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="w-full lg:w-1/2 bg-primary p-12 lg:p-24 flex flex-col justify-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-grid-pattern opacity-50 z-0"></div>
+                <div class="relative z-10">
+                    <h2 class="font-display text-3xl font-semibold tracking-tighter uppercase text-dark mb-6">
+                        Cadastre-se e receba promoções exclusivas
+                    </h2>
+                    <p class="font-sans text-dark/70 mb-10">
+                        Fique por dentro das novidades, lançamentos e descontos antes de todo mundo.
+                    </p>
+                    
+                    <form class="flex flex-col sm:flex-row gap-4">
+                        <input type="email" placeholder="Seu melhor e-mail" class="flex-grow bg-transparent border-b border-dark/30 py-3 text-dark placeholder-dark/40 focus:outline-none focus:border-accent font-sans text-sm">
+                        <button type="button" class="bg-dark text-white px-8 py-3 text-xs font-semibold uppercase tracking-widest hover:bg-accent transition-colors shrink-0 btn-glow">
+                            <span class="btn-content">Cadastrar</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark2 text-white border-t border-white/5 py-16 relative overflow-hidden">
+        <div class="absolute inset-0 bg-grid-pattern-light opacity-30 z-0"></div>
+        <div class="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10 flex flex-col items-center text-center">
+            
+            <a href="#" class="mb-10">
+                <img src="assets/logo-e1740668883685_8182fd50b9ca.png" alt="Meus Cílios Logo" class="h-16 object-contain brightness-0 invert opacity-90 hover:opacity-100 transition-opacity">
+            </a>
+
+            <div class="font-display text-2xl font-bold tracking-widest uppercase text-primary mb-2">Studio Meus Cílios</div>
+            <p class="font-accent italic text-primary/60 text-lg mb-10 max-w-md">Onde a precisão técnica encontra o requinte estético.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 w-full max-w-2xl mb-16 border-y border-white/10 py-10">
+                <div class="flex flex-col items-center">
+                    <h4 class="font-display text-sm font-semibold tracking-widest uppercase text-accent mb-4">Seja um Franqueado</h4>
+                    <p class="text-sm text-primary/70 mb-4 max-w-[200px]">Meus cílios é uma marca do grupo Performance. Clique aqui e saiba mais.</p>
+                    <a href="#" class="text-xs font-semibold uppercase tracking-widest text-white border-b border-white/30 hover:border-accent hover:text-accent transition-colors pb-1">Saiba Mais</a>
+                </div>
+                <div class="flex flex-col items-center">
+                    <h4 class="font-display text-sm font-semibold tracking-widest uppercase text-accent mb-4">Acesse Nossas Redes</h4>
+                    <p class="text-sm text-primary/70 mb-4">@meusciliosfranquias</p>
+                    <div class="flex items-center gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-accent hover:border-accent transition-colors">
+                            <img src="assets/icone-instagram_c0bf521e9261.png" alt="Instagram" class="w-4 h-4 brightness-0 invert" onerror="this.src='https://cdn-icons-png.flaticon.com/512/174/174855.png'">
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-accent hover:border-accent transition-colors">
+                            <iconify-icon icon="mdi:facebook" class="text-lg"></iconify-icon>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-xs uppercase tracking-[0.2em] text-white/40 font-semibold">
+                &copy; 2026 Meus Cílios Franchising. Todos os direitos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.animate-in').forEach(el => {
+                el.style.animationPlayState = 'paused';
+                observer.observe(el);
+            });
+            
+            document.querySelectorAll('#hero .animate-in, header .animate-in').forEach(el => {
+                el.style.animationPlayState = 'running';
+            });
+
+            
+            // Instagram-Slides Animation Logic
+            const animateOnce = true;
+            if (!window.__inViewIO) {
+                window.__inViewIO = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("animate");
+                            if (animateOnce) window.__inViewIO.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1, rootMargin: "0px -5% 0px -5%" });
+            }
+            document.querySelectorAll('.animate-on-scroll').forEach(el => window.__inViewIO.observe(el));
+
+            // Slider Navigation Logic
+            const slider = document.getElementById('servicos-slider');
+            const slides = document.querySelectorAll('.slide-container');
+            const dotsContainer = document.getElementById('serv-dots');
+            const prevBtn = document.getElementById('serv-prev');
+            const nextBtn = document.getElementById('serv-next');
+
+            if (slider && slides.length > 0) {
+                // Create dots
+                slides.forEach((_, i) => {
+                    const dot = document.createElement('div');
+                    dot.className = i === 0 
+                        ? "w-2 h-2 rounded-full bg-dark cursor-pointer transition-transform" 
+                        : "w-2 h-2 rounded-full bg-dark/20 hover:bg-dark/50 cursor-pointer transition-colors transition-transform";
+                    dot.dataset.index = i;
+                    
+                    dot.addEventListener('click', () => {
+                        slides[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    });
+                    dotsContainer.appendChild(dot);
+                });
+
+                const dots = dotsContainer.children;
+                const updateDots = (activeIndex) => {
+                    Array.from(dots).forEach((dot, index) => {
+                        dot.className = index === activeIndex 
+                            ? "w-2 h-2 rounded-full bg-dark cursor-pointer scale-125 transition-transform" 
+                            : "w-2 h-2 rounded-full bg-dark/20 hover:bg-dark/50 cursor-pointer transition-colors";
+                    });
+                };
+
+                const slideObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const index = Array.from(slides).indexOf(entry.target);
+                            if(index !== -1) updateDots(index);
+                        }
+                    });
+                }, { root: slider, threshold: 0.6 });
+
+                slides.forEach(slide => slideObserver.observe(slide));
+
+                const getScrollAmount = () => window.innerWidth < 768 ? window.innerWidth * 0.85 : 424; // 400 + 24 gap
+
+                if (nextBtn && prevBtn) {
+                    nextBtn.addEventListener('click', () => slider.scrollBy({ left: getScrollAmount(), behavior: 'smooth' }));
+                    prevBtn.addEventListener('click', () => slider.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' }));
+                }
+            }
+
+            // Map and Units Filtering Logic
+            const stateBtns = document.querySelectorAll('.state-btn');
+            const statePins = document.querySelectorAll('.state-pin');
+            const unitCards = document.querySelectorAll('.unit-card');
+
+            function filterUnits(stateId) {
+                // Update Buttons
+                stateBtns.forEach(btn => {
+                    if (btn.getAttribute('data-state') === stateId) {
+                        btn.className = 'state-btn bg-accent text-white border border-accent px-8 py-3 text-xs font-semibold uppercase tracking-widest shadow-md transition-colors';
+                    } else {
+                        btn.className = 'state-btn bg-transparent border border-dark/20 text-dark px-8 py-3 text-xs font-semibold uppercase tracking-widest hover:border-accent hover:text-accent transition-colors';
+                    }
+                });
+
+                // Update Pins
+                statePins.forEach(pin => {
+                    if (pin.getAttribute('data-state') === stateId) {
+                        pin.classList.add('bg-accent', 'scale-150');
+                        pin.classList.remove('bg-dark');
+                        pin.querySelector('span').classList.remove('opacity-0');
+                    } else {
+                        pin.classList.remove('bg-accent', 'scale-150');
+                        pin.classList.add('bg-dark');
+                        pin.querySelector('span').classList.add('opacity-0');
+                    }
+                });
+
+                // Update Cards
+                unitCards.forEach(card => {
+                    if (card.getAttribute('data-state') === stateId) {
+                        card.classList.remove('hidden');
+                        card.classList.add('animate-in');
+                        card.style.animationPlayState = 'running';
+                    } else {
+                        card.classList.add('hidden');
+                        card.classList.remove('animate-in');
+                    }
+                });
+            }
+
+            // Init Counter (Global Total)
+            const totalCounter = document.getElementById('total-unidades-counter');
+            if (totalCounter) {
+                totalCounter.innerText = document.querySelectorAll('.unit-card').length;
+            }
+
+            // Init Pin Tooltips with state counts
+            statePins.forEach(pin => {
+                const stateId = pin.getAttribute('data-state');
+                const stateCount = document.querySelectorAll(`.unit-card[data-state="${stateId}"]`).length;
+                const span = pin.querySelector('span');
+                if (span) {
+                    span.innerText = `${stateId} - ${stateCount} Unidades`;
+                }
+            });
+
+            // Init State PR
+            filterUnits('PR');
+
+            // Add Event Listeners
+            stateBtns.forEach(btn => {
+                btn.addEventListener('click', () => filterUnits(btn.getAttribute('data-state')));
+            });
+
+            statePins.forEach(pin => {
+                pin.addEventListener('click', () => filterUnits(pin.getAttribute('data-state')));
+                
+                // Hover effects for the tooltip
+                pin.addEventListener('mouseenter', () => {
+                    pin.querySelector('span').classList.remove('opacity-0');
+                });
+                pin.addEventListener('mouseleave', () => {
+                    if (pin.getAttribute('data-state') !== document.querySelector('.state-btn.bg-accent').getAttribute('data-state')) {
+                        pin.querySelector('span').classList.add('opacity-0');
+                    }
+                });
+            });
+
+            // Hero Video Scroll Fade Logic
+            const heroVideo = document.getElementById('hero-video');
+            const heroSection = document.getElementById('hero');
+            
+            if (heroVideo && heroSection) {
+                // Fade in on load
+                heroVideo.addEventListener('canplaythrough', () => {
+                    heroVideo.classList.remove('opacity-0');
+                    heroVideo.classList.add('opacity-80');
+                });
+
+                // Scroll fade out logic
+                window.addEventListener('scroll', () => {
+                    const scrollY = window.scrollY;
+                    const heroHeight = heroSection.offsetHeight;
+                    
+                    // Calculate opacity: starts at 0.8 and goes to 0 at the end of the hero section
+                    let opacity = 0.8 - (scrollY / heroHeight) * 0.8;
+                    if (opacity < 0) opacity = 0;
+                    
+                    heroVideo.style.opacity = opacity;
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+[
+    {
+        "name": "Meus Cílios Ponta Grossa",
+        "phone": "(42) 9992-3824",
+        "address": "Rua Benjamin Constant – 1 – Sala 06 – Centro, Ponta Grossa, PR",
+        "state": "PR"
+    },
+    {
+        "name": "Meus Cílios Santa Felicidade",
+        "phone": "(41) 9971-6401",
+        "address": "Rua Via Veneto – 1421 – Santa Felicidade, Curitiba, PR",
+        "state": "PR"
+    },
+    {
+        "name": "Meus Cílios Batel Curitiba",
+        "phone": "(41) 9910-7977",
+        "address": "Rua Teixeira Soares – 138 – Loja 1 – Batel, Curitiba, PR",
+        "state": "PR"
+    },
+    {
+        "name": "Meus Cílios Shopping Anita",
+        "phone": "(41) 9993-4284",
+        "address": "Avenida Anita Garibaldi – 2480  Loja 07 – São Lourenço, Curitiba, PR",
+        "state": "PR"
+    },
+    {
+        "name": "Meus Cílios Curitiba Centro",
+        "phone": "(41) 9971-6407",
+        "address": "Avenida Vicente Machado – 520 – Loja 7 – Centro, Curitiba, PR",
+        "state": "PR"
+    },
+    {
+        "name": "Meus Cílios",
+        "phone": "(41) 98888-3838",
+        "address": "R. Cap. Leônidas Marques – 154 – Loja 01 – Jardim das Américas, Curitiba, PR",
+        "state": "PR"
+    },
+    {
+        "name": "Meus Cílios Araucária",
+        "phone": "(41) 99842-9496",
+        "address": "R. Prof. Alfredo Parodi, 753 – Centro, Araucária",
+        "state": "PR"
+    },
+    {
+        "name": "Meus Cílios Santa Maria",
+        "phone": "(55) 9964-0564",
+        "address": "Rua Duque de Caxias – 2319 – Loja 01 – Nonoai, Santa Maria, RS",
+        "state": "RS"
+    },
+    {
+        "name": "Meus Cílios",
+        "phone": "(55) 9993-6783",
+        "address": "Rua Duque de Caxias – 2319 – 03 – Centro, Santa Maria, RS",
+        "state": "RS"
+    },
+    {
+        "name": "Meus Cílios Jardim Lindóia",
+        "phone": "(51) 9970-5032",
+        "address": "Avenida Assis Brasil – 4574 – São Sebastião, Porto Alegre, RS",
+        "state": "RS"
+    },
+    {
+        "name": "Meus Cílios",
+        "phone": "(51) 9949-1070",
+        "address": "Avenida Assis Brasil – 4574 – São Sebastião, Porto Alegre, RS",
+        "state": "RS"
+    },
+    {
+        "name": "Meus Cílios Cachoeirinha",
+        "phone": "(51) 9845-6741",
+        "address": "Avenida General Flores da Cunha – 1901 – Vila Cachoeirinha, Cachoeirinha, RS",
+        "state": "RS"
+    },
+    {
+        "name": "Meus Cílios Gravataí Centro",
+        "phone": "(51) 9968-7961",
+        "address": "Rua Prefeito Ary Tubbs – 732 – Centro, Gravataí, RS",
+        "state": "RS"
+    },
+    {
+        "name": "Meus Cílios",
+        "phone": "(54) 9990-0584",
+        "address": "Avenida Primero de Maio – 1981 – Sala 14 – Várzea Grande 1° de Maio, Gramado, RS",
+        "state": "RS"
+    },
+    {
+        "name": "Meus Cílios Gramado",
+        "phone": "(54) 9911-0115",
+        "address": "Rua Borges de Medeiros – 3878 – Loja 2 – Centro, Gramado, RS",
+        "state": "RS"
+    },
+    {
+        "name": "Meus Cílios",
+        "phone": "(54) 9964-1430",
+        "address": "Avenida Borges de Medeiros – 3892 – térreo – Centro, Gramado, RS",
+        "state": "RS"
+    },
+    {
+        "name": "Meus Cílios Canela",
+        "phone": "(54) 9916-5094",
+        "address": "Rua Borges de Medeiros- 560 – loja 02 – Centro, Canela, RS",
+        "state": "RS"
+    },
+    {
+        "name": "Meus Cílios",
+        "phone": "(48) 9881-2921",
+        "address": "Rua Presidente Coutinho – 311 – Sala 504A – Centro, Florianópolis, SC",
+        "state": "SC"
+    },
+    {
+        "name": "Meus Cílios São José",
+        "phone": "(48) 9916-4171",
+        "address": "Rua Altamiro Di Bernardi – 51 – Loja 04 – Campina, São José, SC",
+        "state": "SC"
+    },
+    {
+        "name": "Meus Cílios Balneário Camboriú",
+        "phone": "(47) 9885-9595",
+        "address": "Rua 2500 – 423 – Edifício Golden Bay – Centro, Balneário Camboriú, SC",
+        "state": "SC"
+    },
+    {
+        "name": "Meus Cílios Itajaí",
+        "phone": "(47) 9892-2255",
+        "address": "Rua Gumercindo Rocha – 64 – sala 01 – Fazenda, Itajaí, SC",
+        "state": "SC"
+    },
+    {
+        "name": "Meus Cílios Vinhedo",
+        "phone": "(19) 9993-0111",
+        "address": "Rua Manoel Matheus – 1360 – sala 02 – Santa Rosa, Vinhedo, SP",
+        "state": "SP"
+    },
+    {
+        "name": "Meus Cílios Santo André",
+        "phone": "(11) 9751-0070",
+        "address": "Rua das Caneleiras – 267 – Jardim, Santo André, SP",
+        "state": "SP"
+    },
+    {
+        "name": "Meus Cílios São Caetano",
+        "phone": "(11) 9945-3027",
+        "address": "Avenida Goiás – 1750 – Santo Antônio, São Caetano do Sul, SP",
+        "state": "SP"
+    },
+    {
+        "name": "Meus Cílios Bauru",
+        "phone": "(14) 9918-2236",
+        "address": "Rua Azarias Leites – 1985 – Ao lado do colégio Batista – Jardim Estoril, Bauru, SP",
+        "state": "SP"
+    },
+    {
+        "name": "Meus Cílios Alphaville",
+        "phone": "(11) 9165-4354",
+        "address": "Alameda Madeira – 258 – Térreo – Alphaville, Barueri, SP",
+        "state": "SP"
+    },
+    {
+        "name": "Meus Cílios Sorocaba",
+        "phone": "(15) 9966-6509",
+        "address": "Avenida Pereira da Silva – 878 – Jardim Santa Rosália, Sorocaba, SP",
+        "state": "SP"
+    },
+    {
+        "name": "Meus Cílios e Linda – Chácara Santo Antônio",
+        "phone": "(11) 97673-1878",
+        "address": "R. Henri Dunant – 920 – Santo Amaro, São Paulo, SP",
+        "state": "SP"
+    },
+    {
+        "name": "Meus Cílios",
+        "phone": "(16) 99643-2024",
+        "address": "R. Episcopal, 2621 – Sala 02 – Centro, São Carlos, SP",
+        "state": "SP"
+    }
+]

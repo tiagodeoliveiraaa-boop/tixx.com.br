@@ -239,6 +239,43 @@
         /* Custom SVG classes */
         .svg-icon { width: 50px; height: 50px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
+        /* Sitedownloader Background System */
+        .bg-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.6;
+        }
+        .bg-glow {
+            position: fixed; inset: 0;
+            background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(116, 255, 10, 0.12), transparent 70%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .bg-vignette {
+            position: fixed; inset: 0;
+            background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(3,3,3,0.6) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        body {
+            background-color: #020202 !important;
+            background-image:
+              linear-gradient(to right, rgba(116, 255, 10, 0.03) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(116, 255, 10, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            overflow-x: hidden;
+            min-height: 100vh;
+            color: #ffffff;
+        }
+
+        .noise-background-fixed {
+            display: none !important;
+        }
+
         /* Lightbox Premium */
         .lightbox {
             display: none;
@@ -321,6 +358,11 @@
     </style>
 </head>
 <body>
+    <!-- BACKGROUND SYSTEM -->
+    <canvas id="particles" class="bg-canvas"></canvas>
+    <div class="bg-glow"></div>
+    <div class="bg-vignette"></div>
+
     <div class="noise-background-fixed"></div>
     <div class="grid-bg"></div>
 
@@ -409,6 +451,22 @@
                     </a>
                 </div>
             </div>
+            <div class="dropdown">
+                <a href="ferramentas.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                    </svg>
+                    Ferramentas
+                </a>
+                <div class="dropdown-content">
+                    <a href="ferramentas.html" class="dropdown-item">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        MEU IP 
+                    </a>
+                </div>
+            </div>
             <a href="../index.html#sobre">
                 <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 Sobre Mim
@@ -433,6 +491,10 @@
         <a class="nav-menu-link w-inline-block" href="projetos.html">
             <svg fill="none" height="24" stroke="var(--neon-green)" stroke-width="2" viewBox="0 0 24 24" width="24"><rect height="18" rx="2" ry="2" width="18" x="3" y="3"></rect><line x1="3" x2="21" y1="9" y2="9"></line><line x1="9" x2="9" y1="21" y2="9"></line></svg>
             PROJETOS
+        </a>
+        <a class="nav-menu-link w-inline-block" href="ferramentas.html">
+            <svg fill="none" height="24" stroke="var(--neon-green)" stroke-width="2" viewBox="0 0 24 24" width="24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+            FERRAMENTAS
         </a>
         <a class="nav-menu-link w-inline-block" href="../index.html#sobre">
             <svg fill="none" height="24" stroke="var(--neon-purple)" stroke-width="2" viewBox="0 0 24 24" width="24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -496,14 +558,14 @@
                     </div>
                 </div>
 
-                <!-- Arquitetura -->
+                <!-- Salão Beleza -->
                 <div class="cyber-card purple-glow" data-reveal="" data-delay="2">
                     <div class="card-img-header">
-                        <img src="imagens/projetos/site_arquitetura_1778280413026.png" alt="Site Arquitetura">
+                        <img src="imagens/projetos/tixxbeleza.png" alt="Salão Beleza">
                     </div>
                     <div class="card-content">
-                        <h3 style="color: #fff; font-size: 1.2rem;">ARQUITETURA</h3>
-                        <a href="projetos.html" target="_blank" class="project-link">
+                        <h3 style="color: #fff; font-size: 1.2rem;">SALÃO BELEZA</h3>
+                        <a href="../sitesmodelos/meuscilios/index.html" target="_blank" class="project-link">
                             VER SITE <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                         </a>
                     </div>
@@ -998,6 +1060,71 @@
         });
 
         document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        /* PARTICLE BACKGROUND */
+        (function particles() {
+            const canvas = document.getElementById('particles');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let w, h, dots, raf;
+            const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+            function resize() {
+                w = canvas.width = window.innerWidth * DPR;
+                h = canvas.height = window.innerHeight * DPR;
+                canvas.style.width = '100%';
+                canvas.style.height = '100%';
+                seed();
+            }
+            function seed() {
+                const N = Math.floor((window.innerWidth * window.innerHeight) / 16000);
+                dots = Array.from({ length: N }, () => ({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    vx: (Math.random() - 0.5) * 0.25 * DPR,
+                    vy: (Math.random() - 0.5) * 0.25 * DPR,
+                    r: (Math.random() * 1.4 + 0.4) * DPR,
+                    a: Math.random() * 0.5 + 0.2
+                }));
+            }
+            function draw() {
+                ctx.clearRect(0, 0, w, h);
+                for (const d of dots) {
+                    d.x += d.vx; d.y += d.vy;
+                    if (d.x < 0 || d.x > w) d.vx *= -1;
+                    if (d.y < 0 || d.y > h) d.vy *= -1;
+                    ctx.beginPath();
+                    ctx.fillStyle = `rgba(116, 255, 10, ${d.a})`;
+                    ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                const MAX = 130 * DPR;
+                for (let i = 0; i < dots.length; i++) {
+                    for (let j = i + 1; j < dots.length; j++) {
+                        const dx = dots[i].x - dots[j].x;
+                        const dy = dots[i].y - dots[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < MAX) {
+                            const op = (1 - dist / MAX) * 0.18;
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(116, 255, 10, ${op})`;
+                            ctx.lineWidth = 0.5 * DPR;
+                            ctx.moveTo(dots[i].x, dots[i].y);
+                            ctx.lineTo(dots[j].x, dots[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                raf = requestAnimationFrame(draw);
+            }
+            let resizeT;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeT);
+                resizeT = setTimeout(resize, 120);
+            });
+            resize();
+            draw();
+        })();
     </script>
 </body>
 </html>
