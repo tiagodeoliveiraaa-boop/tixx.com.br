@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2374ff0a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E"/>
+    <meta charset="utf-8"/>
+    <title>IA Prompts | TIXX</title>
+    <meta content="IA Prompts - Galeria de Imagens e Prompts Criativos." name="description"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="anonymous" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:wght@100;300;400;500;700;900&family=Libre+Barcode+128+Text&display=swap" rel="stylesheet"/>
+    
+    <!-- Evolution CSS (v6) -->
+    <link href="css/ds6-styles.css" rel="stylesheet" type="text/css"/>
+    
+    <style>
+        /* Top Navigation */
+        .top-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 80px;
+            background: rgba(2,2,2,0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-green);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+        }
+        .top-menu { display: flex; gap: 20px; }
+        .top-menu a { 
+            color: #fff; 
+            text-decoration: none; 
+            font-size: 0.85rem; 
+            font-weight: 500; 
+            letter-spacing: 1px; 
+            text-transform: uppercase;
+            padding: 8px 16px;
+            transition: all 0.3s var(--ease-premium);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .top-menu a svg {
+            width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; transition: all 0.3s;
+        }
+        
+        .top-menu a::before, .top-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0; height: 0;
+            border: 1px solid transparent;
+            box-sizing: border-box;
+            border-radius: 4px;
+            pointer-events: none;
+        }
+        .top-menu a::before {
+            top: 0; left: 0;
+            transition: border-color 0s ease-in 0.8s, width 0.4s ease-in 0.4s, height 0.4s ease-in;
+        }
+        .top-menu a::after {
+            bottom: 0; right: 0;
+            transition: border-color 0s ease-in 0.8s, width 0.4s ease-in 0.4s, height 0.4s ease-in;
+        }
+        .top-menu a:hover { 
+            color: var(--neon-green); 
+            text-shadow: 0 0 8px rgba(180,255,0,0.4);
+            background: rgba(180, 255, 0, 0.05);
+        }
+        .top-menu a:hover::before {
+            width: 100%; height: 100%;
+            border-top-color: var(--neon-green);
+            border-right-color: var(--neon-green);
+            transition: width 0.4s ease-out, height 0.4s ease-out 0.4s;
+        }
+        .top-menu a:hover::after {
+            width: 100%; height: 100%;
+            border-bottom-color: var(--neon-green);
+            border-left-color: var(--neon-green);
+            transition: border-color 0s ease-out 0.8s, width 0.4s ease-out 0.8s, height 0.4s ease-out 1.2s;
+        }
+
+        /* Dropdown Submenu */
+        .dropdown { position: relative; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%; left: 0;
+            min-width: 320px;
+            background: rgba(5, 5, 5, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-green);
+            border-top: 3px solid var(--neon-green);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8), 0 0 20px rgba(180,255,0,0.1);
+            z-index: 3000;
+            padding: 10px 0;
+            margin-top: 0;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 95% 100%, 0 100%);
+        }
+        /* Bridge to prevent closing when moving mouse */
+        .dropdown-content::before {
+            content: '';
+            position: absolute;
+            top: -20px; left: 0;
+            width: 100%; height: 20px;
+            background: transparent;
+        }
+        .dropdown:hover .dropdown-content { display: block; animation: slideDown 0.4s var(--ease-premium); }
+        
+        .dropdown-item {
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #fff !important;
+            text-decoration: none;
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+        }
+        .dropdown-item:hover {
+            background: rgba(180, 255, 0, 0.08);
+            color: var(--neon-green) !important;
+            border-left-color: var(--neon-green);
+            padding-left: 35px;
+        }
+        .dropdown-item svg { width: 18px; height: 18px; stroke: var(--neon-green); stroke-width: 1.5; fill: none; }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Side Navigation */
+        .ds-nav {
+            position: fixed;
+            left: 0; top: 80px; bottom: 0;
+            width: 280px;
+            background: rgba(10,10,10,0.95);
+            border-right: 2px solid var(--neon-purple);
+            padding: 40px;
+            z-index: 1999;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            transform: translateX(-100%);
+            transition: transform 0.4s var(--ease-premium);
+        }
+        .ds-nav.active { transform: translateX(0); }
+        
+        .nav-toggle {
+            width: 40px; height: 40px;
+            background: var(--neon-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+            clip-path: polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%);
+        }
+        .nav-toggle:hover, .nav-toggle.active { background: var(--neon-purple); }
+
+        .ds-nav a {
+            color: #ffffff !important;
+            text-decoration: none;
+            font-size: 1rem;
+            font-family: var(--font-display);
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .ds-nav a:hover {
+            color: var(--neon-green) !important;
+            transform: translateX(10px);
+        }
+
+        /* Projects Specific */
+        .cyber-card { padding: 0 !important; overflow: hidden; display: flex; flex-direction: column; }
+        .card-img-header { height: 220px; overflow: hidden; position: relative; }
+        .card-img-header img { 
+            width: 100%; height: 100%; object-fit: cover; opacity: 0.7; 
+            transition: transform 0.8s var(--ease-premium); 
+        }
+        .cyber-card:hover .card-img-header img { transform: scale(1.1); opacity: 1; }
+        .card-content { padding: 20px; background: var(--void-surface); border-top: 1px solid var(--border-green); flex: 1; }
+        
+        .project-link {
+            display: flex; align-items: center; justify-content: space-between;
+            text-decoration: none; color: var(--neon-green); font-family: var(--font-display);
+            font-size: 0.9rem; margin-top: 10px; transition: 0.3s;
+        }
+        .project-link:hover { text-shadow: var(--glow-green); }
+
+        .section-header { text-align: center; margin-bottom: 60px; position: relative; z-index: 10; }
+        .section-header h2 { font-size: clamp(2rem, 5vw, 3.5rem); margin-top: 10px; }
+        
+        .video-container { position: relative; cursor: pointer; }
+        .video-play-btn {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 60px; height: 60px; background: rgba(180, 255, 0, 0.8);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: #000; box-shadow: var(--glow-green); transition: 0.3s;
+        }
+        .video-container:hover .video-play-btn { transform: translate(-50%, -50%) scale(1.1); background: var(--neon-green); }
+
+        .projects-hero {
+            padding: 180px 8% 100px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(2,2,2,0.5) 0%, var(--void-base) 100%);
+            position: relative;
+            z-index: 10;
+        }
+        .projects-hero h1 { font-size: clamp(3rem, 10vw, 7rem); margin-bottom: 20px; }
+
+        .ds-section {
+            padding: 120px 8%;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ds-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Custom SVG classes */
+        .svg-icon { width: 50px; height: 50px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+        /* Sitedownloader Background System */
+        .bg-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.6;
+        }
+        .bg-glow {
+            position: fixed; inset: 0;
+            background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(116, 255, 10, 0.12), transparent 70%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .bg-vignette {
+            position: fixed; inset: 0;
+            background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(3,3,3,0.6) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        body {
+            background-color: #020202 !important;
+            background-image:
+              linear-gradient(to right, rgba(116, 255, 10, 0.03) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(116, 255, 10, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            overflow-x: hidden;
+            min-height: 100vh;
+            color: #ffffff;
+        }
+
+        .noise-background-fixed {
+            display: none !important;
+        }
+
+        /* Lightbox Premium */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(2, 2, 2, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 0.4s var(--ease-premium);
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox.active { display: flex !important; opacity: 1 !important; pointer-events: auto !important; }
+        
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 85vh;
+            border: 2px solid var(--neon-green);
+            box-shadow: 0 0 50px rgba(180, 255, 0, 0.4);
+            transform: scale(0.9);
+            transition: transform 0.5s var(--ease-premium);
+            object-fit: contain;
+            pointer-events: auto;
+        }
+        .lightbox.active .lightbox-content { transform: scale(1); }
+
+        .lightbox-close {
+            position: absolute;
+            top: 40px; right: 40px;
+            color: #fff;
+            font-size: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 10000;
+            width: 60px; height: 60px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        .lightbox-close:hover { 
+            color: var(--neon-green); 
+            background: rgba(180, 255, 0, 0.1);
+            transform: rotate(90deg);
+        }
+        
+        .lightbox-caption {
+            position: absolute;
+            bottom: 40px;
+            color: var(--neon-green);
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: var(--glow-green);
+        }
+
+        .card-img-header img { cursor: zoom-in; }
+
+        .section-divider {
+            height: 2px;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+            box-shadow: 0 0 20px var(--neon-green);
+            margin: 60px 0;
+            opacity: 0.6;
+            position: relative;
+            z-index: 10;
+        }
+
+        .skills-marquee-container.top-marquee {
+            background: rgba(180, 255, 0, 0.03);
+            border-top: 1px solid rgba(180, 255, 0, 0.1);
+            border-bottom: 1px solid rgba(180, 255, 0, 0.1);
+            margin: 40px 0;
+        }
+
+        /* Toast Notification */
+        .cyber-toast {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: rgba(10, 10, 15, 0.95);
+            border: 1px solid var(--neon-green);
+            box-shadow: 0 0 30px rgba(180, 255, 0, 0.3);
+            padding: 15px 30px;
+            border-radius: 4px;
+            color: var(--neon-green);
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            z-index: 20000;
+            opacity: 0;
+            transition: all 0.5s var(--ease-premium);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            backdrop-filter: blur(10px);
+        }
+        .cyber-toast.active {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        .toast-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: rgba(180, 255, 0, 0.1);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <!-- BACKGROUND SYSTEM -->
+    <canvas id="particles" class="bg-canvas"></canvas>
+    <div class="bg-glow"></div>
+    <div class="bg-vignette"></div>
+
+    <div class="noise-background-fixed"></div>
+    <div class="grid-bg"></div>
+
+    <!-- Floating Background Hardware Icons -->
+    <div class="floating-icons-container" style="position: absolute; inset: 0; z-index: 1;">
+        <!-- HARDWARE -->
+        <div class="float-hw green" style="left: 5%; animation-duration: 35s; animation-delay: -5s;">
+            <svg class="svg-icon" viewbox="0 0 24 24"><rect height="12" rx="2" ry="2" width="20" x="2" y="6"></rect><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M6 14h.01M18 14h.01M10 14h4"></path></svg>
+        </div>
+        <div class="float-hw green" style="left: 18%; animation-duration: 28s; animation-delay: -12s;">
+            <svg class="svg-icon" viewbox="0 0 24 24"><rect height="20" rx="7" width="14" x="5" y="2"></rect><path d="M12 6v4"></path></svg>
+        </div>
+        <div class="float-hw green" style="left: 32%; animation-duration: 40s; animation-delay: -2s;">
+            <svg class="svg-icon" viewbox="0 0 24 24"><rect height="14" rx="2" width="20" x="2" y="3"></rect><path d="M8 21h8M12 17v4"></path></svg>
+        </div>
+        <div class="float-hw green" style="left: 45%; animation-duration: 32s; animation-delay: -18s;">
+            <svg class="svg-icon" viewbox="0 0 24 24"><path d="M3 14h3v5H3zM18 14h3v5h-3z"></path><path d="M3 14v-4a9 9 0 0 1 18 0v4"></path><path d="M21 16v2a2 2 0 0 1-2 2h-1M6 20H5a2 2 0 0 1-2-2v-2"></path></svg>
+        </div>
+        <div class="float-hw green" style="left: 58%; animation-duration: 25s; animation-delay: -25s;">
+            <svg class="svg-icon" viewbox="0 0 24 24"><rect height="8" rx="1" width="20" x="2" y="8"></rect><path d="M6 8v-2h2v2M10 8v-2h2v2M14 8v-2h2v2M4 16v2h1v-2M8 16v2h2v-2M13 16v2h3v-2M19 16v2h1v-2"></path></svg>
+        </div>
+        <div class="float-hw green" style="left: 72%; animation-duration: 38s; animation-delay: -8s;">
+            <svg class="svg-icon" viewbox="0 0 24 24"><rect height="18" rx="1" width="18" x="3" y="3"></rect><rect height="6" width="6" x="9" y="9"></rect><path d="M3 7h3M3 11h3M3 15h3M18 7h3M18 11h3M18 15h3M7 3v3M11 3v3M15 3v3M7 18v3M11 18v3M15 18v3"></path></svg>
+        </div>
+        <div class="float-hw green" style="left: 85%; animation-duration: 30s; animation-delay: -15s;">
+            <svg class="svg-icon" viewbox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" x2="12" y1="19" y2="22"></line><line x1="8" x2="16" y1="22" y2="22"></line></svg>
+        </div>
+        <!-- SOFTWARE / DEV / BRANDS -->
+        <div class="float-hw green" style="left: 12%; animation-duration: 36s; animation-delay: -20s;">
+            <svg class="svg-icon" viewbox="0 0 24 24"><path d="M8 6L2 12L8 18M16 6L22 12L16 18M10 20L14 4"></path></svg>
+        </div>
+        <div class="float-hw green" style="left: 25%; animation-duration: 42s; animation-delay: -7s;">
+            <svg class="svg-icon" viewbox="0 0 24 24"><rect height="16" rx="2" ry="2" width="20" x="2" y="4"></rect><path d="M6 9l4 3-4 3 M12 15h4"></path></svg>
+        </div>
+        <div class="float-hw green" style="left: 38%; animation-duration: 29s; animation-delay: -14s;">
+            <svg class="svg-icon" viewbox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"></path><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"></path></svg>
+        </div>
+        <div class="float-hw green" style="left: 52%; animation-duration: 33s; animation-delay: -1s;">
+            <svg class="svg-icon" viewbox="0 0 24 24"><path d="M12 2c-4.4 0-4.4 2-4.4 2v2h4.5v1H4.5S2 6.5 2 12s2.5 5 2.5 5h2v-2.5C6.5 11.5 9 9 12 9h4.5V6.5s0-4.5-4.5-4.5z"></path><path d="M12 22c4.4 0 4.4-2 4.4-2v-2H11.9v-1h7.6s2.5.5 2.5-5-2.5-5-2.5-5h-2v2.5c0 3-2.5 5.5-5.5 5.5H7.5v2.5s0 4.5 4.5 4.5z"></path><circle cx="9" cy="5" r="1"></circle><circle cx="15" cy="19" r="1"></circle></svg>
+        </div>
+        <div class="float-hw green" style="left: 65%; animation-duration: 45s; animation-delay: -10s;">
+            <svg class="svg-icon" viewbox="0 0 24 24"><path d="M17.5 19C19.9853 19 22 16.9853 22 14.5C22 12.1325 20.1772 10.1986 17.8659 10.024C17.3871 6.61868 14.4759 4 11 4C7.13401 4 4 7.13401 4 11C4 11.1718 4.00619 11.3421 4.01831 11.511C2.3172 12.0628 1 13.6841 1 15.5C1 17.9853 3.01472 20 5.5 20H17.5V19Z"></path></svg>
+        </div>
+        <div class="float-hw green" style="left: 78%; animation-duration: 27s; animation-delay: -22s;">
+            <svg class="svg-icon" viewbox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line></svg>
+        </div>
+        <div class="float-hw green" style="left: 92%; animation-duration: 31s; animation-delay: -5s;">
+            <svg class="svg-icon" viewbox="0 0 24 24"><path d="M12 22V4M12 4L6 10M12 4L18 10"></path><path d="M4 22H20"></path></svg>
+        </div>
+    </div>
+
+    <!-- Top Navigation -->
+    <header class="top-nav">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <div class="nav-toggle" id="navToggle">
+                <svg fill="none" height="24" stroke="#000" stroke-width="2" viewbox="0 0 24 24" width="24"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
+            </div>
+            <a href="../index.html" style="display: flex; align-items: center;">
+                <img alt="Tixx Logo" src="logos/tixxlogo.png" style="height: 96px; object-fit: contain;"/>
+            </a>
+        </div>
+        <div class="top-menu">
+            <a href="../index.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                Início
+            </a>
+            <a href="../index.html#areas">
+                <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 22l10-4 10 4L12 2z"></path></svg>
+                Áreas de Especialização
+            </a>
+            <a href="projetos.html">
+                <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect height="18" rx="2" ry="2" width="18" x="3" y="3"></rect><line x1="3" x2="21" y1="9" y2="9"></line><line x1="9" x2="9" y1="21" y2="9"></line></svg>
+                Projetos
+            </a>
+            <div class="dropdown">
+                <a href="ferramentas.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                    </svg>
+                    Ferramentas
+                </a>
+                <div class="dropdown-content">
+                    <a href="ferramentas.html" class="dropdown-item">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        MEU IP 
+                    </a>
+                </div>
+            </div>
+            <a href="../index.html#sobre">
+                <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                Sobre Mim
+            </a>
+            <a href="../index.html#contato">
+                <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                Contato
+            </a>
+        </div>
+    </header>
+
+    <!-- Side Navigation -->
+    <nav class="ds-nav" id="dsNav">
+        <a class="nav-menu-link w-inline-block" href="../index.html">
+            <svg fill="none" height="24" stroke="var(--neon-green)" stroke-width="2" viewBox="0 0 24 24" width="24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+            INÍCIO
+        </a>
+        <a class="nav-menu-link w-inline-block" href="../index.html#areas">
+            <svg fill="none" height="30" stroke="var(--neon-green)" stroke-width="2" viewBox="0 0 24 24" width="30"><path d="M12 2L2 22l10-4 10 4L12 2z"></path></svg>
+            ÁREAS DE ESPECIALIZAÇÃO
+        </a>
+        <a class="nav-menu-link w-inline-block" href="projetos.html">
+            <svg fill="none" height="24" stroke="var(--neon-green)" stroke-width="2" viewBox="0 0 24 24" width="24"><rect height="18" rx="2" ry="2" width="18" x="3" y="3"></rect><line x1="3" x2="21" y1="9" y2="9"></line><line x1="9" x2="9" y1="21" y2="9"></line></svg>
+            PROJETOS
+        </a>
+        <a class="nav-menu-link w-inline-block" href="ferramentas.html">
+            <svg fill="none" height="24" stroke="var(--neon-green)" stroke-width="2" viewBox="0 0 24 24" width="24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+            FERRAMENTAS
+        </a>
+        <a class="nav-menu-link w-inline-block" href="../index.html#sobre">
+            <svg fill="none" height="24" stroke="var(--neon-purple)" stroke-width="2" viewBox="0 0 24 24" width="24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            SOBRE MIM
+        </a>
+        <a class="nav-menu-link w-inline-block" href="../index.html#contato">
+            <svg fill="none" height="24" stroke="var(--neon-green)" stroke-width="2" viewBox="0 0 24 24" width="24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            CONTATO
+        </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="projects-hero" id="hero">
+        <div class="overline-small" data-reveal="" style="color: var(--neon-purple); letter-spacing: 5px;">IA PROMPTS</div>
+        <h1 class="header-title glitch" data-text="IA PROMPTS" data-reveal="">
+            <span class="text-outline">IA PROMPTS</span>
+        </h1>
+        <p class="text-lg" data-reveal="" data-delay="1" style="max-width: 800px; margin: 0 auto; color: rgba(255,255,255,0.7);">
+            Desbloqueie o poder da imaginação artificial. Explore nossa galeria premium, inspire-se com criações de outro mundo. Anexe sua foto e copie os prompts exatos no seu agente de IA para dar vida às suas próprias ideias.
+        </p>
+
+        <!-- Top Marquee -->
+        <div class="skills-marquee-container top-marquee" data-reveal="" data-delay="2">
+            <div class="skills-marquee-content" style="display: inline-flex; align-items: center; gap: 50px; animation: scroll-marquee 45s linear infinite;">
+                <div class="marquee-item" style="display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg><span>VIBE CODE</span></div>
+                <div class="marquee-item" style="display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;"><path d="M12 2L2 22l10-4 10 4L12 2z"></path></svg><span>VIBE DESIGN</span></div>
+                <div class="marquee-item" style="display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg><span>AUTOMAÇÃO WHATSAPP</span></div>
+                <div class="marquee-item" style="display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;"><rect height="14" rx="2" ry="2" width="20" x="2" y="3"></rect><line x1="8" x2="16" y1="21" y2="21"></line><line x1="12" x2="12" y1="17" y2="21"></line></svg><span>SITES E APLICATIVOS</span></div>
+                <div class="marquee-item" style="display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;"><line x1="18" x2="18" y1="20" y2="10"></line><line x1="12" x2="12" y1="20" y2="4"></line><line x1="6" x2="6" y1="20" y2="14"></line></svg><span>DADOS E DASHBOARD</span></div>
+                <div class="marquee-item" style="display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;"><path d="M14.5 2h-5c-2.8 0-5 2.2-5 5v2h10V7c0-.6-.4-1-1-1H8.5V4h6c1.7 0 3 1.3 3 3v2h2V7c0-2.8-2.2-5-5-5z"></path><path d="M9.5 22h5c2.8 0 5-2.2 5-5v-2H9.5v2c0 .6.4 1 1 1h5v2h-6c-1.7 0-3-1.3-3-3v-2h-2v2c0 2.8 2.2 5 5 5z"></path><circle cx="8" cy="7" r="1"></circle><circle cx="16" cy="17" r="1"></circle></svg><span>PYTHON</span></div>
+                <div class="marquee-item" style="display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;"><path d="M2 12h4l3-9 5 18 3-9h5"></path></svg><span>MARKETING DIGITAL</span></div>
+                <div class="marquee-item" style="display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>ESTRATÉGIA EMPRESARIAL</span></div>
+                <div class="marquee-item" style="display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg><span>SEGURANÇA DA INFORMAÇÃO</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modern Separator -->
+    <div class="section-divider" data-reveal=""></div>
+
+
+
+    <!-- ========== SECTION: IMAGENS ========== -->
+    <section class="ds-section" id="imagens" style="background: rgba(15, 15, 15, 0.5);">
+        <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 5%;">
+            <div class="section-header">
+                <div class="overline-small" data-reveal="" style="color: var(--neon-purple);">01. IA ARTISTRY</div>
+                <h2 class="section-title" data-reveal=""><span class="text-outline">GALERIA </span>DE IMAGENS E PROMPTS</h2>
+                <div style="width: 80px; height: 3px; background: var(--neon-purple); margin: 20px auto; box-shadow: var(--glow-purple);"></div>
+            </div>
+
+            <div class="ds-grid">
+                <!-- Imagem 1 -->
+                <div class="cyber-card" data-reveal="" data-delay="1" data-prompt="A digital illustration portrait of a reference in pop-art and neo-expressionism styles. The subject wears round, reflective glasses, dynamically styled hair, and modern casual attire. His face is turned upwards with a confident and visionary expression. The illustration uses geometric color fragments and sharp brushstrokes with a contrasting color palette of dark blue, red, orange, yellow, and cyan. Dramatic lighting, bold facial details, and a clearly visible digital paint texture. A solid dark background reinforces the focus on the character. Futuristic, artistic, cinematic, high-contrast, ultra-detailed impression.">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat1.png" alt="Retrato Neo-Expressionista"></div>
+                    <div class="card-content">
+                        <h3>Retrato Neo-Expressionista</h3>
+                    </div>
+                </div>
+                <!-- Imagem 2 -->
+                <div class="cyber-card" data-reveal="" data-delay="2" data-prompt="A digital illustration portrait of a reference in pop-art and neo-expressionism styles. The subject wears round, reflective glasses, dynamically styled hair, and modern casual attire. His face is turned upwards with a confident and visionary expression. The illustration uses geometric color fragments and sharp brushstrokes with a contrasting color palette of dark blue, red, orange, yellow, and cyan. Dramatic lighting, bold facial details, and a clearly visible digital paint texture. A solid dark background reinforces the focus on the character. Futuristic, artistic, cinematic, high-contrast, ultra-detailed impression.">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat2.png" alt="Visão Pop-Art"></div>
+                    <div class="card-content">
+                        <h3>Visão Pop-Art</h3>
+                    </div>
+                </div>
+                <!-- Imagem 3 -->
+                <div class="cyber-card" data-reveal="" data-delay="3" data-prompt="“A dramatic cinematic composition of a King of Hearts playing card emerging into reality. The card is slightly tilted in a dark, moody environment with soft spotlight lighting. The surface of the card is cracked and breaking apart, with debris and stone fragments flying outward in slow motion. From inside the shattered card, a realistic royal king steps forward - a middle-aged man with a strong, intense expression, short beard, and piercing eyes. He wears an ornate golden crown with red gemstones and a richly embroidered red royal coat with intricate gold patterns and fur details. The king is reaching forward and pointing directly at the viewer, creating a powerful, immersive 3D effect. His body is partially emerging out of the card, blending fantasy and realism. The card features classic King of Hearts symbols in red, with a textured, slightly worn surface. The background is dark, minimal, and cinematic with subtle smoke and light rays enhancing depth. Ultra-detailed textures, hyper-realistic lighting, depth of field, motion particles, sharp focus on the king, dramatic shadows, high contrast, 8K resolution, photorealistic, cinematic poster style.”">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat3.png" alt="O Despertar do Rei"></div>
+                    <div class="card-content">
+                        <h3>O Despertar do Rei</h3>
+                    </div>
+                </div>
+                <!-- Imagem 4 -->
+                <div class="cyber-card" data-reveal="" data-delay="4" data-prompt="&quot;Create hyper-realistic portrait of a muscular man with glowing magma cracks across his body, resembling molten lava beneath charred, rock-like skin. His chest and shoulders appear like cooled volcanic stone splitting apart with bright orange and fiery red lava glowing through the fissures. Subtle smoke rises from his body, creating a dramatic and intense atmosphere. His face is sharp and serious, with strong jawline, short dark hair, and light stubble. The lighting is cinematic, highlighting the glowing cracks against a dark, moody background. Ultra-detailed textures, high contrast, 8K resolution, dramatic shadows, fantasy realism, volcanic humanoid, intense gaze, dark environment.&quot;">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat4.png" alt="Alma Vulcânica"></div>
+                    <div class="card-content">
+                        <h3>Alma Vulcânica</h3>
+                    </div>
+                </div>
+                <!-- Imagem 5 -->
+                <div class="cyber-card" data-reveal="" data-delay="5" data-prompt="Use the provided reference image only to naturally preserve the subject&apos;s facial identity, facial proportions, hairstyle, beard, skin tone, and overall appearance. Create the image as if it were a real photograph of the same person in the scene, not a face replacement or composited edit. The face, neck, body, and hands must look naturally unified with consistent lighting, perspective, and skin texture. Create an ultra-realistic cinematic portrait of the subject in a professional studio setting with dramatic lighting, realistic shadows, and natural depth of field. Ensure the final image looks like a real high-end DSLR photograph, with authentic skin detail, pores, fabric textures, and cinematic color grading. Avoid any CGI, plastic, over-smoothed, or artificial appearance. The subject’s identity and recognizable facial features must remain exactly consistent with the reference image.">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat5.png" alt="Essência Pura"></div>
+                    <div class="card-content">
+                        <h3>Essência Pura</h3>
+                    </div>
+                </div>
+                <!-- Imagem 6 -->
+                <div class="cyber-card" data-reveal="" data-delay="6" data-prompt="Create a stylized digital portrait based on the provided reference photo. Use a semi-realistic painterly style with visible brush strokes and smooth blending. Apply a neon color lighting scheme with strong contrast between deep green background and vibrant highlights in cyan, yellow, orange, and magenta. Use rim lighting and glow effects around the face, hair, and shoulders to create a electric, luminous aura. Skin should have a soft airbrushed look combined with painterly texture, not photorealistic. Enhance facial structure with bold color blocking and artistic shading, not natural tones. Hair should be slightly stylized with dynamic glowing strands and light streaks. Add subtle energy-like light trails or abstract strokes around the subject. Background should be a clean deep blue gradient, minimal and smooth, emphasizing contrast. Lighting: cinematic, high contrast, with strong highlights and soft shadows. Mood: modern, futuristic, vibrant, artistic. Ultra-detailed, sharp focus, high resolution, digital painting, trending on artstation.">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat6.png" alt="Aura Cibernética"></div>
+                    <div class="card-content">
+                        <h3>Aura Cibernética</h3>
+                    </div>
+                </div>
+                <!-- Imagem 7 -->
+                <div class="cyber-card" data-reveal="" data-delay="7" data-prompt="“A dramatic cinematic scene of a man transformed into an ice-covered figure, sitting on a transparent block of cracked ice. His hair, jacket, and skin appear frozen with intricate frosty textures and glistening highlights. He sits leaning forward with his hands resting between his knees, surrounded by scattered snow on the ground. The lighting is dark and moody with a cold blue glow illuminating the ice, emphasizing the chilled environment. Ultra-realistic, high-detail, sharp, atmospheric, dramatic shadows, photorealistic.”">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat7.png" alt="Espírito Congelado"></div>
+                    <div class="card-content">
+                        <h3>Espírito Congelado</h3>
+                    </div>
+                </div>
+                <!-- Imagem 8 -->
+                <div class="cyber-card" data-reveal="" data-delay="8" data-prompt="Create a stylized digital portrait based on the provided reference photo. Use a semi-realistic painterly style with visible brush strokes and smooth blending. Apply a neon purple e green futuristc color lighting scheme with strong contrast between deep blue background and vibrant highlights in cyan, yellow, orange, and magenta. Use rim lighting and glow effects around the face, hair, and shoulders to create a electric, luminous aura. Skin should have a soft airbrushed look combined with painterly texture, not photorealistic. Enhance facial structure with bold color blocking and artistic shading, not natural tones. Hair should be slightly stylized with dynamic glowing strands and light streaks. Add subtle energy-like light trails or abstract strokes around the subject. Background should be a clean deep blue gradient, minimal and smooth, emphasizing contrast. Lighting: cinematic, high contrast, with strong highlights and soft shadows. Mood: modern, futuristic, vibrant, artistic. Ultra-detailed, sharp focus, high resolution, digital painting, trending on artstation. His face is turned upward, with a confident and visionary expression.">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat8.png" alt="Visão Neon Futurista"></div>
+                    <div class="card-content">
+                        <h3>Visão Neon Futurista</h3>
+                    </div>
+                </div>
+                <!-- Imagem 9 -->
+                <div class="cyber-card" data-reveal="" data-delay="9" data-prompt="Create a stylized digital portrait based on the provided reference photo. Use a semi-realistic painterly style with visible brush strokes and smooth blending. Apply a neon color lighting scheme with strong contrast between deep blue background and vibrant highlights in cyan, yellow, orange, and magenta. Use rim lighting and glow effects around the face, hair, and shoulders to create a electric, luminous aura. Skin should have a soft airbrushed look combined with painterly texture, not photorealistic. Enhance facial structure with bold color blocking and artistic shading, not natural tones. Hair should be slightly stylized with dynamic glowing strands and light streaks. Add subtle energy-like light trails or abstract strokes around the subject. Background should be a clean deep blue gradient, minimal and smooth, emphasizing contrast. Lighting: cinematic, high contrast, with strong highlights and soft shadows. Mood: modern, futuristic, vibrant, artistic. Ultra-detailed, sharp focus, high resolution, digital painting, trending on artstation.">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat8.1.png" alt="Energia Vibrante"></div>
+                    <div class="card-content">
+                        <h3>Energia Vibrante</h3>
+                    </div>
+                </div>
+                <!-- Imagem 10 -->
+                <div class="cyber-card" data-reveal="" data-delay="10" data-prompt="“Ultra-detailed black and white portrait of a man in profile, wearing round glasses, intense focused expression, hyper-realistic engraving style, extreme close-up on face, visible skin texture, wrinkles, and beard stubble, dramatic lighting with deep shadows and high contrast, cross-hatching and etching illustration technique, sharp linework, cinematic composition, dark background, minimalist poster design, monochrome, studio lighting, 8K detail, highly textured, artistic print style”">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat9.png" alt="Gravura Monocromática"></div>
+                    <div class="card-content">
+                        <h3>Gravura Monocromática</h3>
+                    </div>
+                </div>
+                <!-- Imagem 11 -->
+                <div class="cyber-card" data-reveal="" data-delay="11" data-prompt="“A detailed hand-drawn portrait of a man , wearing round red-tinted glasses and a red jacket with a raised collar. The artwork is in a sketchy, cross-hatched ink style with rough pencil lines and expressive strokes. The background features abstract geometric construction lines, circles, and architectural drafting marks, giving a technical/artistic fusion look. Color palette is mostly sepia and black ink with bold red accents (glasses and jacket). The texture resembles aged paper or parchment. High contrast, gritty, artistic, slightly cyberpunk aesthetic, poster design style.” His face is turned upward, with a confident and visionary expression.">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat10.png" alt="Esboço Técnico Gritty"></div>
+                    <div class="card-content">
+                        <h3>Esboço Técnico Gritty</h3>
+                    </div>
+                </div>
+                <!-- Imagem 12 -->
+                <div class="cyber-card" data-reveal="" data-delay="12" data-prompt="Use the provided reference image only to naturally preserve the subject&apos;s facial identity, facial proportions, hairstyle, beard, skin tone, and overall appearance. Create the image as if it were a real photograph of the same person in the scene, not a face replacement or composited edit. The face, neck, body, and hands must look naturally unified with consistent lighting, perspective, and skin texture. Create an ultra-realistic cinematic portrait of the subject in a professional studio setting with dramatic lighting, realistic shadows, and natural depth of field. Ensure the final image looks like a real high-end DSLR photograph, with authentic skin detail, pores, fabric textures, and cinematic color grading. Avoid any CGI, plastic, over-smoothed, or artificial appearance. The subject’s identity and recognizable facial features must remain exactly consistent with the reference image. His face is turned upward, with a confident and visionary expression.">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat11.png" alt="Realismo Absoluto"></div>
+                    <div class="card-content">
+                        <h3>Realismo Absoluto</h3>
+                    </div>
+                </div>
+                <!-- Imagem 13 -->
+                <div class="cyber-card" data-reveal="" data-delay="13" data-prompt="“A surreal portrait of a young man with closed eyes, centered composition, calm expression, dark hair slightly messy. The left side of his face and body dissolves into splashing water with droplets frozen mid-air, while the right side transforms into vivid flames with glowing embers and fire particles. Strong contrast between cool tones (water side) and warm tones (fire side). Dramatic lighting, cinematic style, hyper-realistic details, high resolution, soft neutral background, symmetrical composition, conceptual art representing duality (fire vs water, chaos vs calm). Ultra-detailed skin texture, sharp focus, 8K, professional poster design.” His face is turned upward, with a confident and visionary expression.">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat12.png" alt="Dualidade Elemental"></div>
+                    <div class="card-content">
+                        <h3>Dualidade Elemental</h3>
+                    </div>
+                </div>
+                <!-- Imagem 14 -->
+                <div class="cyber-card" data-reveal="" data-delay="14" data-prompt="“Use the uploaded picture as a reference (Strict identity lock, the face must match the attached reference photo exactly, preserving facial structure, skin tone, expression, and hairstyle (same haircut and hair texture) to create an ultra-realistic cinematic double exposure portrait of me in a clean left-facing side profile, sharp jawline and natural facial structure clearly defined. The outer silhouette is dark and well-contoured against a soft warm beige sunset background. Inside the silhouette, seamlessly blend a dramatic urban street scene at golden hour: a lone me walking forward in the center of an empty destroyed city road, symmetrical perspective lines, damaged buildings on both sides, broken debris scattered along sidewalks, electric poles and cables stretching into the distance. The sun positioned directly at the horizon behind the walking figure, creating strong backlight glow and long stretched shadow toward the camera. Warm orange sunlight flooding through the internal city scene, high contrast, cinematic depth, realistic textures, smooth blending edges between portrait and environment. Moody yet hopeful atmosphere, 8K resolution, sharp detail, soft vignette.”">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat13.png" alt="Exposição Dupla Urbana"></div>
+                    <div class="card-content">
+                        <h3>Exposição Dupla Urbana</h3>
+                    </div>
+                </div>
+                <!-- Imagem 15 -->
+                <div class="cyber-card" data-reveal="" data-delay="15" data-prompt="Ultra-realistic cinematic scene of the same man from the reference photo floating mid-air above a futuristic rooftop during sunset twilight. He has a detailed short beard, round glasses, black cap, black jacket layered over a minimalist black t-shirt featuring the glowing neon “Tixx” logo across the chest. The logo emits subtle white, green, and purple light reflections onto the fabric and surrounding skin, matching the provided Tixx logo design exactly. The man levitates naturally with relaxed open hands and a calm, powerful posture while spiraling arcs of electric energy wrap around his body in soft glowing white lightning with faint bluish tendrils. His glowing white sneakers radiate soft ethereal light beneath him. Small floating particles, sparks, and ambient fog drift through the air. The background features a cinematic futuristic city skyline with skyscrapers and reflective glass buildings under dramatic golden-hour lighting. The sky blends deep blue storm clouds, soft purple tones, and warm orange sunset reflections. Strong cinematic backlighting creates a radiant halo around the character’s silhouette, enhancing the atmospheric sci-fi mood. The rooftop surface is wet and reflective, mirroring the lightning and sunset colors. Ultra-detailed skin pores, realistic beard strands, authentic fabric folds, HDR lighting, volumetric fog, dramatic shadows, shallow depth of field, realistic reflections, DSLR realism, 55mm lens look, UHD 8K quality, photorealistic, Unreal Engine quality, cinematic composition, modern sci-fi aesthetic, hyper-detailed, no CGI look, no cartoon style, realistic natural colors.">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat14.png" alt="Levitação Neon"></div>
+                    <div class="card-content">
+                        <h3>Levitação Neon</h3>
+                    </div>
+                </div>
+                <!-- Imagem 16 -->
+                <div class="cyber-card" data-reveal="" data-delay="16" data-prompt="Ultra-detailed dark fantasy portrait of an old Viking warrior in side profile, facing right, with a bald head, braided hair extensions at the back, and a long textured beard. His face is weathered with deep wrinkles, scars, and intricate Nordic-style tattoos engraved across the side of his head, face, and neck. He wears round metallic glasses and a heavy fur-lined Viking armor with engraved Nordic patterns and leather details. The artwork is created in an ultra-detailed engraving / etching illustration style mixed with cyberpunk neon aesthetics. Strong dramatic lighting with high contrast shadows. Neon purple and toxic green rim lights illuminate the warrior from opposite sides, creating a glowing cinematic aura around his silhouette. Dark black background with vibrant purple and green watercolor splashes, paint explosions, glowing ink splatters, smoke textures, and abstract neon particles surrounding the character. Extremely detailed facial texture, realistic beard strands, sharp linework, intricate tattoo details, cinematic composition, modern graphic poster aesthetic, ultra sharp focus, dark fantasy atmosphere, cyber-viking style, high contrast, volumetric lighting, glowing edges, 4K, masterpiece, trending on ArtStation, Unreal Engine quality, hyper-detailed digital illustration.">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat15.png" alt="Viking Cyber Neon"></div>
+                    <div class="card-content">
+                        <h3>Viking Cyber Neon</h3>
+                    </div>
+                </div>
+                <!-- Imagem 17 -->
+                <div class="cyber-card" data-reveal="" data-delay="17" data-prompt="“Ultra-detailed black and white portrait of an old Viking warrior in side profile, facing right, with braided hair and a long textured beard. His face is weathered with deep wrinkles and scars, conveying strength and wisdom. Intricate Nordic-style tattoos cover the side of his face. The illustration is done in fine line engraving / etching style with extremely high detail and realistic shading. Minimalist white background with teal watercolor splashes and ink splatters scattered around the portrait. High contrast, sharp focus, dramatic lighting, artistic poster composition, modern graphic design aesthetic, 4K resolution.”">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat16.png" alt="Guerreiro Nórdico Minimalista"></div>
+                    <div class="card-content">
+                        <h3>Guerreiro Nórdico Minimalista</h3>
+                    </div>
+                </div>
+                <!-- Imagem 18 -->
+                <div class="cyber-card" data-reveal="" data-delay="18" data-prompt="A cinematic, hyper-realistic photograph of a real human person standing at the Krusty Krab kitchen grill, smiling and posing next to a semi-realistic reimagined SpongeBob SquarePants in his chef uniform. SpongeBob is redesigned with realistic sponge textures, porous skin detail, expressive wide eyes and realistic fabric on his white uniform and hat. The kitchen is highly detailed – a large flat grill with sizzling Krabby patties, hanging spatulas, stainless steel surfaces, steam rising from the grill, warm orange fire glow. Cinematic lighting with dramatic warm glow from the grill as key light, steam catching the backlight, subtle rim lighting. Shallow depth of field, film grain, warm amber and orange color grading. Ultra-detailed, 8k photorealistic rendering.">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat17.png" alt="Cozinha do Siri Cascudo"></div>
+                    <div class="card-content">
+                        <h3>Cozinha do Siri Cascudo</h3>
+                    </div>
+                </div>
+                <!-- Imagem 19 -->
+                <div class="cyber-card" data-reveal="" data-delay="19" data-prompt="Create a hyper-detailed black and white portrait artwork where the face is formed entirely from motivational and positive words in bold Portuguese typography. The words must all be written in Portuguese and should follow the contours, shadows, highlights, and facial structure of the uploaded reference image, making the face 99.9% identical to the original photo. Only show the face — no clothing, shoulders, or body. Use a dark black background so the typographic face stands out dramatically with strong contrast. Include motivational Portuguese words such as: “GRATIDÃO”, “FORÇA”, “SUPERAÇÃO”, “FOCO”, “DISCIPLINA”, “PERSISTÊNCIA”, “MOTIVAÇÃO”, “SUCESSO”, “CORAGEM”, “FÉ”, “VITÓRIA”, “RESILIÊNCIA”, “DETERMINAÇÃO”, “EVOLUÇÃO”, “POSITIVIDADE”, “CONQUISTA”, “TRABALHO”, “SONHOS”, “PODER”, “CONFIANÇA” The typography must blend naturally into: * facial contours * shadows * beard details * skin texture * eyes * nose * cheek structure * forehead * lighting gradients Style: * artistic typographic portrait * ultra realistic * black and white * hyper detailed * cinematic contrast * inspirational aesthetic * realistic typography integration * dramatic lighting * premium digital artwork * realistic facial depth * visually powerful and emotional IMPORTANT: All visible words MUST be in Portuguese only. No English words. Preserve maximum facial identity and realism from the uploaded reference photo. Do not place any text on the beard, and use the attached image as a reference for the typography and writing style.">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat18.png" alt="Face da Motivação"></div>
+                    <div class="card-content">
+                        <h3>Face da Motivação</h3>
+                    </div>
+                </div>
+                <!-- Imagem 20 -->
+                <div class="cyber-card" data-reveal="" data-delay="20" data-prompt="Transform this person into a fully stylized 3D cartoon character inspired by Pixar-style animation. Apply the stylization to the entire subject, including head, face, hair, body, clothing, hands, and all visible elements — not just the face. Ensure the whole body is included if visible in the original image, preserving correct anatomy while enhancing proportions in a charming and appealing way. Strictly maintain the original camera angle, perspective, pose, and framing (composition must match the input image). Do not crop, zoom, or change the viewpoint. The background must NEVER remain plain or unchanged. If the original image has a background (including white or neutral), completely replace and reinterpret it into a vibrant, colorful, stylized cartoon environment. If no background is present, generate a new one in the same 3D animated style, ensuring it matches the scene, mood, and subject. The background must be visually rich, cohesive, and fully rendered in the same cartoon style as the character. All elements in the image — including clothing, accessories, and background — must follow the same stylized 3D cartoon aesthetic. No realistic or photographic elements should remain. Use cinematic lighting with soft highlights, global illumination, and realistic shadows. Add depth and atmosphere. Render in ultra-high definition (4K), with smooth shading, realistic materials, and a polished modern animated film look. Highly detailed, expressive, and visually cohesive.">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat19.png" alt="Magia Pixar 3D"></div>
+                    <div class="card-content">
+                        <h3>Magia Pixar 3D</h3>
+                    </div>
+                </div>
+                <!-- Imagem 21 -->
+                <div class="cyber-card" data-reveal="" data-delay="21" data-prompt="“Dark fantasy cinematic portrait of a wounded warrior leaning against a tree in a mystical forest, side profile close-up, cracked lava-like glowing veins spreading from his eye, fiery orange magma energy inside the skin, intense emotional expression, dirty skin with blood marks and scratches, muscular body covered in mud and scars, silver chain necklace and bracelet, dramatic rim lighting, floating embers in the air, ancient magical glowing symbol circle in the blurred background, shallow depth of field, ultra-detailed skin texture, moody atmosphere, volumetric lighting, 8K resolution, high contrast, dark teal and orange color grading, Unreal Engine, hyper-realistic, epic movie poster style”">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat20.png" alt="Guerreiro de Magma"></div>
+                    <div class="card-content">
+                        <h3>Guerreiro de Magma</h3>
+                    </div>
+                </div>
+                <!-- Imagem 22 -->
+                <div class="cyber-card" data-reveal="" data-delay="22" data-prompt="Create Ultra-realistic cinematic editorial poster featuring the exact same man from the provided reference image, with his facial identity preserved with maximum fidelity — identical eye shape, eyebrow structure, beard texture, nose shape, lips, facial proportions, skin tone, hairstyle, and overall bone structure. The composition is perfectly centered, showing the face almost entirely hidden in deep shadow against a solid intense crimson red background. Only the eyes are subtly visible through a soft horizontal band of diffused light cutting across the face inside a thin minimalist rectangular frame. The rest of the face fades naturally into darkness with smooth cinematic gradient falloff, soft diffusion, atmospheric shadows, and subtle film grain texture. Lighting is extremely controlled, low exposure, moody, and editorial, with no harsh highlights or over-sharpening outside the eyes. The subject wears a dark hoodie and black jacket blending into the shadows, creating a mysterious silhouette effect. His expression is calm, intense, focused, and emotionally powerful. The eyes are razor-sharp and naturally illuminated while the surrounding details remain soft and cinematic. Large modern white sans-serif typography reading ‘TIXX’ is positioned across the lower center of the poster, partially overlapping the silhouette. Beneath it, small minimalist poetic text lines appear in a clean luxury editorial layout. Add subtle texture and negative space for a premium fashion-poster aesthetic. Top-right corner contains a small elegant handwritten watermark signature reading ‘Tiago de Oliveira’. Overall style resembles a luxury cinematic fashion campaign poster, hyper-realistic, minimalistic, mysterious, ultra-detailed, soft grain, shallow depth, 8K quality, realistic skin texture, sophisticated color grading, no CGI look, no cartoon effect.">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat21.png" alt="Poster Editorial Cinematic"></div>
+                    <div class="card-content">
+                        <h3>Poster Editorial Cinematic</h3>
+                    </div>
+                </div>
+                <!-- Imagem 23 -->
+                <div class="cyber-card" data-reveal="" data-delay="23" data-prompt="“Ultra-realistic, vertical 4:5 format, selfie with an ultra wide-angle 13mm lens, featuring me alongside SpongeBob, Patrick Star, Squidward, Sandy Cheeks, Mr. Krabs, Gary, and Plankton inside my studio. Everyone is making exaggerated and funny expressions. High-angle camera shot, extremely wide lens without fisheye distortion. Characters portrayed in a realistic live-action version, without a cartoon appearance, with cinematic lighting and all naturally integrated into the scene while maintaining a stylized realism.”">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat22.png" alt="Selfie em Fenda do Biquíni"></div>
+                    <div class="card-content">
+                        <h3>Selfie em Fenda do Biquíni</h3>
+                    </div>
+                </div>
+                <!-- Imagem 24 -->
+                <div class="cyber-card" data-reveal="" data-delay="24" data-prompt="“A high-fashion editorial portrait, cozy and dreamlike, with maximum photographic realism. An adult person lying clearly at the center, completely surrounded by dozens of ultra-cute French Bulldogs filling the frame like a soft living cloud. French Bulldogs with varied and realistic features: some more compact and robust, others smaller and delicate, different short snout shapes, large upright ears, rounded expressive faces, big shiny eyes, and small muscular bodies. Short fur but extremely detailed, soft and healthy-looking, with visible realistic texture, natural shine, and hyper-realistic micro details (without a plastic appearance). Natural variations of colors and patterns typical of the breed: white, cream, beige, caramel, fawn, bluish gray, glossy black, black and white, brindle patterns, and balanced soft markings. All puppies clean, healthy, adorable-looking, with baby-like proportions. Extremely realistic and cinematic lighting: a warm and intimate atmosphere as if a fireplace were nearby, casting soft amber light; consistent rim lighting on both the person and the French Bulldogs, creating glowing outlines around the fur and natural warm halos, with soft gradual shadows and no blown highlights. Maintain a cozy end-of-year/hygge atmosphere, with delicate Christmas lights around the scene and creamy bokeh in the background, subtle enough not to compete with the subject. The person should be wearing an oversized chunky knit sweater made of cashmere wool, thick yarn, relaxed fit, without logos, in Butter Vivid Yellow (HEX #F6DB60), with subtle realistic fabric folds and shadow variations. Perfectly symmetrical top-down composition, Vogue editorial aesthetic, cinematic photography, shallow depth of field, 85mm lens look, high resolution, ultra-detailed, realistic skin texture preserved, and realistic human proportions; maintain the facial structure faithful to the reference photo when provided, without artificial beautification, only premium natural post-processing with organic sharpness.”">
+                    <div class="card-img-header"><img src="imagens/iaprompts/xuxachat23.png" alt="Nuvem de Bulldogs"></div>
+                    <div class="card-content">
+                        <h3>Nuvem de Bulldogs</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ========== 05. FOOTER ========== -->
+    <footer class="cyber-footer" id="contato" style="position: relative; z-index: 10; background: var(--void-base);">
+        <!-- Footer Marquee -->
+        <div class="skills-marquee-container" style="position: relative; width: 100%; overflow: hidden; white-space: nowrap; padding: 30px 0; background: rgba(116, 255, 10, 0.02); border-top: 1px solid rgba(116, 255, 10, 0.1); border-bottom: 1px solid rgba(116, 255, 10, 0.1); margin-bottom: 40px;">
+            <div class="skills-marquee-content" style="display: inline-flex; align-items: center; gap: 50px; animation: scroll-marquee 45s linear infinite;">
+                <div class="marquee-item" style="display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg><span>VIBE CODE</span></div>
+                <div class="marquee-item" style="display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;"><path d="M12 2L2 22l10-4 10 4L12 2z"></path></svg><span>VIBE DESIGN</span></div>
+                <div class="marquee-item" style="display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg><span>AUTOMAÇÃO WHATSAPP</span></div>
+                <div class="marquee-item" style="display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;"><rect height="14" rx="2" ry="2" width="20" x="2" y="3"></rect><line x1="8" x2="16" y1="21" y2="21"></line><line x1="12" x2="12" y1="17" y2="21"></line></svg><span>SITES E APLICATIVOS</span></div>
+                <div class="marquee-item" style="display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;"><line x1="18" x2="18" y1="20" y2="10"></line><line x1="12" x2="12" y1="20" y2="4"></line><line x1="6" x2="6" y1="20" y2="14"></line></svg><span>DADOS E DASHBOARD</span></div>
+                <div class="marquee-item" style="display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;"><path d="M14.5 2h-5c-2.8 0-5 2.2-5 5v2h10V7c0-.6-.4-1-1-1H8.5V4h6c1.7 0 3 1.3 3 3v2h2V7c0-2.8-2.2-5-5-5z"></path><path d="M9.5 22h5c2.8 0 5-2.2 5-5v-2H9.5v2c0 .6.4 1 1 1h5v2h-6c-1.7 0-3-1.3-3-3v-2h-2v2c0 2.8 2.2 5 5 5z"></path><circle cx="8" cy="7" r="1"></circle><circle cx="16" cy="17" r="1"></circle></svg><span>PYTHON</span></div>
+                <div class="marquee-item" style="display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;"><path d="M2 12h4l3-9 5 18 3-9h5"></path></svg><span>MARKETING DIGITAL</span></div>
+                <div class="marquee-item" style="display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>ESTRATÉGIA EMPRESARIAL</span></div>
+                <div class="marquee-item" style="display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; letter-spacing: 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg><span>SEGURANÇA DA INFORMAÇÃO</span></div>
+            </div>
+        </div>
+        <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 40px 5%;">
+            <div class="footer-content" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px;">
+                <!-- Logo -->
+                <div class="footer-logo" data-reveal="">
+                    <img src="logos/tixxlogo.png" alt="Tixx Logo" style="height: 180px; filter: drop-shadow(0 0 10px rgba(116, 255, 10, 0.3));">
+                </div>
+
+                <!-- Direitos -->
+                <div class="footer-rights" data-reveal="" data-delay="1" style="text-align: center;">
+                    <p style="color: rgba(255, 255, 255, 0.6); font-family: var(--font-ui); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">
+                        &copy; <span id="currentYear"></span> TIXX.COM.BR - TODOS OS DIREITOS RESERVADOS.
+                    </p>
+                    <div style="width: 50px; height: 2px; background: var(--neon-purple); margin: 10px auto 0; box-shadow: var(--glow-purple);"></div>
+                </div>
+
+                <!-- Redes Sociais -->
+                <div class="footer-socials" data-reveal="" data-delay="2" style="display: flex; gap: 15px;">
+                    <a href="https://instagram.com/tiagodeoliveiratixx" target="_blank" class="footer-social-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px; height:20px;"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </a>
+                    <a href="https://tiktok.com/@tiagooliveiraaaxuxa" target="_blank" class="footer-social-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px; height:20px;"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox Structure -->
+    <div id="imageLightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <div class="lightbox-container" style="position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%;">
+            <img id="lightboxImg" class="lightbox-content" alt="Lightbox Image">
+            <video id="lightboxVid" class="lightbox-content" controls style="display:none;"></video>
+            <div id="lightboxPlayBtn" class="video-play-btn" style="display:none; width: 100px; height: 100px; font-size: 40px; position: absolute; z-index: 10002; cursor: pointer;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+            </div>
+            
+            <!-- Botão Copiar Prompt no Modal -->
+            <button id="lightboxCopyBtn" class="cyber-btn" style="display:none; position: absolute; bottom: 80px; z-index: 10001; min-width: 200px; text-align: center;">
+                COPIAR PROMPT <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+            </button>
+
+            <a id="lightboxLink" href="#" target="_blank" class="cyber-btn" style="display:none; position: absolute; bottom: 80px; z-index: 10001; min-width: 200px; text-align: center;">VER MODELO DO SITE</a>
+            <div id="lightboxCaption" class="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <!-- JS References -->
+    <script src="js/jquery-3_cc83dad18447.js" type="text/javascript"></script>
+    <script src="js/webflow_ed069067d2e0.js" type="text/javascript"></script>
+    <script>
+        // Side Nav Logic
+        const navToggle = document.getElementById('navToggle');
+        const dsNav = document.getElementById('dsNav');
+
+        navToggle.addEventListener('click', () => {
+            dsNav.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.ds-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                dsNav.classList.remove('active');
+                navToggle.classList.remove('active');
+            });
+        });
+
+        // Intersection Observer for Reveal
+        const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('[data-reveal]').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.filter = 'blur(15px)';
+            el.style.transition = 'all 1.2s var(--ease-premium)';
+            const delay = el.getAttribute('data-delay') || 0;
+            el.style.transitionDelay = `${delay * 0.15}s`;
+            observer.observe(el);
+        });
+
+        // Hero Scroll Transition
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const hero = document.getElementById('hero');
+            if (hero) {
+                const heroHeight = hero.offsetHeight;
+                if (scrollY < heroHeight) {
+                    const opacity = 1 - (scrollY / (heroHeight * 0.7));
+                    const yPos = scrollY * 0.3;
+                    hero.style.opacity = opacity > 0 ? opacity : 0;
+                    hero.style.transform = `translateY(${yPos}px)`;
+                }
+            }
+        });
+
+        // Clone Floating Icons into all Sections
+        const heroIcons = document.querySelector('.floating-icons-container');
+        const sections = document.querySelectorAll('.ds-section');
+        
+        if (heroIcons) {
+            sections.forEach(section => {
+                const clonedIcons = heroIcons.cloneNode(true);
+                clonedIcons.style.opacity = '0.8';
+                section.insertBefore(clonedIcons, section.firstChild);
+            });
+        }
+
+        // 3D Card Hover Effect
+        document.querySelectorAll('.cyber-card').forEach(card => {
+            setTimeout(() => { card.style.transition = ''; }, 2000);
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -10; 
+                const rotateY = ((x - centerX) / centerX) * 10;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+                card.style.setProperty('transform', `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`, 'important');
+            });
+            card.addEventListener('mouseleave', () => { card.style.removeProperty('transform'); });
+        });
+
+        const style = document.createElement('style');
+        style.innerHTML = `
+            [data-reveal].visible { opacity: 1 !important; transform: translateY(0) !important; filter: blur(0) !important; }
+            @keyframes scroll-marquee {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Lightbox Logic
+        const lightbox = document.getElementById('imageLightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxVid = document.getElementById('lightboxVid');
+        const lightboxPlayBtn = document.getElementById('lightboxPlayBtn');
+        const lightboxLink = document.getElementById('lightboxLink');
+        const lightboxCopyBtn = document.getElementById('lightboxCopyBtn');
+        const lightboxCaption = document.getElementById('lightboxCaption');
+        const closeBtn = document.querySelector('.lightbox-close');
+
+        document.querySelectorAll('.cyber-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                const isVideo = card.closest('#videos') !== null;
+                const isSite = card.closest('#sites') !== null;
+                const prompt = card.getAttribute('data-prompt');
+                
+                lightbox.classList.add('active');
+                lightboxImg.style.display = 'block';
+                lightboxVid.style.display = 'none';
+                lightboxVid.pause();
+                lightboxPlayBtn.style.display = 'none';
+                lightboxLink.style.display = 'none';
+                lightboxCopyBtn.style.display = 'none';
+                
+                const img = card.querySelector('img');
+                lightboxImg.src = img.src;
+                lightboxCaption.textContent = img.alt || 'TIXX PROJECT';
+                document.body.style.overflow = 'hidden';
+
+                if (prompt) {
+                    lightboxCopyBtn.style.display = 'block';
+                    lightboxCopyBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        copyPrompt(prompt, lightboxCopyBtn);
+                    };
+                }
+
+                if (isSite) {
+                    const siteLink = card.querySelector('.project-link')?.href || 'projetos.html';
+                    lightboxLink.href = siteLink;
+                    lightboxLink.style.display = 'block';
+                }
+
+                if (isVideo) {
+                    lightboxPlayBtn.style.display = 'flex';
+                    const videoSrc = card.getAttribute('data-video') || 'videos/tixxvideoapresentação.mp4';
+                    lightboxVid.src = videoSrc;
+                }
+            });
+        });
+
+        lightboxPlayBtn.addEventListener('click', () => {
+            lightboxImg.style.display = 'none';
+            lightboxPlayBtn.style.display = 'none';
+            lightboxVid.style.display = 'block';
+            lightboxVid.play();
+        });
+
+        const closeLightbox = () => {
+            lightbox.classList.remove('active');
+            lightboxVid.pause();
+            document.body.style.overflow = '';
+        };
+
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeLightbox();
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            const container = document.querySelector('.lightbox-container');
+            if (e.target === lightbox || e.target === container || e.target === closeBtn) {
+                closeLightbox();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Toast Logic
+        function showToast(message) {
+            let toast = document.querySelector('.cyber-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.className = 'cyber-toast';
+                toast.innerHTML = `
+                    <div class="toast-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                    <span class="toast-msg"></span>
+                `;
+                document.body.appendChild(toast);
+            }
+            toast.querySelector('.toast-msg').textContent = message;
+            toast.classList.add('active');
+            setTimeout(() => toast.classList.remove('active'), 3000);
+        }
+
+        /* PARTICLE BACKGROUND */
+        (function particles() {
+            const canvas = document.getElementById('particles');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let w, h, dots, raf;
+            const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+            function resize() {
+                w = canvas.width = window.innerWidth * DPR;
+                h = canvas.height = window.innerHeight * DPR;
+                canvas.style.width = '100%';
+                canvas.style.height = '100%';
+                seed();
+            }
+            function seed() {
+                const N = Math.floor((window.innerWidth * window.innerHeight) / 16000);
+                dots = Array.from({ length: N }, () => ({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    vx: (Math.random() - 0.5) * 0.25 * DPR,
+                    vy: (Math.random() - 0.5) * 0.25 * DPR,
+                    r: (Math.random() * 1.4 + 0.4) * DPR,
+                    a: Math.random() * 0.5 + 0.2
+                }));
+            }
+            function draw() {
+                ctx.clearRect(0, 0, w, h);
+                for (const d of dots) {
+                    d.x += d.vx; d.y += d.vy;
+                    if (d.x < 0 || d.x > w) d.vx *= -1;
+                    if (d.y < 0 || d.y > h) d.vy *= -1;
+                    ctx.beginPath();
+                    ctx.fillStyle = `rgba(116, 255, 10, ${d.a})`;
+                    ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                const MAX = 130 * DPR;
+                for (let i = 0; i < dots.length; i++) {
+                    for (let j = i + 1; j < dots.length; j++) {
+                        const dx = dots[i].x - dots[j].x;
+                        const dy = dots[i].y - dots[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < MAX) {
+                            const op = (1 - dist / MAX) * 0.18;
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(116, 255, 10, ${op})`;
+                            ctx.lineWidth = 0.5 * DPR;
+                            ctx.moveTo(dots[i].x, dots[i].y);
+                            ctx.lineTo(dots[j].x, dots[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                raf = requestAnimationFrame(draw);
+            }
+            let resizeT;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeT);
+                resizeT = setTimeout(resize, 120);
+            });
+            resize();
+            draw();
+        })();
+
+        function copyPrompt(text, btn) {
+            if (!btn) btn = event.currentTarget;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = 'COPIADO! <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                btn.style.color = 'var(--neon-green)';
+                
+                // Mostrar Toast Notification
+                showToast('Prompt copiado para Área de Tansferência. Abra seu agente, anexe sua foto, cole o prompt copiado e veja a mágica acontecer...');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.color = '';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
